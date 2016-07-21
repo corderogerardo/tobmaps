@@ -13,6 +13,33 @@ JavaScript, Frameworks, Software Architecture, NoSQL Database.
 
 ## Meteor Packages / Description / Why we need them.
 
+less  (for compile .less files)
+iron:router (for routes navigation)
+twbs:bootstrap@3.3.5 (framework css bootstrap)
+fortawesome:fontawesome (icons library)
+zimme:iron-router-active (which route is active)
+jquery (js library)
+okgrow:iron-router-autoscroll
+### Packages for collections in MongoDB
+aldeed:simple-schema
+aldeed:collection2
+aldeed:autoform
+mongo
+
+### Base packages for meteor.
+meteor-base
+mobile-experience
+blaze-html-templates
+session
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+standard-minifier-css
+standard-minifier-js
 
 ## Installation
 What steps need to be taken to have the project up and running?
