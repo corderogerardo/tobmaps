@@ -11,6 +11,8 @@ and finally, You need to install Meteor.js in your OS, Linux, Windows, Mac.
 What might they have a hard time understanding right away?
 JavaScript, Frameworks, Software Architecture, NoSQL Database.
 
+## Meteor Packages / Description / Why we need them.
+
 
 ## Installation
 What steps need to be taken to have the project up and running?
