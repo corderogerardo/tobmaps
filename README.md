@@ -37,8 +37,8 @@ Here you will find the meteor background configuration as packages, packages ver
 Here you will find template modules separated by folders.
 /client/
 ------ /views/
------- ------/layout/main.html (main layout)
------- ------/components-name/
+------ ------/common/ components as footer, header, sidenav
+------ ------/layouts/ Main Layout
 ------ /stylesheets/ (less)
 ------ ------ /components/
 ------ ------ ----- styles.less
@@ -48,7 +48,7 @@ Here you will find the necessary code for Routes and MongoDB Collections
 /lib/ (codigo necesario para correr en ambas capas client-server)
 ------ ------ /collections
 ------ ------ ------ /components-module-feature/
------- ------ / routes.js
+------ routes.js (all routes needed for the app to run, see file)
 ### npm packages folder
 Here you will find the npm packages that you require for the project.
 /packages/ (paquetes)
