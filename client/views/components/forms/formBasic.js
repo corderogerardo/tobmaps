@@ -1,17 +1,13 @@
-Template.formBasic.events({
-	"submit .js-save-email-form-horizontal":function(event){
-		event.preventDefault();
-		email = $("#email").val();
-		password = $("#password").val();
-		domain =  email.replace(/.*@/, "");
-		console.log("Domain: "+domain);
-		console.log("email: "+email);
+Template.formBasic.rendered = function(){
 
-		emailform = {
-			email: email,
-			password:password,
-		};
-		Meteor.call('insertEmail',emailform);
-		$('.js-save-email-form-horizontal').trigger('reset');
-	}
-});
+    // Initialize i-check plugin
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green'
+    });
+
+    // Move modal to body
+    // Fix Bootstrap backdrop issu with animation.css
+    $('.modal').appendTo("body");
+
+};
