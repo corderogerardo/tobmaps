@@ -4,7 +4,7 @@ Meteor.methods({
 		email:emailform.email,
 		password:emailform.password,
 		domain:emailform.domain,
-		accesible:emailform.accesible,
+		imap:emailform.imap,
 		createdOn:new Date(),
 		});
 	}

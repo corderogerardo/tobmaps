@@ -30,7 +30,7 @@
                 <li class="{{isActiveRoute regex='dashboard1|dashboard2|dashboard3|dashboard4l|dashboard5'}}">
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse {{isActiveRoute regex='dashboard1|dashboard2|dashboard3|dashboard4l|dashboard5' className='in'}}">
-                        <li class="{{isActiveRoute regex='dashboard1'}}"><a href="/">Dashboard v.1</a></li>
+                        <li class="{{isActiveRoute regex='dashboard1'}}"><a href="{{pathFor route='dashboard'}}">Dashboard v.1</a></li>
                         <li class="{{isActiveRoute regex='dashboard2'}}"><a href="{{pathFor route='dashboard2'}}">Dashboard v.2</a></li>
                         <li class="{{isActiveRoute regex='dashboard3'}}"><a href="{{pathFor route='dashboard3'}}">Dashboard v.3</a></li>
                         <li class="{{isActiveRoute regex='dashboard4l'}}"><a href="{{pathFor route='dashboard4l'}}">Dashboard v.4</a></li>
