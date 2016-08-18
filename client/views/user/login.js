@@ -1,6 +1,9 @@
 
 /*Events*/
-
+/**
+ * @param  {[type]}
+ * @return {[type]}
+ */
 Template .loginForm.events({
 	"submit .js-form-login":function(event){
 		event.preventDefault();

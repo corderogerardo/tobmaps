@@ -1,4 +1,4 @@
-Template.addYahoo.onRendered(function(){
+Template.addOutlook.onRendered(function(){
     // Initialize fooTable
     $('.footable').footable();
     $('.footable2').footable();
@@ -6,7 +6,7 @@ Template.addYahoo.onRendered(function(){
 Meteor.subscribe("emails", function(){
 	return Emails.find().fetch();
 });
-Template.yahoo_email_table.helpers({
+Template.outlook_email_table.helpers({
 	emails:function(){
 		return Emails.find().fetch();
 	},

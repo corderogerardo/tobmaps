@@ -1,0 +1,195 @@
+--Production Environment
+1. CentOS 7
+2. Apache V/2.4.6
+3. root@204.12.248.125
+
+-- Software Stack on Production:
+1. MongoDB Enterprise 3.3.2
+2. Node.js LTS 4.4.7
+2. NodeJS "Forever" module to start application in the background.
+
+STEP 1: Install additional packages for Linux Enterprise Server. This provides the server with the information to complete the next steps.
+DOCUMENTATION: 'https://fedoraproject.org/wiki/EPEL/es http://www.kamalprasad.com/blog/running-meteor-app-budgetvm-centos-7-vps'
+
+sudo yum install -y epel-release yum-utils
+sudo yum-config-manager --enable epel
+yum update -y
+
+STEP 2: Install NodeJS 4.4.7 LTS Version.
+DOCUMENTATION: 'https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora'
+
+curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -
+yum -y install nodejs
+# To check the version of nodejs to be 4.4.7 and NPM version.
+node -v
+npm -v
+# If npm version is 2.15 you need to upgrade NPM
+npm install -g npm
+
+# Optional: install build tools: To compile and install native addons from npm you may also need to install build tools
+
+yum install gcc-c++ make
+# or: yum groupinstall 'Development Tools'
+
+
+STEP 3: Install MongoDB Enterprise.
+DOCUMENTATION 'https://docs.mongodb.com/manual/tutorial/install-mongodb-enterprise-on-red-hat/'
+# Create a /etc/yum.repos.d/mongodb-enterprise.repo file to hold the following configutarion information for the MongoDB repository.
+nano /etc/yum.repos.d/mongodb-enterprise.repo
+
+# Add these lines
+[mongodb-enterprise]
+name=MongoDB Enterprise Repository
+baseurl=https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/stable/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
+
+# nano commands
+To save press ctrl+o
+To exit press ctrl+x
+
+# Once you have created that file you can install now MongoDB Enterprise with the following command.
+sudo yum install -y mongodb-enterprise
+
+STEP 4: Install MeteorJS.
+DOCUMENTATION "https://www.meteor.com/install"
+
+# Command
+curl https://install.meteor.com/ | sh
+
+
+STEP 5: Install Git and configure SSH Keys.
+DOCUMENTATION "https://git-scm.com/book/en/v2/Getting-Started-Installing-Git"
+
+# Command
+sudo yum install git-all
+
+# Deploy Keys per Machine or Repository
+# To create the ssh key with type and byte.
+ssh-keygen -t rsa -b 4096
+# Adding your SSH key to the ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+
+DOCUMENTATION https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
+
+# To take out the public SSH KEY command.
+cat ~/.ssh/id_rsa.pub
+DOCUMENTATION https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key#_generate_ssh_key
+
+# SSH-KEY
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCtkME0H+CkH6MpePKLLWR5/RWb1/Kkj3AB+0u8R+snuukkuDQ6Fax84+ChO5LUwItHczpUtm4vHCydVBRFAct5bq5AjT5Rnpo0BzWFrvqK9q2AIrLmeG9jvqFcC67Vp3ogz6biny6891JEJJjaDK0xg5KskwveEOKYsKHTJARM4qS5wES2m26NyZkeUWrCdkeRLFixS01pHeh49ODsaKjUzrW9YDCsZzPnsz7utHXzKibf5/yt5ccfYycEW/XnBMjVl+Vac/egfoEiy7GneQvTBBxVpuVm5HlUhv75zLFzbtbej4TQOfX3XV97tuY4FFud9wxxOZzYM33Kqk0w30F20uSXQ9VRiOD9n+oNDNSmamgEgO+v9WV+R3bQwpCAL6Z8mW1Xnho6wLPeDXG6Sab2HqqsMhwrsZdz9QDPwywLa76hTZKceu7t1LkZIuQDHqiW8IMNY1+66o2IzySs8Rg4Es+hvV804tpS4Hp+fk2KGxfsJx6lTU0TAoKD1SxopPTVD9Z2RDfAsX9cPVLE/gcQM8VQiomk/TlH/qgtcOrpX/wnbIR5Ieod53PEfZpnRQYj/TjBNaNSaPd5/b/SIWHmRMEK+9bDFMgfymHXYZNRN+ZFXUey2VyWwJ4MNZRAWfvO1OgpKhdo1UrAQplN/Qn+eHZ2WntY9rSMSsWhSDfjMw== root@localhost.localdomain
+
+DOCUMENTATION "https://developer.github.com/guides/managing-deploy-keys/"
+
+STEP 6: Install Passenger packages
+DOCUMENTATION 'https://www.phusionpassenger.com/library/walkthroughs/deploy/meteor/ownserver/nginx/oss/el7/install_passenger.html'
+
+# Commands
+#Install various prerequisites
+sudo yum install -y pygpgme curl
+
+# Add our el7 YUM repository
+sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
+
+# Install Passenger Nginx
+sudo yum install -y nginx passenger
+
+STEP 7 : Enable the Passenger Nginx module and restart Nginx
+DOCUMENTATION 'https://www.phusionpassenger.com/library/walkthroughs/deploy/meteor/ownserver/nginx/oss/el7/install_passenger.html'
+# Edit /etc/nginx/conf.d/passenger.conf and uncomment passenger_root, passenger_ruby and passenger_instance_registry_dir. For example, you may see this:
+# passenger_root /some-filename/locations.ini;
+# passenger_ruby /usr/bin/ruby;
+# passenger_instance_registry_dir /var/run/passenger-instreg;
+
+# Remove the '#' characters, like this:
+Copypassenger_root /some-filename/locations.ini;
+passenger_ruby /usr/bin/ruby;
+passenger_instance_registry_dir /var/run/passenger-instreg;
+
+# When you are finished with this step, restart Nginx:
+sudo service nginx restart
+
+STEP 8 : Transferring the Meteor package to the server
+# NOTE: you have some options here:
+# 1. You can clone from the repository from gitlab
+git clone repository
+# 1.2 You should use git, gitlab and gitlab CI.
+
+# 2. You can create the bundle.tar.gz package from your local machine
+meteor bundle bundle-package.tar.gz
+# another option
+meteor build --directory /directory
+
+# Now if you choose to create the build from your local machine, you need to upload the build-package.tar.gz to the server.
+# In your local machine or development environment, in your console, move to the folder directory where you have your build-package.tar.gz and write this command to upload the file to the server.
+scp bundle-package.tar.gz adminuser@yourserver.com:
+# The file is located in /root/
+
+# Create an user to add that user permit to the meteor app, for your own security you should not run an app with root privileges.
+sudo adduser myappuser
+#	Also ensure that has you ssh key installed
+sudo mkdir -p ~myappuser/.ssh
+touch $HOME/.ssh/authorized_keys
+sudo sh -c "cat $HOME/.ssh/authorized_keys >> ~myappuser/.ssh/authorized_keys"
+sudo chown -R myappuser: ~myappuser/.ssh
+sudo chmod 700 ~myappuser/.ssh
+sudo sh -c "chmod 600 ~myappuser/.ssh/*"
+
+# Now extract the package: you need to do this in a permanent location on the server. A good location is /var/www/APP_NAME, then you need to assign that folder of the app to the user you have created.
+cd /var/www/myapp
+tar xzf ~/bundle-package.tar.gz
+chown -R myappuser: .
+
+# In /var/www/myapp/bundle you should see that bundle folder is the extracted app.
+# IMPORTANT you need to move inside bundle an create a public folder, the commands
+cd /var/www/myapp/bundle
+mkdir public
+
+STEP 9 : Login as the app's user to install the npm dependencies.
+sudo -u myappuser -H bash -l
+# Install app dependencies
+cd /var/www/myapp/bundle/programs/server
+npm install --production
+# Now to logout from the user and go back to admin type:
+exit
+
+STEP 10 : Configuring Nginx and Passenger
+# Create the file configuration of your app.
+sudo nano /etc/nginx/conf.d/myapp.conf
+# Put this configuration inside the file:
+server {
+    listen 80;
+    server_name yourserver.com;
+
+    # Tell Nginx and Passenger where your app's 'public' directory is
+    root /var/www/myapp/bundle/public;
+
+    # Turn on Passenger
+    passenger_enabled on;
+    # Tell Passenger that your app is a Meteor app
+    passenger_app_type node;
+    passenger_startup_file main.js;
+
+    # Tell your app where MongoDB is
+    passenger_env_var MONGO_URL mongodb://localhost:27017/myappdb;
+    # Tell your app what its root URL is
+    passenger_env_var ROOT_URL http://yourserver.com;
+}
+
+# Restart Nginx Service
+sudo service nginx restart
+
+STEP 11 : Install PhantomJS, CasperJS, SlimerJS, Commands.
+# sudo npm install phantomjs -g
+# sudo npm install casperjs -g
+# sudo npm install slimerjs -g
+
+# DON'T TOUCH /ETC/HOSTS FILE - I was working
+
+# DOCUMENTATION TO FOLLOW https://www.phusionpassenger.com/library/walkthroughs/deploy/meteor/ownserver/nginx/oss/el7/install_passenger.html , https://www.phusionpassenger.com/library/deploy/nginx/deploy/meteor/
+# ERRORS https://forums.meteor.com/t/meteor-deployment-on-ubuntu-14-04-via-phusion-passenger-cannot-execute-node/20333
+
+# NOW FOLLOW THE SAME STEPS TO CREATE A DEV.VERSION.COM OF YOUR PROJECT.
+

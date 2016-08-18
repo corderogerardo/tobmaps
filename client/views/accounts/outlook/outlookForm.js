@@ -1,4 +1,4 @@
-Template.yahooForm.events({
+Template.outlookForm.events({
 	"submit .js-save-email-form-horizontal":function(event){
 		event.preventDefault();
 		email = $("#email").val();
