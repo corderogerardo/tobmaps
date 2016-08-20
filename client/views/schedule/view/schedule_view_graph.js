@@ -1,7 +1,14 @@
+'use strict';
+/**
+ * This render the graph's bots activity to the template
+ * @return {Graph rendered} -
+ */
 Template.graphScheduleView.rendered = function(){
-
     // Data and options for charts
-
+    /**
+     * The object barOptions holds the internal configurations for the graph. Here you can change the series, lines, axis , color[add a new color per each data], grid.
+     * @type {Object}
+     */
     var barOptions = {
         series: {
             lines: {
@@ -21,7 +28,7 @@ Template.graphScheduleView.rendered = function(){
         xaxis: {
             tickDecimals: 0
         },
-        colors: ["#1ab394","red"],
+        colors: ["#1ab394","red", "orange"],
         grid: {
             color: "#999999",
             hoverable: true,
@@ -37,6 +44,11 @@ Template.graphScheduleView.rendered = function(){
             content: "Bot Cuantity: %y, Hours: %x"
         }
     };
+    /**
+     * This the static data passed to draw the graph.
+     * This data will be fetched from mongodb database.
+     * @type {Object}
+     */
     var barData = {
         label: "Succeeded",
         data: [
@@ -95,9 +107,37 @@ Template.graphScheduleView.rendered = function(){
             [23, 12],
         ]
     };
-    $.plot($("#flot-line-chart-schedule"), [barData,barDataTwo], barOptions);
-
-
-
-
+    var barDataTree = {
+        label: "Paused",
+        data: [
+        	[0,10],
+            [1, 4],
+            [2, 5],
+            [3, 9],
+            [4, 4],
+            [5, 2],
+            [6, 4],
+            [7, 4],
+            [8, 5],
+            [9, 9],
+            [10, 4],
+            [11, 2],
+            [12, 4],
+            [13, 4],
+            [14, 5],
+            [15, 9],
+            [16, 4],
+            [17, 2],
+            [18, 4],
+            [19, 4],
+            [20, 5],
+            [21, 9],
+            [22, 4],
+            [23, 2],
+        ]
+    };
+    /**
+     * This the Jquery function that take the id of the graph container and pass the data and configuration to draw the data.
+     */
+    $.plot($("#flot-line-chart-schedule"), [barData,barDataTwo,barDataTree], barOptions);
 };
