@@ -1,9 +1,5 @@
-/*** TERMINAL COMMAND 
-casperjs paramsAction.js yahoo.com outlook.com --username="tobmaps@yahoo.com" --password="spamBOT-12345678" --engine=slimerjs
-***/
-
 var casper = require("casper").create({
-	clientScripts: ['/home/fernando/Escritorio/casper_practice/jquery.min.js'],
+	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
     logLevel: "debug",
 	viewportSize:
