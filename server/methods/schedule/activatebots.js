@@ -1,26 +1,34 @@
 exec = Npm.require('child_process').exec;
-/**
- * define server methods so that the clients will have access to server components
- * @param  {[type]} command)       {								this.unblock();				var result         [description]
- * @param  {[type]} 'commandYahoo' :                                function(line) {               console.log("In command method", line);    Fiber [description]
- * @return {[type]}                [description]
- */
+
 Meteor.methods({
-	'command' : function(line) {
-    console.log("In command method", line);
-    Fiber = Npm.require('fibers');
-    exec(line, function(error, stdout, stderr) {
-      console.log('Command Method', error, stdout, stderr);
-      Fiber(function() {
-        Replies.remove({});
-        var replyId = Replies.insert(
-          { 
-            message: stdout ? JSON.stringify(stdout) : JSON.stringify(stderr), 
-            time_exec: (new Date).toTimeString(),
-            domain: "@Yahoo.com"
-          });
-        return replyId;  
-      }).run();
-    }); 
-  }
+	'command' : function() {
+
+    accounts = 
+    [
+      {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
+      {user: "tobmapas@yahoo.com", pwd: "spamBOT-12345678"}
+    ];
+
+
+    for (var i = 0; i < accounts.length; i++) {
+        var username = accounts[i]["user"];
+        var password = accounts[i]["pwd"];
+        line = 'casperjs ../../../../../tests/yahoo/moveSpamAction.js yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs';
+        console.log("In command method", line);
+        Fiber = Npm.require('fibers');
+        exec(line, function(error, stdout, stderr) {
+          console.log('Command Method', error, stdout, stderr);
+          Fiber(function() {
+            //Replies.remove({});
+            var replyId = Replies.insert(
+              { 
+                message: stdout ? JSON.stringify(stdout) : JSON.stringify(stderr), 
+                time_exec: (new Date).toTimeString(),
+                domain: "@Yahoo.com"
+              });
+            return replyId;  
+          }).run();
+        }); 
+      };
+    }
 });

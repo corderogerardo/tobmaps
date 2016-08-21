@@ -54,8 +54,10 @@ accounts.forEach(function(account) {
 			this.wait(5000);
 		});
 
-		/**** Select messages out spam to inbox (list) ****/
-
+    /**
+     * Select messages out spam to inbox (list)
+     */
+     
 		casper.then(function(){
 			this.waitForText("Spam", function() {
 		  	this.clickLabel("Spam");
@@ -105,7 +107,7 @@ accounts.forEach(function(account) {
 
 		casper.waitForSelector("div.not-you",function(){
 			this.click("a#login-signout");
-			this.wait(2000);
+			this.wait(5000);
 		});
 
 	});
