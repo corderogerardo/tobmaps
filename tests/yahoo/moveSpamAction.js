@@ -20,7 +20,7 @@ utils = require("utils");
 
 whiteList = casper.cli.args
 
-var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com"
+var url = "https://login.yahoo.com/config/mail?.intl=us&.done=https%3A%2F%2Fmg.mail.yahoo.com%3A443%2Fneo%2Flaunch%3F.rand%3Degtpucj7f6kvm"
 
 var accounts = [];
 
@@ -73,7 +73,7 @@ accounts.forEach(function(account) {
 					ids.push({
 						message_id: $(this).attr("id"),
 						email: $('div.from', this).attr("title"),
-						data_cid: $('input[title="Casilla de verificación: sin marcar"]', this).attr("data-cid")
+						data_cid: $('input[title="Checkbox, not checked"]', this).attr("data-cid")
 					});
 				});
 				return ids;

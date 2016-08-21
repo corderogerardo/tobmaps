@@ -6,9 +6,8 @@ Meteor.methods({
     accounts = 
     [
       {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-      {user: "tobmapas@yahoo.com", pwd: "spamBOT-12345678"}
+      {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"}
     ];
-
 
     for (var i = 0; i < accounts.length; i++) {
         var username = accounts[i]["user"];
@@ -24,7 +23,7 @@ Meteor.methods({
               { 
                 message: stdout ? JSON.stringify(stdout) : JSON.stringify(stderr), 
                 time_exec: (new Date).toTimeString(),
-                domain: "@Yahoo.com"
+                domain: "@yahoo.com"
               });
             return replyId;  
           }).run();
