@@ -12,5 +12,8 @@ Template.scheduleViewTable.events({
 	},
 	'click .js-active-bottwo':function(event){
 		console.log('I clicked button two');
+    console.log("command");
+    var replyId = Meteor.call('command');
+    Session.set('replyId', replyId);
 	},
 });
