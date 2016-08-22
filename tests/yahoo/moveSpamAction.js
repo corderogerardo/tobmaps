@@ -4,8 +4,8 @@ var casper = require("casper").create({
     logLevel: "debug",
 	viewportSize:
 		{
-			width: 1350,
-			height: 1200
+			width: 1300,
+			height: 700
 		},
 	 pageSettings:
 	 	{
@@ -28,13 +28,13 @@ accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password
 
 casper.start()
 
-accounts.forEach(function(account) { 
+accounts.forEach(function(account) {
 
 	var username = account.user;
 	var password = account.pwd;
 
 
-	casper.thenOpen(url, function() { 
+	casper.thenOpen(url, function() {
 
 		casper.then(function(){
 			casper.fill('form[id="mbr-login-form"]', {
@@ -46,7 +46,7 @@ accounts.forEach(function(account) {
 		  this.click("form#mbr-login-form button[type=submit][value='authtype']");
 		  this.wait(6000);
 		});
-        
+
     casper.then(function(){
 			casper.fill('form[id="mbr-login-form"]', {
 		  	passwd : password
@@ -57,7 +57,7 @@ accounts.forEach(function(account) {
     /**
      * Select messages out spam to inbox (list)
      */
-     
+
 		casper.then(function(){
 			this.waitForText("Spam", function() {
 		  	this.clickLabel("Spam");
@@ -79,7 +79,7 @@ accounts.forEach(function(account) {
 				return ids;
 			});
 		utils.dump(messagesSpam);
-		});	
+		});
 
 		casper.then(function(){
 			this.each(messagesSpam, function(self, obj){
@@ -87,12 +87,12 @@ accounts.forEach(function(account) {
 				self.then(function(){
 					this.each(whiteList, function(self, white){
 						if(obj.email.replace(/.*@/, "") == white){
-							tag = true;	
+							tag = true;
 						}
 					});
 					if (tag == true) {
 						this.click('input[data-cid="'+obj.data_cid+'"]');
-					}	
+					}
 				});
 			});
 			casper.waitForSelector("button[id='btn-not-spam']", function() {

@@ -1,5 +1,5 @@
 var casper = require("casper").create({
-	clientScripts: ['jquery.min.js'],
+	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
     logLevel: "debug",
 	viewportSize:
@@ -64,14 +64,14 @@ casper.then(function(){
 
 		casper.then(function(){
 			this.waitForText("To",function(){
-				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com');
+				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com ');
 				this.wait(5000);
 			});
 		});
 
 		casper.then(function(){
 			this.waitForText("To", function(){
-				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com', {keepFocus: true});
+				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com ', {keepFocus: true});
 				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", casper.page.event.key.Enter , {keepFocus: true});
 				this.page.sendEvent("keypress", casper.page.event.key.Enter);
 				this.echo("send press enter to page");
