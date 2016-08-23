@@ -29,5 +29,10 @@ Meteor.methods({
           }).run();
         }); 
       };
+    },
+    addBot:function(bot){
+      //Bots.remove({});
+      bot.createdOn = (new Date).toTimeString();
+      return Bots.insert(bot);
     }
 });
