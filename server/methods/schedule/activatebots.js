@@ -36,3 +36,7 @@ Meteor.methods({
       return Bots.insert(bot);
     }
 });
+
+Meteor.publish("bots", function(){
+  return Bots.find();
+})

@@ -8,12 +8,11 @@
                         {{>iboxTools}}
                     </div>
                     <div class="ibox-content">
-
                         <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                             <tr>
-                                <th>Bots</th>
+                                <th>Domain</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -21,15 +20,12 @@
 <!--
  	Data to be loaded from Collection
 -->
+                            {{#each bots}} 
                             <tr class="gradeX">
-                                <td>test@yahoo.com</td>
-                                <td>Action 1
-                                </td>
+                              <td>{{typeDomain}}</td>
+                              <td class="center">{{action}}</td>
                             </tr>
-                            <tr>
-                                <td>test@yahoo.com</td>
-                                <td class="center">Action 2</td>
-                            </tr>
+                            {{/each}}
                             </tbody>
                             <tfoot>
                             <tr>
@@ -45,5 +41,4 @@
             </div>
         </div>
     </div>
-
 </template>
