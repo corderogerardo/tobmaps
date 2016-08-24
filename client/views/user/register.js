@@ -6,12 +6,14 @@ Template.registerTobmaps.events({
 		var userName = $('#username').val();
 		var userEmail = $('#email').val();
 		var userPass = $('#password').val();
-		console.log("User: "+userName+" "+userEmail+" "+userPass);
+
 		Accounts.createUser({
 			username: userName,
 			email:userEmail,
 			password: userPass
 		});
-		console.log("User Created");
+
+		$('.js-form-register').trigger('reset');
+		Router.go('/');
 	}
 });

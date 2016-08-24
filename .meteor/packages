@@ -17,7 +17,7 @@ meteor-base@1.0.4
 mobile-experience@1.0.4
 mongo@1.1.11
 blaze-html-templates@1.0.4
-session@1.1.6
+session
 tracker@1.1.0
 logging@1.1.15
 reload@1.1.10

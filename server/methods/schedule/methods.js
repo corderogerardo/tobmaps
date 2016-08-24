@@ -25,10 +25,11 @@ var process_exec_sync = function (command) {
 	return future.wait();
 };
 
-// define server methods so that the clients will have access to server components
+/**
+ * Meteor methods in server side for schedules
+ */
 Meteor.methods({
 	'command' : function() {
-
     var accounts =
     [
       {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
@@ -69,5 +70,28 @@ Meteor.methods({
 		}
 		// success
 		return true;
-	}
+	},
+	/**
+	 * insertSchedule: Method that validate if there is an user logged to insert a schedule to it's collection.
+	 * @param  {User Object} userId User logged
+	 * @param  {schedule Object} from the scheduleForm form.
+	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
+	 */
+	insertSchedule: function(userId, scheduleForm){
+		if(this.userId){
+			Schedules.insert({
+				name:scheduleForm.name,
+				description:scheduleForm.description,
+				days:scheduleForm.days,
+				hours:scheduleForm.hours,
+				awakening:scheduleForm.awakening,
+				actions:scheduleForm.actions,
+				schedulelogged:'',
+				createdOn:new Date(),
+				createdBy:this.userId,
+			});
+		}
+	},
+
+
 });
