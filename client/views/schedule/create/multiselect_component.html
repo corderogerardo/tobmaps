@@ -1,0 +1,37 @@
+<template name="multiselectComponent">
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+<div class="select-list">
+  <div class="title">Hours</div>
+  <div class="select-options">
+		{{> hourSchedule}}
+  </div>
+</div>
+</div>
+<!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+<div class="select-list">
+  <div class="title">Minutes</div>
+  <div class="select-options">
+		{{> minutesSchedule}}
+  </div>
+</div>
+</div> -->
+</template>
+
+<template name="hourSchedule">
+	{{#each hours}}
+	 <div class="option">
+        <input type="checkbox" id="hour{{@index}}" value="{{@index}}" />
+        <label for="option1">{{@index}}:00</label>
+    </div>
+	{{/each}}
+
+</template>
+<template name="minutesSchedule">
+	{{#each minutes}}
+	 <div class="option">
+        <input type="checkbox" id="minutes{{@index}}0" value="{{@index}}0" />
+        <label for="option1">{{@index}}0:00</label>
+    </div>
+	{{/each}}
+
+</template>
