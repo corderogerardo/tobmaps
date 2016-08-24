@@ -60,24 +60,10 @@ Meteor.methods({
       //Bots.remove({});
       bot.createdOn = (new Date).toTimeString();
       return Bots.insert(bot);
-    }
+    },
 });
 
 Meteor.publish("bots", function(){
   return Bots.find();
 })
-    runCasperJS: function(command) {
-		// This method call won't return immediately, it will wait for the
-		// asynchronous code to finish, so we call unblock to allow this client
-		// to queue other method calls (see Meteor docs)
-		this.unblock();
-		// run synchonous system command
-		var result = process_exec_sync(command);
-		// check for error
-		if (result.error) {
-			throw new Meteor.Error("exec-fail", "Error running CasperJS: " + result.error.message);
-		}
-		// success
-		return true;
-	}
-});
+    
