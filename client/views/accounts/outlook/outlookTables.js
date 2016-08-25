@@ -1,9 +1,10 @@
-'use strict';
 /**
  * Wjem addOutlook template render invoke function callback
  * @param  {onRendered} Event)
  * @return {boolean}
  */
+Meteor.subscribe("emails","outlook.com");
+
 Template.addOutlook.onRendered(function(){
     // Initialize fooTable
     $('.footable').footable();
@@ -15,13 +16,10 @@ Template.addOutlook.onRendered(function(){
  * @param  {function}
  * @return {emails}
  */
-Meteor.subscribe("emails", function(){
-	return Emails.find().fetch();
-});
 
 
 Template.outlook_email_table.helpers({
-	emails:function(){
+	emailsOutlook:function(){
 		return Emails.find().fetch();
 	},
 });

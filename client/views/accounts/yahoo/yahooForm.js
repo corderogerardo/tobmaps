@@ -10,8 +10,9 @@ Template.yahooForm.events({
 		emailform = {
 			email: email,
 			password:password,
+			domain:domain,
 		};
-		Meteor.call('insertEmail',emailform);
+		Meteor.call('insertEmail',Session.get('userId'),emailform);
 		$('.js-save-email-form-horizontal').trigger('reset');
 	}
 });

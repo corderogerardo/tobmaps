@@ -17,11 +17,12 @@ Template.outlookForm.events({
 		var emailform = {
 			email: email,
 			password:password,
+			domain:domain,
 		};
 		/**
 		 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
 		 */
-		Meteor.call('insertEmail',emailform);
+		Meteor.call('insertEmail',Session.get('userId'),emailform);
 		$('.js-save-email-form-horizontal').trigger('reset');
 	}
 });

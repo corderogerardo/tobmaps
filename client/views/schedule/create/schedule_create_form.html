@@ -149,8 +149,10 @@
                                 	<div class="form-group">
                                 		<label for="">Select Action</label>
                                 		<select name="" id="actions" class="form-control" required="required">
-                                		<option value="addEmail">Add Email</option>
-                                		<option value="moveEmail">Move Email</option>
+                                		{{#each bots}}
+                                		<option value="{{ action }}">{{ action }}</option>
+                                		{{/each}}
+
                                 	</select>
                                 	</div>
                             </div>

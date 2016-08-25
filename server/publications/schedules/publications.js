@@ -1,5 +1,11 @@
 Meteor.publish('schedules', function(){
-	return Schedules.find({
-
-	});
+	if(this.userId){
+		return Schedules.find({
+			$or:[
+				{
+					createdBy:this.userId
+				}
+			]
+		});
+	}
 });

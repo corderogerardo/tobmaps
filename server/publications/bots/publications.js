@@ -1,3 +1,5 @@
 Meteor.publish("bots", function(){
-  return Bots.find();
+	if(this.userId){
+  	return Bots.find({});
+	}
 });

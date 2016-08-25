@@ -1,5 +1,15 @@
 'use strict';
 
+Meteor.subscribe("bots", function(){
+	return Schedules.find().fetch();
+});
+
+Template.scheduleCreateForm.helpers({
+	bots:function(){
+		return Schedules.find().fetch();
+	}
+});
+
 Template.scheduleCreateForm.events({
 	"click #js-form-schedule":function(event){
 		event.preventDefault();
@@ -15,11 +25,22 @@ Template.scheduleCreateForm.events({
 		});
 		var awakening = $('#awakening').val();
 		var actions = $('#actions').val();
+		var scheduleForm = {
+			name:name,
+			description:description,
+			days:days,
+			hours:hours,
+			awakening:awakening,
+			actions:actions,
+		};
 		console.log(days);
 		console.log(hours);
 		console.log(awakening);
 		console.log(actions);
 		console.log("Submit pressed");
+
+		Meteor.call('insertSchedules',Session.get('userId'),scheduleForm);
+
 		return false;
 
 	}

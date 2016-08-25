@@ -17,6 +17,7 @@ Meteor.methods({
 				domain:emailform.domain,
 				imap:emailform.imap,
 				createdOn:new Date(),
+				createdBy:this.userId,
 				});
 			}
 		}

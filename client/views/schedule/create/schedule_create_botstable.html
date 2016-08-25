@@ -24,16 +24,9 @@
                             <tbody>
 <!--
  	Data to be loaded from Collection
--->
-                            <tr class="gradeX">
-                                <td>test@yahoo.com</td>
-                                <td>Action 1
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>test@yahoo.com</td>
-                                <td class="center">Action 2</td>
-                            </tr>
+-->  											{{#each schedule}}
+													{{> scheduleTableItems}}
+													{{/each }}
                             </tbody>
                             <tfoot>
                             <tr>
@@ -49,5 +42,10 @@
             </div>
         </div>
     </div>
-
+</template>
+<template name="scheduleTableItems">
+	<tr class="gradeX">
+		<td>{{ name }}</td>
+		<td>{{ actions }}</td>
+	</tr>
 </template>
