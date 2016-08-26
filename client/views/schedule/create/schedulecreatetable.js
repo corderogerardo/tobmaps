@@ -2,7 +2,7 @@ Meteor.subscribe("schedules",function(){
 	return Schedules.find().fetch();
 });
 Meteor.subscribe("actions",function(){
-	return Bots.find().fetch();
+	return Actions.find().fetch();
 });
 
 Template.scheduleCreateTableBots.helpers({
@@ -13,9 +13,9 @@ Template.scheduleCreateTableBots.helpers({
 });
 Template.scheduleTableItemsActionsName.helpers({
 	getById:function(botId){
-		var name = Bots.findOne({
+		var name = Actions.findOne({
 			_id:botId
-		}).action;
+		}).name;
 		return name;
 	}
 });

@@ -9,9 +9,9 @@ Meteor.publish('schedules', function(){
 		});
 	}
 });
-Meteor.publish('actions', function(){
+Meteor.publish('actionsBots', function(){
 	if(this.userId){
-		return Bots.find({
+		return Actions.find({
 
 		});
 	}

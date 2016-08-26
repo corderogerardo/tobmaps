@@ -1,10 +1,10 @@
-Meteor.subscribe("bots", function(){
-	return Bots.find().fetch();
+Meteor.subscribe("actions", function(){
+	return Actions.find().fetch();
 });
 
 Template.multiselectActions.helpers({
 	bots:function(){
-		return Bots.find().fetch();
+		return Actions.find().fetch();
 	}
 });
 

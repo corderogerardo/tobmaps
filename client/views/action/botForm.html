@@ -1,7 +1,7 @@
 <template name="botCreateForm">
 <!-- Page heading -->
   {{> pageHeading title='Create Bot / Bots List' }}
-	
+
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
       <div class="col-lg-12">
@@ -13,7 +13,7 @@
               <div class="ibox-content">
 	                {{#autoForm collection="Actions" id="botCreateForm" type="method" meteormethod="addBot"}}
 							    <fieldset>
-							      {{> afQuickField name='action'}}
+							      {{> afQuickField name='name'}}
 							      {{> afQuickField name='description' rows=3}}
 							      {{> afQuickField name="typeDomain"}}
 							      {{> afQuickField name='path'}}

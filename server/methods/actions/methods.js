@@ -4,6 +4,6 @@ Meteor.methods({
 	 addBot:function(bot){
       //Bots.remove({});
       bot.createdOn = (new Date).toTimeString();
-      return Bots.insert(bot);
+      return Actions.insert(bot);
     }
 });
