@@ -1,7 +1,7 @@
 <template name="scheduleCreateForm">
 <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
-          <form role="form">
+          <form class="js-form-schedule" role="form">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -13,9 +13,11 @@
                             <div class="col-sm-6 b-r">
                             <div class="col-sm-12">
 												<div class="form-group">
-												<input type="text" name="nameSchedule" id="nameSchedule" class="form-control" placeholder="Name" value="" required="required" title="">
+												<label for="Schedule Name">Schedule Name</label>
+												<input type="text" name="nameSchedule" id="nameSchedule" class="form-control" placeholder="Schedule Name" value="" required="required" title="">
 												</div>
 												<div class="form-group">
+												<label for="Schedule Description">Schedule Description</label>
 												<textarea class="form-control" rows="2" id="descriptionSchedule" placeholder="Description"></textarea>
 												</div>
                             </div>
@@ -138,7 +140,7 @@
 
 <div class="form-group">
 	<p>
-		Select the hours to be executed.
+			<label for="Select the hours to be executed.">Select the hours to be executed.</label>
 	</p>
 	{{> multiselectComponent}}
 </div>
@@ -147,20 +149,19 @@
                                 		<input type="number" name="" id="awakening" class="form-control" value="" min="0" max="60" step="" required="required" title="time">
                                 	</div>
                                 	<div class="form-group">
-                                		<label for="">Select Action</label>
-                                		<select name="" id="actions" class="form-control" required="required">
-                                		{{#each bots}}
-                                		<option value="{{ action }}">{{ action }}</option>
-                                		{{/each}}
+                                		<label for="">Select Actions</label>
+                                		<br>
 
-                                	</select>
+                                		{{> multiselectActions}}
+
+
                                 	</div>
                             </div>
                         </div>
                 <div class="row">
 	                <div class="col-lg-12">
 						<div>
-							<button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="js-form-schedule" type="submit"><strong>Save</strong></button>
+							<button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Save</strong></button>
 						</div>
 	                </div>
                 </div>
@@ -171,3 +172,4 @@
          </div>
 </div>
 </template>
+

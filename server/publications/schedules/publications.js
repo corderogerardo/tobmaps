@@ -9,3 +9,10 @@ Meteor.publish('schedules', function(){
 		});
 	}
 });
+Meteor.publish('actions', function(){
+	if(this.userId){
+		return Bots.find({
+
+		});
+	}
+});

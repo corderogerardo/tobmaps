@@ -1,35 +1,20 @@
 <template name="multiselectComponent">
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-<div class="select-list">
-  <div class="title">Hours</div>
-  <div class="select-options">
+  <link rel="import" href="https://rawgit.com/sitepoint-editors/multiselect-web-component/master/src/multiselect.html">
+	<x-multiselect id="scheduleHours" name="scheduleHours" placeholder="Select Hours">
 		{{> hourSchedule}}
-  </div>
-</div>
-</div>
-<!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-<div class="select-list">
-  <div class="title">Minutes</div>
-  <div class="select-options">
-		{{> minutesSchedule}}
-  </div>
-</div>
-</div> -->
+	</x-multiselect>
 </template>
 
 <template name="hourSchedule">
 	{{#each hours}}
-	 <div class="option">
-        <input type="checkbox" id="hour{{@index}}" value="{{@index}}" />
-        <label for="option1">{{@index}}:00</label>
-    </div>
+	 <li id="hour{{ _id }}" selected value="{{@index}}">{{@index}}:00</li>
 	{{/each}}
 
 </template>
 <template name="minutesSchedule">
 	{{#each minutes}}
 	 <div class="option">
-        <input type="checkbox" id="minutes{{@index}}0" value="{{@index}}0" />
+        <input type="checkbox" id="minutes{{@index}}0" value="{{@index}}0" checked />
         <label for="option1">{{@index}}0:00</label>
     </div>
 	{{/each}}

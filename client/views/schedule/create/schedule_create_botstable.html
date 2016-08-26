@@ -17,20 +17,20 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                             <tr>
-                                <th>Bots</th>
+                                <th>Schedule Name</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
 <!--
  	Data to be loaded from Collection
--->  											{{#each schedule}}
+-->  											{{#each schedules}}
 													{{> scheduleTableItems}}
 													{{/each }}
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Total bots: </th>
+                                <th>Total Schedules: {{schedules.length}} </th>
                                 <th>Total actions: </th>
                             </tr>
                             </tfoot>
@@ -46,6 +46,14 @@
 <template name="scheduleTableItems">
 	<tr class="gradeX">
 		<td>{{ name }}</td>
-		<td>{{ actions }}</td>
+		<td>
+			{{#each actions}}
+				<span class="label label-primary">{{> scheduleTableItemsActionsName botId=this }}</span>
+			{{/each}}
+
+		</td>
 	</tr>
+</template>
+<template name="scheduleTableItemsActionsName">
+		{{ getById botId}}
 </template>

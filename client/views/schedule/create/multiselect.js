@@ -47,6 +47,14 @@ function updateTable() {
 };
 
 };
+Template.hourSchedule.onRendered(function () {
+
+var multiselect = document.querySelector('#scheduleHours');
+	multiselect.addEventListener('change', function() {
+  console.log('Selected items:', this.selectedItems());
+});
+
+});
 
 Template.hourSchedule.helpers({
 	hours: function(){

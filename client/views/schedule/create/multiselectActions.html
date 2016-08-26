@@ -1,0 +1,11 @@
+<template name="multiselectActions">
+<link rel="import" href="https://rawgit.com/sitepoint-editors/multiselect-web-component/master/src/multiselect.html">
+	<x-multiselect id="actionsBot" name="actionsBot" placeholder="Select Actions">
+		{{#each bots}}
+		{{> botActionsSchedule}}
+		{{/each}}
+	</x-multiselect>
+</template>
+<template name="botActionsSchedule">
+	<li id="{{ _id }}" value="{{ _id }}">{{ action }}</li>
+</template>

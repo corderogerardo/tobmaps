@@ -86,7 +86,7 @@ Meteor.methods({
 				hours:scheduleForm.hours,
 				awakening:scheduleForm.awakening,
 				actions:scheduleForm.actions,
-				schedulelogged:'',
+				schedulelogged:[''],
 				createdOn:new Date(),
 				createdBy:this.userId,
 			});
