@@ -1,5 +1,3 @@
-Meteor.publish('emails', function(){
-	return Emails.find({
-
-	});
-});
+Meteor.publish("accounts", function(){
+  return Accounts.find();
+})

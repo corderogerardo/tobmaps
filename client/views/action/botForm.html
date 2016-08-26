@@ -11,16 +11,16 @@
                   {{>iboxTools}}
               </div>
               <div class="ibox-content">
-	                {{#autoForm collection="Bots" id="botCreateForm" type="method" meteormethod="addBot"}}
+	                {{#autoForm collection="Actions" id="botCreateForm" type="method" meteormethod="addBot"}}
 							    <fieldset>
 							      {{> afQuickField name='action'}}
 							      {{> afQuickField name='description' rows=3}}
 							      {{> afQuickField name="typeDomain"}}
 							      {{> afQuickField name='path'}}
 							    </fieldset>
-								    <button type="submit" class="btn btn-primary">Save</button>
-								    <button type="reset" class="btn btn-default">Cancel</button>
-						  	{{/autoForm}}
+								   <button type="submit" class="btn btn-primary">Save</button>
+								   <button type="reset" class="btn btn-default">Cancel</button>
+						  		{{/autoForm}}
               </div>
           </div>
       </div>

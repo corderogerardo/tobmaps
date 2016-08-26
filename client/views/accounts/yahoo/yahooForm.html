@@ -5,38 +5,41 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Add email</h5>
+                        <h5>Add Account</h5>
                          <ul class="nav nav-tabs navbar-right">
-		                        <li class="active"><a data-toggle="tab" href="#tab-single"> Single</a></li>
+		                        <li class="active"><a data-toggle="tab" href="#tab-single">Single</a></li>
 		                        <li class=""><a data-toggle="tab" href="#tab-multi">Multi</a></li>
-		                 </ul>
+		                 		</ul>
                     </div>
 		                <div class="tabs-container">
 		                    <div class="tab-content">
 		                        <div id="tab-single" class="tab-pane active">
 		                            <div class="panel-body">
 										<div class="ibox-content">
-											<form class="js-save-email-form-horizontal form-horizontal">
-												<div class="form-group"><label class="col-sm-2 control-label">Email</label>
-
-												<div class="col-sm-10"><input type="email" id="email" class="form-control" required></div>
-												</div>
-											<div class="hr-line-dashed"></div>
-											<div class="form-group"><label class="col-sm-2 control-label">Password</label>
-											<div class="col-sm-10"><input type="password" id="password" class="form-control" name="password" required></div>
-											</div>
-											<div class="hr-line-dashed"></div>
-											<div class="form-group">
-											<div class="">
-											<button class="btn btn-white" type="submit">Cancel</button>
-											<button class="btn btn-primary" type="submit">Save</button>
-											</div>
-											</div>
-											</form>
+											{{#autoForm collection="Accounts" id="yahooForm" type="method" meteormethod="addAccount"}}
+										    <div class="form-group {{#if afFieldIsInvalid name='email'}}has-error{{/if}}">
+											    <label class="control-label col-md-1">{{afFieldLabelText name='email'}}</label>
+											    {{> afFieldInput name='email' class='form-control'}}
+											    {{#if afFieldIsInvalid name='email'}}
+											    <span class="help-block">{{{afFieldMessage name='email'}}}</span>
+											    {{/if}}
+											  </div>
+										    <div class="hr-line-dashed"></div>
+										    <div class="form-group {{#if afFieldIsInvalid name='email'}}has-error{{/if}}">
+											    <label class="control-label col-md-1">{{afFieldLabelText name='password'}}</label>
+											    {{> afFieldInput name='password' class='form-control' type='password'}}
+											    {{#if afFieldIsInvalid name='password'}}
+											    <span class="help-block">{{{afFieldMessage name='password'}}}</span>
+											    {{/if}}
+											  </div>
+										      <div class="hr-line-dashed"></div>
+										      <button type="reset" class="btn btn-default">Cancel</button>
+											   <button type="submit" class="btn btn-primary">Save</button>
+									  	{{/autoForm}}
 										</div>
 		                            </div>
 		                        </div>
-		                        <div id="tab-multi" class="tab-pane">
+		                        <div id="tab-multi" class="tab-pane ">
 		                            <div class="panel-body">
 		                               <div class="ibox-content">
 					                        <form class="js-save-email-form-horizontal form-horizontal">
@@ -66,5 +69,4 @@
             </div>
         </div>
     </div>
-
 </template>

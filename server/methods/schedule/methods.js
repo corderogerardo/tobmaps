@@ -57,55 +57,19 @@ Meteor.methods({
         });
       };
     },
-<<<<<<< HEAD:server/methods/schedule/activatebots.js
-    addBot:function(bot){
-      //Bots.remove({});
-      bot.createdOn = (new Date).toTimeString();
-      return Bots.insert(bot);
-    },
-});
-
-Meteor.publish("bots", function(){
-  return Bots.find();
-})
-    
-=======
     runCasperJS: function(command) {
-		// This method call won't return immediately, it will wait for the
-		// asynchronous code to finish, so we call unblock to allow this client
-		// to queue other method calls (see Meteor docs)
-		this.unblock();
-		// run synchonous system command
-		var result = process_exec_sync(command);
-		// check for error
-		if (result.error) {
-			throw new Meteor.Error("exec-fail", "Error running CasperJS: " + result.error.message);
-		}
-		// success
-		return true;
-	},
-	/**
-	 * insertSchedule: Method that validate if there is an user logged to insert a schedule to it's collection.
-	 * @param  {User Object} userId User logged
-	 * @param  {schedule Object} from the scheduleForm form.
-	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
-	 */
-	insertSchedule: function(userId, scheduleForm){
-		if(this.userId){
-			Schedules.insert({
-				name:scheduleForm.name,
-				description:scheduleForm.description,
-				days:scheduleForm.days,
-				hours:scheduleForm.hours,
-				awakening:scheduleForm.awakening,
-				actions:scheduleForm.actions,
-				schedulelogged:'',
-				createdOn:new Date(),
-				createdBy:this.userId,
-			});
-		}
-	},
-
-
+			// This method call won't return immediately, it will wait for the
+			// asynchronous code to finish, so we call unblock to allow this client
+			// to queue other method calls (see Meteor docs)
+			this.unblock();
+			// run synchonous system command
+			var result = process_exec_sync(command);
+			// check for error
+			if (result.error) {
+				throw new Meteor.Error("exec-fail", "Error running CasperJS: " + result.error.message);
+			}
+			// success
+			return true;
+		},
 });
->>>>>>> gerardo:server/methods/schedule/methods.js
+
