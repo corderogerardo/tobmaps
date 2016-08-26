@@ -8,7 +8,31 @@
                         <h5>Yahoo list accounts</h5>
                     </div>
                     <div class="ibox-content">
-					{{> yahoo_email_table}}
+                      <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>IMAP</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {{#each accounts}}
+                            <tr>
+                              <td class="text-left">{{email}}</td>
+                              <td class="text-left">{{password}}</td>
+                              <td class="text-left">{{imap}}</td>
+                            </tr>
+                          {{/each}}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
                     </div>
                 </div>
             </div>
@@ -16,34 +40,5 @@
     </div>
 </template>
 <template name="yahoo_email_table">
-	 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="5">
-                            <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>domain</th>
-                                <th>IMAP</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-							{{#each emailsYahoo}}
-								{{> yahoo_emails_item}}
-							{{/each}}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="5">
-                                    <ul class="pagination pull-right"></ul>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-</template>
-<template name="yahoo_emails_item">
-	<tr>
-		<td>{{email}}</td>
-		<td>{{password}}</td>
-		<td>{{domain}}</td>
-		<td>{{imap}}</td>
-	</tr>
+
 </template>

@@ -9,17 +9,12 @@ Meteor.methods({
 	 * @param  {Email Object} from the email form.
 	 * @return {Boolean} Return true if the email was insected correctly, false if does not.
 	 */
-	insertEmail: function(userId,emailform){
-		if(this.userId){
-			Emails.insert({
-				email:emailform.email,
-				password:emailform.password,
-				domain:emailform.domain,
-				imap:emailform.imap,
-				createdOn:new Date(),
-				createdBy:this.userId,
-				});
-			}
-		}
+	addAccount: function(account){
+		//if(this.userId){
+			account.imap = true;
+			account.createdOn = new Date();
+			return Accounts.insert(account);
+	}
+		//}
 
 });

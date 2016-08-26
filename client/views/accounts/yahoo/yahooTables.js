@@ -1,13 +1,22 @@
-Meteor.subscribe("emails","yahoo.com");
+/**
+ * Initialize fooTable
+ */
 
 Template.addYahoo.onRendered(function(){
-    // Initialize fooTable
-    $('.footable').footable();
-    $('.footable2').footable();
+  $('.footable').footable();
+  $('.footable2').footable();
 });
 
-Template.yahoo_email_table.helpers({
-	emailsYahoo:function(){
-		return Emails.find().fetch();
+/**
+ * subscribe to read data
+ */
+
+Meteor.subscribe("accounts", function(){
+	return Accounts.find().fetch();
+});
+
+Template.yahooTables.helpers({
+	accounts:function(){
+		return Accounts.find().fetch();
 	},
 });

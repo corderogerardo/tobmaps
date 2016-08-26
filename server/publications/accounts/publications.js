@@ -1,10 +1,9 @@
-Meteor.publish('emails', function(domainName){
+Meteor.publish('accounts', function(){
 	if(this.userId){
-		return Emails.find({
+		return Accounts.find({
 			$or:[
 				{
 					createdBy:this.userId,
-					domain:domainName
 				}
 			]
 		});
