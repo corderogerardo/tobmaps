@@ -1,6 +1,7 @@
 /* Initialize fooTable*/
-Template.yahooTables.onRendered(function(){
+Template.aolTables.onRendered(function(){
   $('.footable').footable();
+  $('.footable2').footable();
 });
 
 /* Subscribe to read data */
@@ -13,8 +14,8 @@ Meteor.subscribe("emails", function(){
  * @param  {[function]} 
  * @return {[emails] (Query projection)}
  */
-Template.yahooTables.helpers({
+Template.aolTables.helpers({
 	emails:function(){
-		return Emails.find({createdBy:Meteor.userId(), typeDomain:'yahoo.com'});
+		return Emails.find({createdBy:Meteor.userId(), typeDomain:'aol.com'});
 	},
 });

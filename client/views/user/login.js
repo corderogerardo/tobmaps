@@ -1,21 +1,35 @@
 'use strict';
-/*Events*/
+
 /**
- * @param  {[type]}
- * @return {[type]}
+ * Refers to when the template is inserted into the DOM
+ * @param  {[#login-email]} )} 
+ * @return {[type]}             
  */
 
-Template.loginForm.events({
-	"submit .js-form-login":function(e){
-		e.preventDefault();
-		var userEmail = $('#login-email').val();
-		var userPass = $('#login-pass').val();
-		Meteor.loginWithPassword(userEmail,userPass);
-		if(!Meteor.userId()){
-			Router.go('/');
-		}else{
-			Router.go('dashboard');
-		}
-		$('.js-form-login').trigger('reset');
-	}
+Template.loginForm.onRendered(function(){
+    var validator = $('.js-form-login').validate({
+        submitHandler: function(event){
+            var email = $('[name=email]').val();
+            var password = $('[name=password]').val();
+            Meteor.loginWithPassword(email, password, function(error){
+                if(error){
+                  if(error.reason == "User not found"){
+                      validator.showErrors({
+                          email: "That email doesn't belong to a registered user."   
+                      });
+                  }
+                  if(error.reason == "Incorrect password"){
+                      validator.showErrors({
+                          password: "You entered an incorrect password."    
+                      });
+                  }
+                } else {
+                    var currentRoute = Router.current().route.getName();
+                    if(currentRoute == "login"){
+                        Router.go("user.show", {_id: Meteor.userId()});
+                    }
+                }
+            });
+        }
+    });
 });

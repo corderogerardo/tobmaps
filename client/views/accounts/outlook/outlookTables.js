@@ -1,5 +1,5 @@
 /**
- * Wjem addOutlook template render invoke function callback
+ *AddOutlook template render invoke function callback
  * @param  {onRendered} Event)
  * @return {boolean}
  */
@@ -18,8 +18,8 @@ Template.addOutlook.onRendered(function(){
  */
 
 
-Template.outlook_email_table.helpers({
-	emailsOutlook:function(){
-		return Emails.find().fetch();
+Template.outlookTables.helpers({
+	emails:function(){
+		return Emails.find({createdBy:Meteor.userId(), typeDomain:'outlook.com'});
 	},
 });

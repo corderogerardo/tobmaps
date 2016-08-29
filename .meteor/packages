@@ -9,7 +9,7 @@ iron:router
 twbs:bootstrap@3.3.5
 fortawesome:fontawesome
 zimme:iron-router-active
-jquery@1.11.9
+jquery
 aldeed:simple-schema
 aldeed:collection2
 aldeed:autoform
@@ -32,3 +32,4 @@ okgrow:router-autoscroll
 gadicohen:phantomjs
 shell-server
 accounts-password
+themeteorchef:jquery-validation
