@@ -5,45 +5,39 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Outlook list accounts</h5>
+                        <h5>Accounts List</h5>
                     </div>
                     <div class="ibox-content">
-					{{> outlook_email_table}}
+                      <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Domain</th>
+                            <th>IMAP</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {{#each emails}}
+                            <tr>
+                              <td class="text-left">{{email}}</td>
+                              <td class="text-left">{{password}}</td>
+                              <td class="text-left">{{typeDomain}}</td>
+                              <td class="text-left">{{imap}}</td>
+                            </tr>
+                          {{/each}}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</template>
-<template name="outlook_email_table">
-	 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="5">
-                            <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Password</th>
-                                <th>domain</th>
-                                <th>IMAP</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-							{{#each emailsOutlook}}
-								{{> outlook_emails_item}}
-							{{/each}}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="5">
-                                    <ul class="pagination pull-right"></ul>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-</template>
-<template name="outlook_emails_item">
-	<tr>
-		<td>{{email}}</td>
-		<td>{{password}}</td>
-		<td>{{domain}}</td>
-		<td>{{imap}}</td>
-	</tr>
 </template>

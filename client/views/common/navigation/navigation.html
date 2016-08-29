@@ -13,8 +13,10 @@
                             <img alt="image" class="img-circle" src="../img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ currentUser.username}}</strong>
-                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                            <span class="clear"> 
+                            <span class="block m-t-xs"> <strong class="font-bold">{{ currentUser.username}}</strong>
+                             </span>
+                             <span class="text-muted text-xs block">Admin<b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="{{pathFor route='profile'}}">Profile</a></li>
                             <li><a href="{{pathFor route='contacts'}}">Contacts</a></li>
@@ -48,16 +50,16 @@
                     <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
                         <li class=""><a href="">View</a></li>
-                        <li class=""><a href="">Add</a></li>
+                        <li class=""><a href="/users/register">Add</a></li>
                     </ul>
                 </li>
                  <li class="">
                     <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Accounts</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
                         <li class=""><a href="/accounts/yahoo">Yahoo</a></li>
-                        <li class=""><a href="">Gmail</a></li>
+                        <li class=""><a href="/accounts/gmail">Gmail</a></li>
                         <li class=""><a href="/accounts/outlook">Outlook</a></li>
-                        <li class=""><a href="">AOL</a></li>
+                        <li class=""><a href="/accounts/aol">AOL</a></li>
                     </ul>
                 </li>
 

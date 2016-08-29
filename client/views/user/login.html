@@ -5,13 +5,14 @@
             <form class="m-t js-form-login" role="form" action="{{pathFor route='dashboard1'}}">
 				<div class="input-group m-b">
 				 	<span class="input-group-addon"><i class="fa fa-user"></i></span>
-				 	<input type="text" id="login-email" placeholder="User" class="form-control">
+				 	<input type="text" placeholder="User" class="form-control" name="email"
+          required>
 				</div>
 				<div class="input-group m-b">
 					<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-					<input type="password" id="login-pass" placeholder="Password" class="form-control">
+					<input type="password" placeholder="Password" class="form-control" name="password" required>
 				</div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <input type="submit" class="btn btn-primary block full-width m-b" value="login">
                 <a href="#"><small>Forgot password?</small></a>
             </form>
             <p class="m-t"> <small>TobMaps &copy; 2016</small> </p>

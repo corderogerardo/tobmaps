@@ -16,17 +16,18 @@
 		                        <div id="tab-single" class="tab-pane active">
 		                            <div class="panel-body">
 										<div class="ibox-content">
-											{{#autoForm collection="Accounts" id="yahooForm" type="method" meteormethod="addAccount"}}
+											{{#autoForm collection="Emails" id="yahooForm" type="method" meteormethod="addAEmailYahoo"}}
 										    <div class="form-group {{#if afFieldIsInvalid name='email'}}has-error{{/if}}">
-											    <label class="control-label col-md-1">{{afFieldLabelText name='email'}}</label>
-											    {{> afFieldInput name='email' class='form-control'}}
+											    <label class="control-label col-md-1 col-sm-1 col-xs-1">{{afFieldLabelText name='email'}}</label>
+											    {{> afFieldInput name='email' class='form-control' 
+											    placeholder='example@yahoo.com'}}
 											    {{#if afFieldIsInvalid name='email'}}
 											    <span class="help-block">{{{afFieldMessage name='email'}}}</span>
 											    {{/if}}
 											  </div>
 										    <div class="hr-line-dashed"></div>
 										    <div class="form-group {{#if afFieldIsInvalid name='email'}}has-error{{/if}}">
-											    <label class="control-label col-md-1">{{afFieldLabelText name='password'}}</label>
+											    <label class="control-label col-md-1 col-sm-1 col-xs-1">{{afFieldLabelText name='password'}}</label>
 											    {{> afFieldInput name='password' class='form-control' type='password'}}
 											    {{#if afFieldIsInvalid name='password'}}
 											    <span class="help-block">{{{afFieldMessage name='password'}}}</span>
