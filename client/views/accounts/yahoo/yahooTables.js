@@ -11,12 +11,12 @@ Template.addYahoo.onRendered(function(){
  * subscribe to read data
  */
 
-Meteor.subscribe("accounts", function(){
-	return Accounts.find().fetch();
+Meteor.subscribe("emails", function(){
+	return Emails.find().fetch();
 });
 
 Template.yahooTables.helpers({
-	accounts:function(){
-		return Accounts.find().fetch();
+	emails:function(){
+		return Emails.find().fetch();
 	},
 });

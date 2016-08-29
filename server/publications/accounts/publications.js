@@ -1,6 +1,6 @@
-Meteor.publish('accounts', function(){
+Meteor.publish('emails', function(){
 	if(this.userId){
-		return Accounts.find({
+		return Emails.find({
 			$or:[
 				{
 					createdBy:this.userId,

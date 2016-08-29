@@ -1,7 +1,7 @@
-Meteor.subscribe("bots");
+Meteor.subscribe("actions");
 
-Template.createTableBots.helpers({
+Template.botTable.helpers({
   bots:function(){
-    return Bots.find();
+    return Actions.find().fetch();
   }
 })

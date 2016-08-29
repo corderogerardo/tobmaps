@@ -16,7 +16,7 @@
 		                        <div id="tab-single" class="tab-pane active">
 		                            <div class="panel-body">
 										<div class="ibox-content">
-											{{#autoForm collection="Accounts" id="yahooForm" type="method" meteormethod="addAccount"}}
+											{{#autoForm collection="Emails" id="yahooForm" type="method" meteormethod="addAccount"}}
 										    <div class="form-group {{#if afFieldIsInvalid name='email'}}has-error{{/if}}">
 											    <label class="control-label col-md-1">{{afFieldLabelText name='email'}}</label>
 											    {{> afFieldInput name='email' class='form-control'}}
