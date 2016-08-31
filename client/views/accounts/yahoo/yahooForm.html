@@ -28,7 +28,7 @@
 										    <div class="hr-line-dashed"></div>
 										    <div class="form-group {{#if afFieldIsInvalid name='email'}}has-error{{/if}}">
 											    <label class="control-label col-md-1 col-sm-1 col-xs-1">{{afFieldLabelText name='password'}}</label>
-											    {{> afFieldInput name='password' class='form-control' type='password'}}
+											    {{> afFieldInput name='password' class='form-control'}}
 											    {{#if afFieldIsInvalid name='password'}}
 											    <span class="help-block">{{{afFieldMessage name='password'}}}</span>
 											    {{/if}}
@@ -43,19 +43,17 @@
 		                        <div id="tab-multi" class="tab-pane ">
 		                            <div class="panel-body">
 		                               <div class="ibox-content">
-					                        <form class="js-save-email-form-horizontal form-horizontal">
-					                            <div class="form-group"><label class="control-label">Enter multi-emails and password following this pattern: email,password</label>
-
-					                            <div class="col-sm-12">
-					                            	<textarea class="form-control" rows="5" id="comment"></textarea>
+					                        <form class="js-multi-form form-horizontal">
+					                            <div class="form-group">
+					                            	<label class="control-label">Enter multi-emails and password following this pattern: email,password</label>
+						                            	<div class="col-sm-12">
+							                            	<textarea class="form-control" rows="5" id="yahhoString" placeholder="example@yahoo.com,password,example2@yahoo.com,password"></textarea>
+							                            </div>
 					                            </div>
-					                            </div>
-
-
 					                            <div class="hr-line-dashed"></div>
 					                            <div class="form-group">
 					                                <div class="">
-					                                    <button class="btn btn-white" type="submit">Cancel</button>
+					                                    <button class="btn btn-default" type="reset">Cancel</button>
 					                                    <button class="btn btn-primary" type="submit">Save</button>
 					                                </div>
 					                            </div>
