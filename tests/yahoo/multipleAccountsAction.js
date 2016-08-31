@@ -150,7 +150,13 @@ accounts.forEach(function(account) {
 				this.wait(3000);
 		});
 
-	});
-}); // end for loop
+	}); // end casper.thenOpen function
+}); // end accounts.each loop
 
-casper.run();
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
+casper.run(function(){
+	this.exit();
+});

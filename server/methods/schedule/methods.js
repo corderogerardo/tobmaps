@@ -29,7 +29,7 @@ var process_exec_sync = function (command) {
  * Meteor methods in server side for schedules
  */
 Meteor.methods({
-	'command' : function() {
+	command: function() {
     var accounts =
     [
       {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},

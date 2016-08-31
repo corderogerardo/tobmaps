@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Outlook Casper's Bot that move emails from inbox to spam
  * @type {CasperJS Bot}
@@ -9,7 +10,7 @@
 var casper = require('casper').create({
 	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
-    logLevel: 'debug',
+	logLevel: 'debug',
 	viewportSize:
 		{
 			width: 1300,
@@ -142,7 +143,7 @@ casper.then(function(){
 	this.each(results, function iterateids(self,id){
 		self.then(function thenIterate(){
 			this.echo('div[id="'+id+'"] > div');
-			this.click('div[id="'+id+'"] > div');
+			this.click('div[id="'+i'use strict';d+'"] > div');
 			/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
 		});
 		self.wait(5000);

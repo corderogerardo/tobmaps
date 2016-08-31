@@ -1,36 +1,38 @@
-<template name="scheduleCreateTableBots">
-
-    <!-- Page heading -->
-    {{> pageHeading title='Schedule Create - List of Schedules' category='Schedule/create' }}
-
-    <div class="wrapper wrapper-content animated fadeInRight">
+<template name="listsTable">
+<div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>List of Schedules</h5>
+                        <h5>White/Black Lists</h5>
                     </div>
                     <div class="ibox-content">
-
                         <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                             <tr>
-                                <th>Schedule Name</th>
-                                <th>Actions</th>
+                                <th>List name</th>
+                                <th>List type</th>
+                                <th>Domains in the list</th>
                             </tr>
                             </thead>
                             <tbody>
 <!--
  	Data to be loaded from Collection
--->  											{{#each schedules}}
-													{{> scheduleTableItems}}
-													{{/each }}
+-->
+                            {{#each lists}}
+                            <tr class="gradeX">
+                              <td>{{listname}}</td>
+                              <td>{{typelist}}</td>
+                              <td>{{#each domains}}
+                             			<span class="label label-primary">{{domain}}</span>
+                              {{/each }}</td>
+                            </tr>
+                            {{/each}}
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Total Schedules: {{schedules.length}} </th>
-                                <th>Total actions: </th>
+                                <th colspan="3">Total Lists: {{lists.length}} </th>
                             </tr>
                             </tfoot>
                         </table>
@@ -41,18 +43,4 @@
             </div>
         </div>
     </div>
-</template>
-<template name="scheduleTableItems">
-	<tr class="gradeX">
-		<td>{{ name }}</td>
-		<td>
-			{{#each actions}}
-				<span class="label label-primary">{{> scheduleTableItemsActionsName botId=this }}</span>
-			{{/each}}
-
-		</td>
-	</tr>
-</template>
-<template name="scheduleTableItemsActionsName">
-		{{ getById botId}}
 </template>

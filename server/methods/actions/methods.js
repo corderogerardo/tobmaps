@@ -1,9 +1,8 @@
-'use strict';
-
 Meteor.methods({
-	 addBot:function(bot){
-      //Bots.remove({});
-      bot.createdOn = (new Date).toTimeString();
-      return Actions.insert(bot);
+	 addAction:function(doc,userId){
+      if(this.userId){
+      	doc.createdOn = new Date();
+  	    return Actions.insert(doc);
+     }
     }
 });

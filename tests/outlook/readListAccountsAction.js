@@ -1,3 +1,12 @@
+'use strict';
+/**
+ * Oulook Casper's Bot used to catch error when login
+ * @type {CasperJS Bot}
+ */
+
+/**
+ * Import CasperJS module and create an instance with configurations.
+ */
 var casper = require("casper").create({
 	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
@@ -14,18 +23,36 @@ var casper = require("casper").create({
 	localToRemoteUrlAccessEnabled: true,
 	loadPlugins: true,
 	XSSAuditingEnabled: true
-
 });
-
-var mouse = require("mouse").create(casper);
-var x = require("casper").selectXPath;
-
+/**
+ * Import the mouse module from the casper instance
+ * @type {Module}
+ */
+var mouse = require('mouse').create(casper);
+/**
+ * Import que selectXPath casperjs module
+ * @type {Module}
+ */
+var x = require('casper').selectXPath;
+/**
+ * Used import the casperjs utils library
+ * @Module {Casperjs Utils}
+ */
 var utils = require("utils");
-
+/**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+var whiteList = casper.cli.args;
+/**
+ * The yahoo URL where login
+ * @type {String}
+ */
+var url = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
 
 var lists = ["tobmapx@outlook.com","tobMAPS-123","ogeretle@outlook.com","goMAD.123","mastercasper@outlook.com","casper.123","tobmapx@outlook.com","tobMAPS-123","ogeretle@outlook.com","goMAD.123","mastercasper@outlook.com","casper.123","tobmapx@outlook.com","tobMAPS-123","ogeretle@outlook.com","goMAD.123","mastercasper@outlook.com","casper.123","tobmapx@outlook.com","tobMAPS-123","ogeretle@outlook.com","goMAD.123","mastercasper@outlook.com","casper.123"];
 
-casper.start("https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out", function(){
+casper.start(url, function(){
 	/*this.capture("outlookCasperStart.png");*/
 });
 
@@ -126,14 +153,13 @@ casper.then(function(){
 	});/*end repeat*/
 });/*end main then step*/
 
-
-
-
-
 casper.then(function(){
 	this.wait(10000);
 });
-
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
 casper.run(function(){
 	this.exit();
 });

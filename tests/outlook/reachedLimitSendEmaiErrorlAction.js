@@ -1,10 +1,20 @@
+'use strict';
+/**
+ * Yahoo Casper's Bot that move emails from inbox to spam
+ * @type {CasperJS Bot}
+ */
+
+/**
+ * Import CasperJS module and create an instance with configurations.
+ */
 var casper = require("casper").create({
+	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
-    logLevel: "debug",
+	logLevel: "debug",
 	viewportSize:
 		{
-			width: 1650,
-			height: 931
+			width: 1300,
+			height: 700
 		},
 	 pageSettings:
 	 	{
@@ -15,10 +25,41 @@ var casper = require("casper").create({
 	XSSAuditingEnabled: true
 
 });
+/**
+ * Import the mouse module from the casper instance
+ * @type {Module}
+ */
+var mouse = require('mouse').create(casper);
+/**
+ * Import que selectXPath casperjs module
+ * @type {Module}
+ */
+var x = require('casper').selectXPath;
+/**
+ * Used import the casperjs utils library
+ * @Module {Casperjs Utils}
+ */
+var utils = require("utils");
+/**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+var whiteList = casper.cli.args;
+/**
+ * The yahoo URL where login
+ * @type {String}
+ */
+var url = "https://login.yahoo.com/config/mail?.intl=us&.done=https%3A%2F%2Fmg.mail.yahoo.com%3A443%2Fneo%2Flaunch%3F.rand%3Degtpucj7f6kvm";
+/**
+ * The accounts array is where we save the user and password data we passed in the args when we use the method.
+ * @type {Array}
+ */
+var accounts = [];
+accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
-var mouse = require("mouse").create(casper);
-var x = require("casper").selectXPath;
-
+/**
+ *	Here starts the Bot.
+ */
 casper.start("https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out", function(){
 	/*this.capture("outlookCasperStart.png");*/
 });
@@ -104,6 +145,10 @@ casper.then(function(){
 	this.wait(10000);
 });
 
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
 casper.run(function(){
 	this.die("Exit casper").exit();
 });
