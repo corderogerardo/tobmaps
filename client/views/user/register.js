@@ -12,6 +12,21 @@ Template.register.rendered = function(){
   $('.modal').appendTo("body");
 };
 
+Template.register.onRendered(function(){
+    $('.js-register-form').validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 8
+            }
+        }
+    });
+});
+
 Template.register.events({
   "submit .js-register-form":function(event){
     event.preventDefault();
