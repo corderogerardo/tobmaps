@@ -5,11 +5,10 @@ Meteor.subscribe("actions",function(){
 	return Actions.find().fetch();
 });
 
-Template.scheduleCreateTableBots.helpers({
+Template.scheduleViewTable.helpers({
 	schedules:function(){
 		return Schedules.find().fetch();
 	},
-
 });
 Template.scheduleTableItemsActionsName.helpers({
 	getById:function(botId){

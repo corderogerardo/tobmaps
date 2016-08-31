@@ -3,7 +3,7 @@
 // and the password test123
  Meteor.startup(function () {
     if (!Meteor.users.findOne()){
-      for (var i=1;i<9;i++){
+      for (var i=1;i<3;i++){
         var email = "user"+i+"@test.com";
         var avatar = "ava"+i+".png"
         console.log("creating a user with password 'test123' and username/ email: "+email);

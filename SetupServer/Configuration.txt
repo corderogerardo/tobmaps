@@ -5,7 +5,7 @@
 
 -- Software Stack on Production:
 1. MongoDB Enterprise 3.3.2
-2. Node.js LTS 4.4.7
+2. Node.js LTS 4.5
 2. NodeJS "Forever" module to start application in the background.
 
 STEP 1: Install additional packages for Linux Enterprise Server. This provides the server with the information to complete the next steps.
@@ -15,12 +15,12 @@ sudo yum install -y epel-release yum-utils
 sudo yum-config-manager --enable epel
 yum update -y
 
-STEP 2: Install NodeJS 4.4.7 LTS Version.
+STEP 2: Install NodeJS 4.5 LTS Version.
 DOCUMENTATION: 'https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora'
 
 curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -
 yum -y install nodejs
-# To check the version of nodejs to be 4.4.7 and NPM version.
+# To check the version of nodejs to be 4.5 and NPM version.
 node -v
 npm -v
 # If npm version is 2.15 you need to upgrade NPM

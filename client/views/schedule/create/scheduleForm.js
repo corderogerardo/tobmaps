@@ -1,6 +1,6 @@
 'use strict';
 
-Template.scheduleCreateForm.events({
+Template.scheduleForm.events({
 	"submit .js-form-schedule":function(event){
 		event.preventDefault();
 		var name = $('#nameSchedule').val();
