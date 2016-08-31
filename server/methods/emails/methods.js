@@ -45,4 +45,61 @@ Meteor.methods({
 			return Emails.insert(account);
 		}
 	},
+  addMultiYahoo: function(userId, account){
+		if((this.userId) && (account.email.replace(/.*@/, "") == "yahoo.com") ){
+			return Emails.insert({
+				email: account.email,
+				password: account.password,
+				imap: 'Accessable',
+				typeDomain: account.email.replace(/.*@/, ""),
+				createdOn: (new Date).toTimeString(),
+				createdBy: this.userId,
+			});
+		}
+	},
+	addMultiGmail: function(userId, account){
+		if((this.userId) && (account.email.replace(/.*@/, "") == "gmail.com") ){
+			return Emails.insert({
+				email: account.email,
+				password: account.password,
+				imap: 'Accessable',
+				typeDomain: account.email.replace(/.*@/, ""),
+				createdOn: (new Date).toTimeString(),
+				createdBy: this.userId,
+			});
+		}
+	},
+	addMultiOutlook: function(userId, account){
+		if((this.userId) && (account.email.replace(/.*@/, "") == "outlook.com") ){
+			return Emails.insert({
+				email: account.email,
+				password: account.password,
+				imap: 'Accessable',
+				typeDomain: account.email.replace(/.*@/, ""),
+				createdOn: (new Date).toTimeString(),
+				createdBy: this.userId,
+			});
+		}
+	},
+	addMultiAol: function(userId, account){
+		if((this.userId) && (account.email.replace(/.*@/, "") == "aol.com") ){
+			return Emails.insert({
+				email: account.email,
+				password: account.password,
+				imap: 'Accessable',
+				typeDomain: account.email.replace(/.*@/, ""),
+				createdOn: (new Date).toTimeString(),
+				createdBy: this.userId,
+			});
+		}
+	},
+	addRoles:function(userId){
+    Roles.addUsersToRoles(userId, ['User']);
+  },
+  addUserAccount: function(account){
+		return Accounts.createUser({
+      email: account.email,
+      password: account.password
+    });
+	}
 });
