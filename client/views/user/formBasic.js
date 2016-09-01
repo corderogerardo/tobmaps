@@ -1,4 +1,4 @@
-Template.formBasic.rendered = function(){
+/*Template.formBasic.rendered = function(){
 
     // Initialize i-check plugin
     $('.i-checks').iCheck({
@@ -10,4 +10,4 @@ Template.formBasic.rendered = function(){
     // Fix Bootstrap backdrop issu with animation.css
     $('.modal').appendTo("body");
 
-};
+};*/
