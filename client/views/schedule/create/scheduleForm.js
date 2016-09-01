@@ -2,7 +2,7 @@ Meteor.subscribe("actions");
 Meteor.subscribe("lists");
 Meteor.subscribe("domains");
 
-Template.scheduleForm.helpers({
+Template.schedulesForm.helpers({
 	actions:function(){
 		return Actions.find().map(function(c){
 			return{label:c.name,value:c._id};
@@ -12,7 +12,7 @@ Template.scheduleForm.helpers({
 		return Lists.find({
 			$or:[
 				{
-				typelist:whiteList
+				typelist:'whiteList'
 				}
 			]
 		}).map(function(c){
@@ -23,7 +23,7 @@ Template.scheduleForm.helpers({
 		return Lists.find({
 			$or:[
 				{
-				typelist:blackList
+				typelist:'blackList'
 				}
 			]
 		}).map(function(c){
@@ -33,7 +33,7 @@ Template.scheduleForm.helpers({
 	hours: function(){
 		var arr = [];
 		for(var i =0;i<24;i++){
-			arr.push(i);
+			arr.push({label:i+":00",value:i});
 		}
 		return arr;
 	},
@@ -44,37 +44,5 @@ Template.scheduleForm.helpers({
 			i+=10;
 		}
 		return arr;
-	}
-});
-
-Template.scheduleForm.events({
-	"submit .js-form-schedule":function(event){
-		event.preventDefault();
-		var name = $('#nameSchedule').val();
-		var description = $('#descriptionSchedule').val();
-		var days = [];
-		var hours = [];
-		var actions = [];
-		$('.switch input').each(function(index){
-				days.push($(this).is(":checked"));
-		});
-		var omultiselect = document.querySelector('#scheduleHours');
-		var multiselect = document.querySelector('#actionsBot');
-		hours = omultiselect.selectedItems();
-		actions = multiselect.selectedItems();
-		var awakening = $('#awakening').val();
-		var scheduleForm = {
-			name:name,
-			description:description,
-			days:days,
-			hours:hours,
-			awakening:awakening,
-			actions:actions,
-		};
-
-		Meteor.call('insertSchedule',Session.get('userId'),scheduleForm);
-
-		$('.js-form-schedule').trigger("reset");
-
 	}
 });

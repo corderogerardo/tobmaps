@@ -77,21 +77,12 @@ Meteor.methods({
 	 * @param  {schedule Object} from the scheduleForm form.
 	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
 	 */
-	insertSchedule: function(userId, scheduleForm){
+	insertSchedule: function(schedulef,userId){
 		if(this.userId){
-			Schedules.insert({
-				name:scheduleForm.name,
-				description:scheduleForm.description,
-				days:scheduleForm.days,
-				hours:scheduleForm.hours,
-				awakening:scheduleForm.awakening,
-				actions:scheduleForm.actions,
-				schedulelogged:[''],
-				createdOn:new Date(),
-				createdBy:this.userId,
-			});
+			schedulef.schedulelogged = [''];
+			schedulef.createdOn = new Date();
+			schedulef.createdBy = this.userId;
+			Schedules.insert(schedulef);
 		}
 	},
-
-
 });

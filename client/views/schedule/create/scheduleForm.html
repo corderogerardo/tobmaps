@@ -1,4 +1,4 @@
-<template name="scheduleForm">
+<template name="schedulesForm">
 <!-- Page heading -->
   {{> pageHeading title='Schedule Weekly Cron' }}
 
@@ -11,21 +11,22 @@
               </div>
               <div class="ibox-content">
 	                {{#autoForm collection="Schedules" id="schedulesForm" type="method" meteormethod="insertSchedule"}}
-							    <fieldset>
+							    <fieldset class="col-sm-6">
 							      {{> afQuickField name='name'}}
 							      {{> afQuickField name='description'}}
 
-							      {{> afQuickField name='days' multiple=true tags=true options=optionsDays }}
+							      {{> afQuickField name='days' multiple=true tags=true }}
 
-							      {{> afQuickField name='hours' multiple=true tags=true options=hours value=hours }}
-
+							      {{> afQuickField name='hours' multiple=true tags=true options=hours }}
+							    </fieldset>
+							    <fieldset class="col-sm-6">
 							      {{> afQuickField name='awakening'}}
 
-							      {{> afQuickField name='actions' multiple=true tags=true options=actions value=actions }}
+							      {{> afQuickField name='actions' multiple=true tags=true options=actions }}
 
-										{{> afQuickField name='whitelist' options=whitelist value=whitelist }}
+										{{> afQuickField name='whitelist' options=whitelist }}
 
-										{{> afQuickField name='blacklist' options=blacklist value=blacklist }}
+										{{> afQuickField name='blacklist' options=blacklist }}
 							    </fieldset>
 								   <button type="submit" class="btn btn-primary">Save</button>
 								   <button type="reset" class="btn btn-default">Cancel</button>

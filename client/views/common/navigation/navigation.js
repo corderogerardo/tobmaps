@@ -64,7 +64,7 @@ Template.navigation.events({
   'click .js-show-schedule-create':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("scheduleCreate.show", {_id: Meteor.userId()});
+      Router.go("scheduleFormView.show", {_id: Meteor.userId()});
     }
   },
 })
