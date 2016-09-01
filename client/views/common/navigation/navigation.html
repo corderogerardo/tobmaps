@@ -44,7 +44,7 @@
                     <a href="schedule"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Schedule</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse {{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist' className='in'}}">
                         <li class="{{isActiveRoute regex='graphFlot'}}"><a class="js-show-schedule-view" href="#">View</a></li>
-                        <li class="{{isActiveRoute regex='graphRickshaw'}}"><a href="/schedule/create">Create</a></li>
+                        <li class="{{isActiveRoute regex='graphRickshaw'}}"><a class="js-show-schedule-create" href="#" >Create</a></li>
                     </ul>
                 </li>
                 {{#if isAdminUser 'Admin'}}

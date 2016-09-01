@@ -5,7 +5,7 @@ Meteor.subscribe("domains");
 Template.scheduleForm.helpers({
 	actions:function(){
 		return Actions.find().map(function(c){
-			return{label:c.name,value:c._id}
+			return{label:c.name,value:c._id};
 		});
 	},
 	whitelist:function(){
@@ -16,7 +16,7 @@ Template.scheduleForm.helpers({
 				}
 			]
 		}).map(function(c){
-			return {label:c.listname,value:c._id}
+			return {label:c.listname,value:c._id};
 		});
 	},
 	blacklist:function(){
@@ -27,7 +27,7 @@ Template.scheduleForm.helpers({
 				}
 			]
 		}).map(function(c){
-			return {label:c.listname,value:c._id}
+			return {label:c.listname,value:c._id};
 		});
 	},
 	hours: function(){
