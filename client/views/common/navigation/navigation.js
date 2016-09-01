@@ -10,7 +10,7 @@ Template.navigation.helpers({
         console.log("admin");
         return Roles.userIsInRole(Meteor.user(), ['Admin']);
       }
-      else if(Roles.addUsersToRoles(Meteor.user(), ['User'])){
+      else if(Roles.userIsInRole(Meteor.user(), ['User'])){
         console.log("User");
         return;
       }
