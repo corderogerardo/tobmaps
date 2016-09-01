@@ -3,8 +3,7 @@
 // and the password test123
  Meteor.startup(function () {
  	// bootstrap the admin user if they exist -- You'll be replacing the id later
-	if (Meteor.users.findOne("myQpmPqNZwsYNn6GW"))
-	  Roles.addUsersToRoles("myQpmPqNZwsYNn6GW", ['Admin']);
+
 
 	if (!Meteor.users.findOne()){
       for (var i=1;i<3;i++){
@@ -16,4 +15,18 @@
         	services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
       }
     }
+  var userAdmin = Meteor.users.findOne({
+ 		emails:[{address:"user1@test.com"}],
+ 	});
+ 	var userx = Meteor.users.findOne({
+ 		emails:[{address:"user2@test.com"}],
+ 	});
+ 	console.log(userAdmin);
+ 	console.log(userx);
+	if (userAdmin){
+	  Roles.addUsersToRoles(userAdmin._id, ['Admin']);
+	}
+	if (userx){
+	  Roles.addUsersToRoles(userx._id, ['User']);
+	}
   });
