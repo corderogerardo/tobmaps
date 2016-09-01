@@ -10,17 +10,15 @@ Template.navigation.helpers({
         console.log("admin");
         return Roles.userIsInRole(Meteor.user(), ['Admin']);
       }
-      else if(Roles.userIsInRole(Meteor.user(), ['User'])){
-        console.log("User");
-        return;
+   	},
+    isUser: function() {
+      if(Roles.userIsInRole(Meteor.user(), ['User'])){
+        return Roles.userIsInRole(Meteor.user(), ['User']);
       }
       else {
         console.log("new user");
         Meteor.call("addRoles", Meteor.userId());
       }
-   	},
-    isUser: function() {
-      return Roles.userIsInRole(Meteor.user(), ['User']);
     }
 })
 

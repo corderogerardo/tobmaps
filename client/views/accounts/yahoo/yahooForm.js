@@ -5,6 +5,17 @@
  * @param  {string} acounts and passwords
  * @param  {account} orders the string in mail and password pairs 
  */
+
+Template.yahooForm.onRendered(function(){
+    $('.js-multi-form').validate({
+        rules: {
+            yahhoString: {
+                required: true
+            },
+        }
+    });
+});
+
 Template.yahooForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
