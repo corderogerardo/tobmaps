@@ -7,6 +7,27 @@ Template.topNavbar.rendered = function(){
 
 };
 
+Template.topNavbar.helpers({
+    // check if user is an admin
+    isAdminUser: function() {
+      if(Roles.userIsInRole(Meteor.user(), ['Admin'])){
+        console.log("admin");
+        return Roles.userIsInRole(Meteor.user(), ['Admin']);
+      }
+      else if(Roles.addUsersToRoles(Meteor.user(), ['User'])){
+        console.log("User");
+        return;
+      }
+      else {
+        console.log("new user");
+        Meteor.call("addRoles", Meteor.userId());
+      }
+    },
+    isUser: function() {
+      return Roles.userIsInRole(Meteor.user(), ['User']);
+    }
+})
+
 Template.topNavbar.events({
 
     // Toggle left navigation

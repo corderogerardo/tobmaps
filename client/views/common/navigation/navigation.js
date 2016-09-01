@@ -8,7 +8,7 @@ Template.navigation.helpers({
     isAdminUser: function() {
       if(Roles.userIsInRole(Meteor.user(), ['Admin'])){
         console.log("admin");
-        return Roles.userIsInRole(Meteor.user(), ['Admin']);;
+        return Roles.userIsInRole(Meteor.user(), ['Admin']);
       }
       else if(Roles.addUsersToRoles(Meteor.user(), ['User'])){
         console.log("User");
@@ -18,7 +18,10 @@ Template.navigation.helpers({
         console.log("new user");
         Meteor.call("addRoles", Meteor.userId());
       }
-   	}
+   	},
+    isUser: function() {
+      return Roles.userIsInRole(Meteor.user(), ['User']);
+    }
 })
 
 Template.navigation.events({
@@ -56,6 +59,12 @@ Template.navigation.events({
     event.preventDefault();
     if(Meteor.user()){
       Router.go("scheduleView.show", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-schedule-create':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("scheduleCreate.show", {_id: Meteor.userId()});
     }
   },
 })
