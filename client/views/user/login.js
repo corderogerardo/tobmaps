@@ -24,10 +24,7 @@ Template.loginForm.onRendered(function(){
                       });
                   }
                 } else {
-                    var currentRoute = Router.current().route.getName();
-                    if(currentRoute == "login"){
-                        Router.go("user.show", {_id: Meteor.userId()});
-                    }
+                      Router.go("user.show", {_id: Meteor.userId()});
                 }
             });
         }
