@@ -1,7 +1,16 @@
+'use strict';
+/**
+ * Oulook Casper's Bot used to login into account and move
+ * @type {CasperJS Bot}
+ */
+
+/**
+ * Import CasperJS module and create an instance with configurations.
+ */
 var casper = require("casper").create({
-	clientScripts: ['jquery.min.js'],
+	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
-    logLevel: "debug",
+	logLevel: "debug",
 	viewportSize:
 		{
 			width: 1300,
@@ -15,10 +24,31 @@ var casper = require("casper").create({
 	loadPlugins: true,
 	XSSAuditingEnabled: true
 });
-var mouse = require("mouse").create(casper);
-var x = require("casper").selectXPath;
-
+/**
+ * Import the mouse module from the casper instance
+ * @type {Module}
+ */
+var mouse = require('mouse').create(casper);
+/**
+ * Import que selectXPath casperjs module
+ * @type {Module}
+ */
+var x = require('casper').selectXPath;
+/**
+ * Used import the casperjs utils library
+ * @Module {Casperjs Utils}
+ */
 var utils = require("utils");
+/**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+var whiteList = casper.cli.args;
+/**
+ * The yahoo URL where login
+ * @type {String}
+ */
+var url = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
 
 casper.on('page.error', function(msg, trace) {
    this.echo('Error: ' + msg, 'ERROR');
@@ -28,13 +58,11 @@ casper.on('page.error', function(msg, trace) {
    }
 });
 
-var whitelist = ["outlook.com","yahoo.com","gmail.com"];
-
-casper.start("https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out",function(){
+casper.start(url,function(){
 
 });
 
-casper.thenOpen("https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out",function(){
+casper.thenOpen(url,function(){
 	this.echo("You're in CASPER.THENOPEN");
 		this.fill('form[name="f1"]',
 			{
@@ -123,6 +151,11 @@ casper.then(function(){
 casper.then(function(){
 	this.wait(10000);
 });
+
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
 casper.run(function(){
 	this.exit();
 });

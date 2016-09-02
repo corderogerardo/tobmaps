@@ -2,19 +2,19 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div class="LoginForm">
             <h3>TobMaps</h3>
-            <form class="m-t js-form-login" role="form" action="{{pathFor route='dashboard1'}}">
+        <form class="m-t js-form-login" role="form">
 				<div class="input-group m-b">
 				 	<span class="input-group-addon"><i class="fa fa-user"></i></span>
-				 	<input type="text" placeholder="User" class="form-control" name="email"
+				 	<input type="text" placeholder="User" class="form-control" name="email" id="email"
           required>
 				</div>
 				<div class="input-group m-b">
 					<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-					<input type="password" placeholder="Password" class="form-control" name="password" required>
+					<input type="password" placeholder="Password" class="form-control" name="password" id="password" required>
 				</div>
-                <input type="submit" class="btn btn-primary block full-width m-b" value="login">
-                <a href="#"><small>Forgot password?</small></a>
-            </form>
+       <input type="button" class="btn btn-primary block full-width m-b" id="js-form-login" value="login">
+       <a href="#"><small>Forgot password?</small></a>
+       </form>
             <p class="m-t"> <small>TobMaps &copy; 2016</small> </p>
         </div>
     </div>

@@ -33,5 +33,7 @@ gadicohen:phantomjs
 shell-server
 accounts-password
 themeteorchef:jquery-validation
+natestrauser:select2
+aldeed:autoform-select2
 alanning:roles
 accounts-ui

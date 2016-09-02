@@ -4,11 +4,13 @@ accounts-ui@1.1.9
 accounts-ui-unstyled@1.1.12
 alanning:roles@1.2.15
 aldeed:autoform@5.8.1
+aldeed:autoform-select2@2.0.2
 aldeed:collection2@2.9.1
 aldeed:collection2-core@1.1.1
 aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
+aldeed:template-extension@3.4.3
 allow-deny@1.0.5
 autoupdate@1.2.11
 babel-compiler@6.9.1
@@ -72,6 +74,7 @@ modules-runtime@0.7.6
 momentjs:moment@2.10.6
 mongo@1.1.11
 mongo-id@1.0.5
+natestrauser:select2@4.0.3
 npm-bcrypt@0.9.1
 npm-mongo@1.5.46
 observe-sequence@1.0.12

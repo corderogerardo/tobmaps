@@ -1,6 +1,6 @@
 'use strict';
 
-Template.scheduleViewTable.events({
+Template.schedule_view_table.events({
 	'click .js-active-botone':function(event){
 		console.log('I clicked button one');
 		event.preventDefault();

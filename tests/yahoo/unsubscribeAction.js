@@ -1,11 +1,20 @@
+'use strict';
+/**
+ * Yahoo Casper's Bot that move emails from inbox to spam
+ * @type {CasperJS Bot}
+ */
+
+/**
+ * Import CasperJS module and create an instance with configurations.
+ */
 var casper = require("casper").create({
 	clientScripts: ['jquery.min.js'],
 	verbose: true,
     logLevel: "debug",
 	viewportSize:
 		{
-			width: 1350,
-			height: 1200
+			width: 1300,
+			height: 700
 		},
 	 pageSettings:
 	 	{
@@ -16,27 +25,65 @@ var casper = require("casper").create({
 	XSSAuditingEnabled: true
 
 });
-
+/**
+ * Import the mouse module from the casper instance
+ * @type {Module}
+ */
+var mouse = require('mouse').create(casper);
+/**
+ * Import que selectXPath casperjs module
+ * @type {Module}
+ */
+var x = require('casper').selectXPath;
+/**
+ * Used import the casperjs utils library
+ * @Module {Casperjs Utils}
+ */
 utils = require("utils");
-
-whiteList = ["outlook.com", "yahoo.com"]
-
+/**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+var whiteList = casper.cli.args;
+/**
+ * The yahoo URL where login
+ * @type {String}
+ */
 var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com"
-var config = { accounts : 
-	[
-		{user : "tobmaps@yahoo.com", pwd : "spamBOT-12345678"}
-	]
-};
+/**
+ * The accounts array is where we save the user and password data we passed in the args when we use the method.
+ * @type {Array}
+ */
+var accounts = [];
+accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
-casper.start()
+/**
+ *	Here starts the Bot.
+ */
+casper.start();
 
-config.accounts.forEach(function(account) { 
-
+accounts.forEach(function(account) {
+/**
+	 * Username from email to login
+	 * @type {String}
+	 */
 	var username = account.user;
+	/**
+	 * Password from email to login
+	 * @type {[type]}
+	 */
 	var password = account.pwd;
-	var stopFlag = false;
 
-	casper.thenOpen(url, function() { 
+	/**
+	 * We added a new navigation step with this casperjs function that receive our
+	 * yahoo url
+	 */
+	var stopFlag = false;
+	/**
+	 * We added a new navigation step with this casperjs function that receive our
+	 * yahoo url
+	 */
+	casper.thenOpen(url, function() {
 
 		this.waitForSelector("input[name='username']", function() {
 		  this.sendKeys("input[name='username']", username);
@@ -47,7 +94,7 @@ config.accounts.forEach(function(account) {
 		  this.click("form#mbr-login-form button[type=submit][value='authtype']");
 		  this.wait(6000);
 		});
-        
+
     this.waitForSelector("input[name='passwd']", function() {
 	  	this.sendKeys("input[name='passwd']", password);
 	  	this.wait(2000);
@@ -81,7 +128,7 @@ config.accounts.forEach(function(account) {
 				return ids;
 			});
 		utils.dump(messages);
-		});	
+		});
 
 		casper.then(function(){
 			this.each(messages, function(self, obj){
@@ -89,7 +136,7 @@ config.accounts.forEach(function(account) {
 				self.then(function(){
 					this.each(whiteList, function(self, white){
 						if(obj.email.replace(/.*@/, "") == white){
-							tag = true;	
+							tag = true;
 						}
 					});
 					if (tag == true) {
@@ -99,7 +146,7 @@ config.accounts.forEach(function(account) {
 							this.evaluate(function(){
 								$.each($("div.thread-body a"), function(){
 									if($(this).text() != "unsubscribe"){
-										this.click("div.thread-body a");	
+										this.click("div.thread-body a");
 									}
 								});
 							});
@@ -111,14 +158,14 @@ config.accounts.forEach(function(account) {
 						  	this.wait(5000);
 						  });
 						});
-					}	
+					}
 				});
 			});
 		});
 
 		/**** end ****/
 
-		
+
 		casper.thenOpen(url);
 
 		casper.waitForSelector("div.not-you",function(){
@@ -127,6 +174,12 @@ config.accounts.forEach(function(account) {
 		});
 
 	});
-}); // end for loop
+}); // end for accounts.each loop
 
-casper.run();
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
+casper.run(function(){
+	this.exit();
+});

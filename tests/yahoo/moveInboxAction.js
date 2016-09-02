@@ -1,11 +1,20 @@
+'use strict';
+/**
+ * Yahoo Casper's Bot that move emails from Spam to Inbox
+ * @type {CasperJS Bot}
+ */
+
+/**
+ * Import CasperJS module and create an instance with configurations.
+ */
 var casper = require("casper").create({
 	clientScripts: ['jquery.min.js'],
 	verbose: true,
     logLevel: "debug",
 	viewportSize:
 		{
-			width: 1350,
-			height: 1200
+			width: 1300,
+			height: 700
 		},
 	 pageSettings:
 	 	{
@@ -17,24 +26,63 @@ var casper = require("casper").create({
 
 });
 
+/**
+ * Import the mouse module from the casper instance
+ * @type {Module}
+ */
+var mouse = require('mouse').create(casper);
+/**
+ * Import que selectXPath casperjs module
+ * @type {Module}
+ */
+var x = require('casper').selectXPath;
+/**
+ * Used import the casperjs utils library
+ * @Module {Casperjs Utils}
+ */
 utils = require("utils");
 
-whiteList = ["outlook.com", "yahoo.com"];
-
+/**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+whiteList = casper.cli.args;
+/**
+ * The yahoo URL where login
+ * @type {String}
+ */
 var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com";
-var config = { accounts :
-	[
-		{user : "tobmaps@yahoo.com", pwd : "spamBOT-12345678"}
-	]
-};
+/**
+ * The accounts array is where we save the user and password data we passed in the args when we use the method.
+ * @type {Array}
+ */
+var accounts = [];
+accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
+/**
+ *	Here starts the Bot.
+ */
 casper.start();
 
-config.accounts.forEach(function(account) {
+/**
+ * Iterate the array to process each account saved.
+ */
+accounts.forEach(function(account) {
 
+	/**
+	 * Username from email to login
+	 * @type {String}
+	 */
 	var username = account.user;
+	/**
+	 * Password from email to login
+	 * @type {[type]}
+	 */
 	var password = account.pwd;
-
+	/**
+	 * We added a new navigation step with this casperjs function that receive our
+	 * yahoo url
+	 */
 	casper.thenOpen(url, function() {
 
 		this.waitForSelector("input[name='username']", function() {
@@ -70,6 +118,10 @@ config.accounts.forEach(function(account) {
 		casper.then(function(){
 			messagesSpam = this.evaluate(function(){
 				ids = [];
+				/**
+				 * Jquery.Each function.
+				 * @return {Object}
+				 */
 				$.each($("div.list-view-item"), function(x,y){
 					ids.push({
 						message_id: $(this).attr("id"),
@@ -105,13 +157,18 @@ config.accounts.forEach(function(account) {
 		/**** end ****/
 
 		casper.thenOpen(url);
-
+		/**
+		 * waitForSelector waits for the div.not-you selector associate to logout button.
+		 * then when the button loads we click the logout function
+		 */
 		casper.waitForSelector("div.not-you",function(){
 			this.click("a#login-signout");
 			this.wait(2000);
 		});
 
 	});
-}); // end for loop
+}); // end for each loop
 
-casper.run();
+casper.run(function(){
+	this.exit();
+});
