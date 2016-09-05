@@ -1,9 +1,8 @@
-'use strict';
 /**
  * This render the graph's bots activity to the template
  * @return {Graph rendered} -
  */
-Template.graphScheduleView.rendered = function(){
+Template.schedule_view_graph.rendered = function(){
     // Data and options for charts
     /**
      * The object barOptions holds the internal configurations for the graph. Here you can change the series, lines, axis , color[add a new color per each data], grid.

@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Yahoo Casper's Bot that opens multiple yahoo accounts
  * @type {CasperJS Bot}

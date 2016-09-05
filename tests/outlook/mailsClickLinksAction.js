@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Oulook Casper's Bot used to access on email account and click on several links
  * @type {CasperJS Bot}

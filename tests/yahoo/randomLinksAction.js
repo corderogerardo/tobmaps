@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Yahoo Casper's Bot that click randomly on links in emails
  * @type {CasperJS Bot}

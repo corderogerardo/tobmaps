@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Yahoo Casper's Bot that move emails from Spam to Inbox
  * @type {CasperJS Bot}

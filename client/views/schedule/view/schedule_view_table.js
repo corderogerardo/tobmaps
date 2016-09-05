@@ -1,10 +1,9 @@
-'use strict';
-
 Template.schedule_view_table.events({
 	'click .js-active-botone':function(event){
 		console.log('I clicked button one');
 		event.preventDefault();
-		var command = 'casperjs ../../../../../tests/outlook/readalistofaccountsbot.js --engine=slimerjs --disk-cache=no';
+		var command = 'outlook/moveSpamAction.js';
+
 		Meteor.call('runCasperJS', command, function (error, result) {
 			console.log(error);
 			console.log(result);

@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Oulook Casper's Bot used to catch error when login
  * @type {CasperJS Bot}
