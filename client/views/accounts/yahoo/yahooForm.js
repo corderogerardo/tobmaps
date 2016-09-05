@@ -1,20 +1,25 @@
 'use strict';
+
+/**
+ * validate rules for multiple form
+ */
+
+Template.yahooForm.onRendered(function(){
+  $('.js-multi-form').validate({
+      rules: {
+          yahhoString: {
+              required: true
+          },
+      }
+  });
+});
+
 /**
  * Event that takes a string and separates the pair takes a account and password and stores them in a scheme, 
  * repite the process for each pair and call a RPC
  * @param  {string} acounts and passwords
  * @param  {account} orders the string in mail and password pairs 
  */
-
-Template.yahooForm.onRendered(function(){
-    $('.js-multi-form').validate({
-        rules: {
-            yahhoString: {
-                required: true
-            },
-        }
-    });
-});
 
 Template.yahooForm.events({
 	"submit .js-multi-form":function(event){

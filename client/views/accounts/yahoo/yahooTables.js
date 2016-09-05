@@ -18,3 +18,11 @@ Template.yahooTables.helpers({
 		return Emails.find({createdBy:Meteor.userId(), typeDomain:'yahoo.com'});
 	},
 });
+
+Template.yahooTables.events({
+  'click .js-delete-account':function(){
+    var account_id = this._id;
+    console.log(account_id);
+    Meteor.call('removeEmailYahoo', Meteor.userId(), account_id);
+  },
+})
