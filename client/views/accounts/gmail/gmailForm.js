@@ -1,4 +1,19 @@
 'use strict';
+
+/**
+ * validate rules for multiple form
+ */
+
+Template.gmailForm.onRendered(function(){
+  $('.js-multi-form').validate({
+      rules: {
+          gmailString: {
+              required: true
+          },
+      }
+  });
+});
+
 /**
  * Event that takes a string and separates the pair takes a account and password and stores them in a scheme, 
  * repite the process for each pair and call a RPC
