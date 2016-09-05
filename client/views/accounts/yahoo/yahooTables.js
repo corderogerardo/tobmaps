@@ -24,5 +24,6 @@ Template.yahooTables.events({
     var account_id = this._id;
     console.log(account_id);
     Meteor.call('removeEmailYahoo', Meteor.userId(), account_id);
+    $('.footable').footable();
   },
 })

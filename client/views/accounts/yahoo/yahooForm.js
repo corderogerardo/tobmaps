@@ -10,7 +10,12 @@ Template.yahooForm.onRendered(function(){
           yahhoString: {
               required: true
           },
-      }
+      },
+      messages: {
+        yahhoString: {
+            required: "You must enter an email address and You must enter a password."
+        }
+    }
   });
 });
 
@@ -20,7 +25,6 @@ Template.yahooForm.onRendered(function(){
  * @param  {string} acounts and passwords
  * @param  {account} orders the string in mail and password pairs 
  */
-
 Template.yahooForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
