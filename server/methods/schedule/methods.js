@@ -1,4 +1,3 @@
-'use strict';
 
 var exec = Npm.require('child_process').exec;
 
@@ -29,7 +28,7 @@ var process_exec_sync = function (command) {
  * Meteor methods in server side for schedules
  */
 Meteor.methods({
-	command: function() {
+	command: function(commandAction) {
     var accounts =
     [
       {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
@@ -39,20 +38,20 @@ Meteor.methods({
     for (var i = 0; i < accounts.length; i++) {
         var username = accounts[i]["user"];
         var password = accounts[i]["pwd"];
-        var line = 'casperjs ../../../../../tests/yahoo/moveSpamAction.js yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs';
+        var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
         console.log("In command method", line);
         var Fiber = Npm.require('fibers');
         exec(line, function(error, stdout, stderr) {
           console.log('Command Method', error, stdout, stderr);
           Fiber(function() {
             //Replies.remove({});
-            var replyId = Replies.insert(
+            var botcli = ScheduleLoggers.insert(
               {
                 message: stdout ? JSON.stringify(stdout) : JSON.stringify(stderr),
                 time_exec: (new Date).toTimeString(),
                 domain: "@yahoo.com"
               });
-            return replyId;
+            return botcli;
           }).run();
         });
       };

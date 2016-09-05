@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Outlook Casper's Bot that move emails from inbox to spam
  * @type {CasperJS Bot}
@@ -13,8 +12,8 @@ var casper = require('casper').create({
 	logLevel: 'debug',
 	viewportSize:
 		{
-			width: 1300,
-			height: 700
+			width: 1360,
+			height: 760
 		},
 	 pageSettings:
 	 	{

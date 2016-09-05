@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Outlook Casper's Bot that move emails from inbox to spam
  * @type {CasperJS Bot}

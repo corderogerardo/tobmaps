@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Oulook Casper's Bot used to login into account and move
  * @type {CasperJS Bot}
