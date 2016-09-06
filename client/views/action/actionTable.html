@@ -29,10 +29,9 @@
 										<td class="center">tests/{{isp}}</td>
 										<td class="center">{{typelist}}</td>
 										<td class="center">{{createdOn}}</td>
-										<td class="center">{{#afModal class="btn btn-primary" collection="Actions" operation="update" meteormethod="updateAction" doc=_id}}
-											Update action
-											{{/afModal}}
-											<button class="btn btn-danger js-delete-action" value="{{_id}}" type="button">Delete Action</button>
+										<td class="center">
+											<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-action"
+											value={{_id}}></button>
 										</td>
 									</tr>
 									{{/each}}

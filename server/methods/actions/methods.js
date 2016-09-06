@@ -15,13 +15,13 @@ Meteor.methods({
 			throw new Meteor.Error('not-authorized');
 		}
 		if(this.userId){
-			var userFind = Actions.findOne({name:doc.name});
-			check(userFind._id,String);
+			var actionFind = Actions.findOne({name:doc.name});
+			check(actionFind._id,String);
 			check(doc.name, String);
 			check(doc.description,String);
 			check(doc.isp,String);
 			check(doc.typelist,String);
-				return Actions.update(userFind._id,{$set:{
+				return Actions.update(actionFind._id,{$set:{
 					name:doc.name,
 					description:doc.description,
 					isp:doc.isp,
@@ -35,7 +35,8 @@ Meteor.methods({
 				throw new Meteor.Error('not-authorized');
 			}
 			if(this.userId){
-				Actions.remove(id);
+				check(id,String);
+				Actions.remove({_id:id});
 			}
 		}
 });

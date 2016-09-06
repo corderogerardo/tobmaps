@@ -1,27 +1,26 @@
 <template name="listsForm">
 	<!-- Page heading -->
-  {{> pageHeading title='Lists Form' }}
-
+	{{> pageHeading title='Lists Form' }}
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
-      <div class="col-lg-12">
-          <div class="ibox float-e-margins">
-              <div class="ibox-title">
-                  <h5>Form to register Lists</h5>
-              </div>
-              <div class="ibox-content">
-	                {{#autoForm collection="Lists" id="listsForm" type="method" meteormethod="insertList"}}
-							    <fieldset>
-							      {{> afQuickField name='listname'}}
-							      {{> afQuickField name='typelist'}}
-							      {{> afQuickField name='domains' multiple=true tags=true options=listDomains }}
-							    </fieldset>
-								   <button type="submit" class="btn btn-primary">Save</button>
-								   <button type="reset" class="btn btn-default">Cancel</button>
-						  		{{/autoForm}}
-              </div>
-          </div>
-      </div>
-  	</div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Form to register Lists</h5>
+					</div>
+					<div class="ibox-content">
+						{{#autoForm collection="Lists" id="listsForm" type="method" meteormethod="insertList"}}
+						<fieldset>
+							{{> afQuickField name='listname'}}
+							{{> afQuickField name='typelist'}}
+							{{> afQuickField name='domains' multiple=true tags=true options=listDomains }}
+						</fieldset>
+						<button type="submit" class="btn btn-primary">Save</button>
+						<button type="reset" class="btn btn-default">Cancel</button>
+						{{/autoForm}}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

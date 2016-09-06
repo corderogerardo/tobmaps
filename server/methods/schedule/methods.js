@@ -3,9 +3,9 @@ var exec = Npm.require('child_process').exec;
 
 var process_exec_sync = function (command) {
 	 // Load future from fibers
-  var Future = Npm.require("fibers/future");
-  // Load exec
-  var child = Npm.require("child_process");
+	 var Future = Npm.require("fibers/future");
+	// Load exec
+	var child = Npm.require("child_process");
 	// Create new future
 	var future = new Future();
 	// Run command synchronous
@@ -18,7 +18,7 @@ var process_exec_sync = function (command) {
 		}
 		// return stdout
 		result.stdout = stdout;
-			future.return(result);
+		future.return(result);
 	});
 	// wait for future
 	return future.wait();
@@ -27,36 +27,36 @@ var process_exec_sync = function (command) {
 /**
  * Meteor methods in server side for schedules
  */
-Meteor.methods({
+ Meteor.methods({
 	command: function(commandAction) {
-    var accounts =
-    [
-      {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-      {user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"}
-    ];
+		var accounts =
+		[
+		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
+		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"}
+		];
 
-    for (var i = 0; i < accounts.length; i++) {
-        var username = accounts[i]["user"];
-        var password = accounts[i]["pwd"];
-        var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
-        console.log("In command method", line);
-        var Fiber = Npm.require('fibers');
-        exec(line, function(error, stdout, stderr) {
-          console.log('Command Method', error, stdout, stderr);
-          Fiber(function() {
-            //Replies.remove({});
-            var botcli = ScheduleLoggers.insert(
-              {
-                message: stdout ? JSON.stringify(stdout) : JSON.stringify(stderr),
-                time_exec: (new Date).toTimeString(),
-                domain: "@yahoo.com"
-              });
-            return botcli;
-          }).run();
-        });
-      };
-    },
-    runCasperJS: function(command) {
+		for (var i = 0; i < accounts.length; i++) {
+			var username = accounts[i]["user"];
+			var password = accounts[i]["pwd"];
+			var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
+			console.log("In command method", line);
+			var Fiber = Npm.require('fibers');
+			exec(line, function(error, stdout, stderr) {
+				console.log('Command Method', error, stdout, stderr);
+				Fiber(function() {
+						//Replies.remove({});
+						var botcli = ScheduleLoggers.insert(
+						{
+							message: stdout ? JSON.stringify(stdout) : JSON.stringify(stderr),
+							time_exec: (new Date).toTimeString(),
+							domain: "@yahoo.com"
+						});
+						return botcli;
+					}).run();
+			});
+		};
+	},
+	runCasperJS: function(command) {
 		// This method call won't return immediately, it will wait for the
 		// asynchronous code to finish, so we call unblock to allow this client
 		// to queue other method calls (see Meteor docs)
@@ -76,12 +76,32 @@ Meteor.methods({
 	 * @param  {schedule Object} from the scheduleForm form.
 	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
 	 */
-	insertSchedule: function(schedulef,userId){
+	 insertSchedule: function(schedulef){
+		if(!this.userId){
+			throw new Meteor.Error('not-authorized');
+		}
 		if(this.userId){
+			check(schedulef.name,String);
+			check(schedulef.description,String);
+			check(schedulef.days,Array);
+			check(schedulef.hours,Array);
+			check(schedulef.awakening,Number);
+			check(schedulef.actions,Array);
+			check(schedulef.whitelist,String);
+			check(schedulef.blacklist,String);
 			schedulef.schedulelogged = [''];
 			schedulef.createdOn = new Date();
 			schedulef.createdBy = this.userId;
 			Schedules.insert(schedulef);
 		}
-	},
-});
+	 },
+	 removeSchedule:function(schedule_id){
+		if(!this.userId){
+			throw new Meteor.Error('not-authorized');
+		}
+		if(this.userId){
+			check(schedule_id,String);
+			return Schedules.remove(schedule_id);
+		}
+	 },
+	});
