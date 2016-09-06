@@ -1,5 +1,4 @@
 <template name="actionTable">
-	{{> autoformModals}}
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
 			<div class="col-lg-12">
@@ -16,29 +15,27 @@
 										<th>Description</th>
 										<th>ISP</th>
 										<th>Type of List Needed.</th>
-										<th>Date of creation.</th>
 										<th>Update-Delete.</th>
 									</tr>
 								</thead>
 								<tbody>
 									<!--	Data to be loaded from Collection-->
-									{{#each actions}}
+									{{#each actionsdata}}
 									<tr class="gradeX">
-										<td>{{name}}</td>
-										<td class="center">{{description}}</td>
-										<td class="center">tests/{{isp}}</td>
-										<td class="center">{{typelist}}</td>
-										<td class="center">{{createdOn}}</td>
+										<td>{{> editableText collection="actions" field="name" userCanEdit=userCanEdit}}</td>
+										<td class="center">{{> editableText collection="actions" field="description" userCanEdit=userCanEdit}}</td>
+										<td class="center">tests/{{> editableText collection="actions" field="isp" userCanEdit=userCanEdit}}</td>
+										<td class="center">{{> editableText collection="actions" field="typelist" userCanEdit=userCanEdit}}</td>
 										<td class="center">
 											<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-action"
-											value={{_id}}></button>
+											></button>
 										</td>
 									</tr>
 									{{/each}}
 								</tbody>
 								<tfoot>
 									<tr>
-										<th colspan="6">Total Actions: {{actions.length}}
+										<th colspan="6">Total Actions: {{actionsdata.length}}
 										</th>
 									</tr>
 								</tfoot>

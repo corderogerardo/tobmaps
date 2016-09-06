@@ -1,8 +1,11 @@
 Meteor.subscribe("actions");
 
 Template.actionTable.helpers({
-	actions:function(){
+	actionsdata:function(){
 		return Actions.find().fetch();
+	},
+	userCanEdit : function() {
+		return this.userId === Meteor.userId();
 	}
 });
 
