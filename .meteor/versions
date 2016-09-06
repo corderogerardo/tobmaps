@@ -15,6 +15,9 @@ allow-deny@1.0.5
 autoupdate@1.2.11
 babel-compiler@6.9.1
 babel-runtime@0.1.11
+babrahams:editable-text@0.8.24
+babrahams:editable-text-wysiwyg@0.5.24
+babrahams:editable-text-wysiwyg-bootstrap-3@0.5.24
 base64@1.0.9
 binary-heap@1.0.9
 blaze@2.1.8
@@ -26,6 +29,7 @@ caching-html-compiler@1.0.6
 callback-hook@1.0.9
 check@1.2.3
 coffeescript@1.1.4
+dburles:mongo-collection-instances@0.3.5
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.6
@@ -33,6 +37,7 @@ ddp-rate-limiter@1.0.5
 ddp-server@1.2.10
 deps@1.0.12
 diff-sequence@1.0.6
+djedi:sanitize-html@1.11.3
 ecmascript@0.5.8
 ecmascript-runtime@0.3.14
 ejson@1.0.12
@@ -41,6 +46,7 @@ fastclick@1.0.12
 fortawesome:fontawesome@4.5.0
 gadicohen:phantomjs@0.0.2
 geojson-utils@1.0.9
+gwendall:body-events@0.1.6
 hot-code-push@1.0.4
 html-tools@1.0.10
 htmljs@1.0.10
@@ -55,6 +61,7 @@ iron:middleware-stack@1.1.0
 iron:router@1.0.13
 iron:url@1.0.11
 jquery@1.11.9
+lai:collection-extensions@0.2.1_1
 launch-screen@1.0.12
 ldk:casperjs@0.1.8
 less@2.7.5
