@@ -65,4 +65,22 @@ Template.navigation.events({
       Router.go("scheduleFormView.show", {_id: Meteor.userId()});
     }
   },
+  'click .js-show-actions':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("actions.show", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-domains':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("domains.show", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-lists':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("lists.show", {_id: Meteor.userId()});
+    }
+  },
 })
