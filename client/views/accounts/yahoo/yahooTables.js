@@ -1,6 +1,6 @@
 /* Initialize fooTable*/
 Template.yahooTables.onRendered(function(){
-  $('.footable').footable();
+	$('.footable').footable();
 });
 
 /* Subscribe to read data */
@@ -10,7 +10,7 @@ Meteor.subscribe("emails", function(){
 
 /**
  * Summary The subscribe Meteor Event to filter data that will be passed to template using helpers methods
- * @param  {[function]} 
+ * @param  {[function]}
  * @return {[emails] (Query projection)}
  */
 Template.yahooTables.helpers({

@@ -2,6 +2,7 @@ Meteor.subscribe("actions");
 Meteor.subscribe("lists");
 Meteor.subscribe("domains");
 
+
 Template.schedulesForm.helpers({
 	actions:function(){
 		return Actions.find().map(function(c){

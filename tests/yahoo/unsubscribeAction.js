@@ -6,102 +6,102 @@
 /**
  * Import CasperJS module and create an instance with configurations.
  */
-var casper = require("casper").create({
+ var casper = require("casper").create({
 	clientScripts: ['jquery.min.js'],
 	verbose: true,
-    logLevel: "debug",
+	logLevel: "debug",
 	viewportSize:
-		{
-			width: 1300,
-			height: 700
-		},
-	 pageSettings:
-	 	{
+	{
+		width: 1300,
+		height: 700
+	},
+	pageSettings:
+	{
 		userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11"
-		},
+	},
 	localToRemoteUrlAccessEnabled: true,
 	loadPlugins: true,
 	XSSAuditingEnabled: true
 
-});
+ });
 /**
  * Import the mouse module from the casper instance
  * @type {Module}
  */
-var mouse = require('mouse').create(casper);
+ var mouse = require('mouse').create(casper);
 /**
  * Import que selectXPath casperjs module
  * @type {Module}
  */
-var x = require('casper').selectXPath;
+ var x = require('casper').selectXPath;
 /**
  * Used import the casperjs utils library
  * @Module {Casperjs Utils}
  */
-utils = require("utils");
+ utils = require("utils");
 /**
  *	We take the args we passed from meteorjs app.
  * @Args {args}
  */
-var whiteList = casper.cli.args;
+ var whiteList = casper.cli.args;
 /**
  * The yahoo URL where login
  * @type {String}
  */
-var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com"
+ var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com"
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
  */
-var accounts = [];
-accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
+ var accounts = [];
+ accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
 /**
  *	Here starts the Bot.
  */
-casper.start();
+ casper.start();
 
-accounts.forEach(function(account) {
+ accounts.forEach(function(account) {
 /**
 	 * Username from email to login
 	 * @type {String}
 	 */
-	var username = account.user;
+	 var username = account.user;
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
-	var password = account.pwd;
+	 var password = account.pwd;
 
 	/**
 	 * We added a new navigation step with this casperjs function that receive our
 	 * yahoo url
 	 */
-	var stopFlag = false;
+	 var stopFlag = false;
 	/**
 	 * We added a new navigation step with this casperjs function that receive our
 	 * yahoo url
 	 */
-	casper.thenOpen(url, function() {
+	 casper.thenOpen(url, function() {
 
 		this.waitForSelector("input[name='username']", function() {
-		  this.sendKeys("input[name='username']", username);
-		  this.wait(1000);
+			this.sendKeys("input[name='username']", username);
+			this.wait(1000);
 		});
 
 		this.waitForSelector("form#mbr-login-form button[type=submit][value='authtype']", function() {
-		  this.click("form#mbr-login-form button[type=submit][value='authtype']");
-		  this.wait(6000);
+			this.click("form#mbr-login-form button[type=submit][value='authtype']");
+			this.wait(6000);
 		});
 
-    this.waitForSelector("input[name='passwd']", function() {
-	  	this.sendKeys("input[name='passwd']", password);
-	  	this.wait(2000);
+		this.waitForSelector("input[name='passwd']", function() {
+			this.sendKeys("input[name='passwd']", password);
+			this.wait(2000);
 		});
 
 		this.waitForSelector("form#mbr-login-form button[name='signin']", function() {
-		  this.click("form#mbr-login-form button[name='signin']");
-		  this.wait(2000);
+			this.click("form#mbr-login-form button[name='signin']");
+			this.wait(2000);
 		});
 
 
@@ -109,9 +109,9 @@ accounts.forEach(function(account) {
 
 		casper.then(function(){
 			this.waitForText("Buzón", function() {
-		  	this.clickLabel("Buzón");
-		  	this.wait(2000);
-		  });
+				this.clickLabel("Buzón");
+				this.wait(2000);
+			});
 		});
 
 		var messages;
@@ -126,7 +126,7 @@ accounts.forEach(function(account) {
 				});
 				return ids;
 			});
-		utils.dump(messages);
+			utils.dump(messages);
 		});
 
 		casper.then(function(){
@@ -153,9 +153,9 @@ accounts.forEach(function(account) {
 						});
 						casper.then(function(){
 							this.waitForText("Buzón", function() {
-						  	this.clickLabel("Buzón");
-						  	this.wait(5000);
-						  });
+								this.clickLabel("Buzón");
+								this.wait(5000);
+							});
 						});
 					}
 				});
@@ -172,13 +172,13 @@ accounts.forEach(function(account) {
 			this.wait(2000);
 		});
 
-	});
+	 });
 }); // end for accounts.each loop
 
 /**
  * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
  * calling this method is mandatory in order to run the Casper navigation suite.
  */
-casper.run(function(){
+ casper.run(function(){
 	this.exit();
-});
+ });

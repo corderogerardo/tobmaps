@@ -12,24 +12,27 @@
 								<thead>
 									<tr>
 										<th>Domain name</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<!--Data to be loaded from Collection-->
-									{{#each domains}}
+									{{#each domainsData}}
 									<tr class="gradeX">
-										<td><span class="label label-primary">{{domain}}</span></td>
+										<td><span class="label">{{> editableText collection="domains" field="domain" userCanEdit=userCanEdit}}</span></td>
+										<th>
+											<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-domain" type="button"></button>
+											</th>
 									</tr>
 									{{/each}}
 								</tbody>
 								<tfoot>
 									<tr>
-										<th colspan="3">Total Domains: {{domains.length}} </th>
+										<th colspan="3">Total Domains: {{domainsData.length}} </th>
 									</tr>
 								</tfoot>
 							</table>
 						</div>
-
 					</div>
 				</div>
 			</div>

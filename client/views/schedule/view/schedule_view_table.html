@@ -1,60 +1,53 @@
 <template name="schedule_view_table">
-
-    <!-- Page heading -->
-    {{> pageHeading title='Actions/Bots Accounts Data tables' category='Schedule/view' }}
-
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Actions/Bots Accounts Data tables</h5>
-                    </div>
-                    <div class="ibox-content">
-
-                        <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example" >
-                            <thead>
-                            <tr>
-                                <th>Action/Bot Account</th>
-                                <th>Next Activation</th>
-                                <th>Action to be done</th>
-                                 <th>Active now to test</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-<!--
- 	Data to be loaded from Collection
--->
-                            <tr class="gradeX">
-                                <td>test@yahoo.com</td>
-                                <td>4am
-                                </td>
-                                <td>Open emails</td>
-                                <td><button type="button" class="btn btn-primary js-active-botone">Active now</button></td>
-
-                            </tr>
-                            <tr>
-                                <td>tobmaps@yahoo.com</td>
-                                <td class="center">5am</td>
-                                <td class="center">Move messages to Inbox</td>
-                                <td><button type="button" class="btn btn-primary js-active-bottwo">Active now</button></td>
-
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Total bot accounts: </th>
-                                <th>Total time use: </th>
-                                <th colspan="2">Total actions executed: </th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Page heading -->
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>Schedules and their actions.</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="table-responsive">
+							<table class="table table-striped table-bordered table-hover dataTables-example" >
+								<thead>
+									<tr>
+										<th>Schedule name</th>
+										<th>Schedule description</th>
+										<th>Activations</th>
+										<th>Actions to be done</th>
+										<th>Active now to test</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!--Data to be loaded from Collection-->
+									<tr class="gradeX">
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><button type="button" class="btn btn-primary js-active-botone">Active now</button></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><button type="button" class="btn btn-primary js-active-bottwo">Active now</button></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<th colspan="2">Total Schedules: </th>
+										<th>Total time to use: </th>
+										<th colspan="2">Total actions executed: </th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
