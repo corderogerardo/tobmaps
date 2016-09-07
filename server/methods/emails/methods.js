@@ -9,15 +9,6 @@ Meteor.methods({
 	 * @param  {Email Object} from the email form.
 	 * @return {Boolean} Return true if the email was insected correctly, false if does not.
 	 */
-	addAEmailYahoo: function(account){
-		if((this.userId) && (account.email.replace(/.*@/, "") == "yahoo.com") ){
-			account.imap = 'Accessable';
-			account.typeDomain = account.email.replace(/.*@/, ""); 
-			account.createdOn = (new Date).toTimeString();
-			account.createdBy = this.userId;
-			return Emails.insert(account);
-		}
-	},
 	addAEmailAol: function(account){
 		if((this.userId) && (account.email.replace(/.*@/, "") == "aol.com") ){
 			account.imap = 'Accessable';
@@ -27,25 +18,10 @@ Meteor.methods({
 			return Emails.insert(account);
 		}
 	},
-	addAEmailGmail: function(account){
-		if((this.userId) && (account.email.replace(/.*@/, "") == "gmail.com") ){
-			account.imap = 'Accessable';
-			account.typeDomain = account.email.replace(/.*@/, ""); 
-			account.createdOn = (new Date).toTimeString();
-			account.createdBy = this.userId;
-			return Emails.insert(account);
+  addAEmailYahoo: function(userId, account){
+  	if(! this.userId) {
+				throw new Meteor.Error('not-authorized');
 		}
-	},
-	addAEmailOutlook: function(account){
-		if((this.userId) && (account.email.replace(/.*@/, "") == "outlook.com") ){
-			account.imap = 'Accessable';
-			account.typeDomain = account.email.replace(/.*@/, ""); 
-			account.createdOn = (new Date).toTimeString();
-			account.createdBy = this.userId;
-			return Emails.insert(account);
-		}
-	},
-  addMultiYahoo: function(userId, account){
 		if((this.userId) && (account.email.replace(/.*@/, "") == "yahoo.com") ){
 			return Emails.insert({
 				email: account.email,
@@ -55,9 +31,14 @@ Meteor.methods({
 				createdOn: (new Date).toTimeString(),
 				createdBy: this.userId,
 			});
+		} else {
+			throw new Meteor.Error(account.email);
 		}
 	},
-	addMultiGmail: function(userId, account){
+	addAEmailGmail: function(userId, account){
+		if(! this.userId) {
+				throw new Meteor.Error('not-authorized');
+		}
 		if((this.userId) && (account.email.replace(/.*@/, "") == "gmail.com") ){
 			return Emails.insert({
 				email: account.email,
@@ -67,9 +48,14 @@ Meteor.methods({
 				createdOn: (new Date).toTimeString(),
 				createdBy: this.userId,
 			});
+		} else {
+			throw new Meteor.Error(account.email);
 		}
 	},
-	addMultiOutlook: function(userId, account){
+	addAEmailOutlook: function(userId, account){
+		if(! this.userId) {
+				throw new Meteor.Error('not-authorized');
+		}
 		if((this.userId) && (account.email.replace(/.*@/, "") == "outlook.com") ){
 			return Emails.insert({
 				email: account.email,
@@ -79,9 +65,14 @@ Meteor.methods({
 				createdOn: (new Date).toTimeString(),
 				createdBy: this.userId,
 			});
+		} else {
+			throw new Meteor.Error(account.email);
 		}
 	},
 	addMultiAol: function(userId, account){
+		if(! this.userId) {
+				throw new Meteor.Error('not-authorized');
+		}
 		if((this.userId) && (account.email.replace(/.*@/, "") == "aol.com") ){
 			return Emails.insert({
 				email: account.email,
@@ -91,6 +82,8 @@ Meteor.methods({
 				createdOn: (new Date).toTimeString(),
 				createdBy: this.userId,
 			});
+		} else {
+			throw new Meteor.Error(account.email);
 		}
 	},
 	 /* removeEmail: Method that validate if there is an user logged to insert an email to it's the collection.
@@ -99,6 +92,9 @@ Meteor.methods({
 	 * @return {Boolean} Return true if the email was insected correctly, false if does not.
 	 */
 	removeEmailYahoo: function(userId, account_id){
+		if(! this.userId) {
+				throw new Meteor.Error('not-authorized');
+		}
 		if(this.userId){
     	Emails.remove({"_id":account_id});
     }

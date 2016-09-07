@@ -36,6 +36,7 @@ Template.register.onRendered(function(){
                 });
             }
         } else {
+            toastr.success('You have create a new account.','User added!');
             $('.js-register-form').trigger('reset');
         }
       });
