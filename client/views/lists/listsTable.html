@@ -19,12 +19,12 @@
 								</thead>
 								<tbody>
 									<!--	Data to be loaded from Collection-->
-									{{#each lists}}
+									{{#each listsData}}
 									<tr class="gradeX">
-										<td>{{listname}}</td>
+										<td>{{> editableText collection="lists" field="listname" userCanEdit=userCanEdit}}</td>
 										<td>{{typelist}}</td>
 										<td>{{#each domains}}
-											<span class="label label-primary">{{this}}</span>
+											<span class="label">{{this}}</span>
 											{{/each }}</td>
 										<td>
 											<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-list" type="button"></button></td>
@@ -33,7 +33,7 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<th colspan="4">Total Lists: {{lists.length}} </th>
+											<th colspan="4">Total Lists: {{listsData.length}} </th>
 										</tr>
 									</tfoot>
 								</table>

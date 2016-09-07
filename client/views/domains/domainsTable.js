@@ -1,8 +1,15 @@
 Meteor.subscribe("domains");
 
 Template.domainsTable.helpers({
-	domains:function(){
+	domainsData:function(){
 		return Domains.find().fetch();
+	},
+	userCanEdit : function() {
+		if(Meteor.user()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 });
 

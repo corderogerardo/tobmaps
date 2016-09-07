@@ -1,9 +1,16 @@
 Meteor.subscribe("lists");
 
 Template.listsTable.helpers({
-	lists:function(){
+	listsData:function(){
 		return Lists.find().fetch();
 	},
+	userCanEdit : function() {
+		if(Meteor.user()){
+			return true;
+		}else{
+			return false;
+		}
+	}
 });
 
 Template.listsTable.events({
