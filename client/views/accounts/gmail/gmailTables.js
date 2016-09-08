@@ -45,5 +45,4 @@ Template.gmailTables.events({
         }
       });
   },
-})
 });

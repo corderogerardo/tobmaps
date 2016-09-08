@@ -90,10 +90,10 @@ Template.yahooForm.events({
 			/**
 			 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
 			 */
-			Meteor.call('addAEmailYahoo',Session.get('userId'),account, function(err,res){
+			Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err,res){
         if(err){
           console.log("Error "+err);
-          toastr.error('The account is invalid: '+err,'Account could not be added!');
+          toastr.error('The account is invalid '+err,'Account could not be added!');
         }else{
           console.log("Success "+res);
           toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
