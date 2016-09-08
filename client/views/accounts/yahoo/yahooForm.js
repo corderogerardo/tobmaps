@@ -78,7 +78,7 @@ $.validator.setDefaults({
 Template.yahooForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
-		var string = $('[id=yahhoString]').val();
+		var string = $('[name=yahhoString]').val();
 		var array = string.split(",");
     for (var i = 0; i < array.length; i=i+2) {
 			var email = array[i];
@@ -93,7 +93,7 @@ Template.yahooForm.events({
 			Meteor.call('addAEmailYahoo',Session.get('userId'),account, function(err,res){
         if(err){
           console.log("Error "+err);
-          toastr.error('The domain is invalid in this email: '+err,'Account could not be added!');
+          toastr.error('The account is invalid: '+err,'Account could not be added!');
         }else{
           console.log("Success "+res);
           toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
