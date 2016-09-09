@@ -1,5 +1,7 @@
-<template name="aolTables">
+<template name="usersTable">
     <!-- Page heading -->
+    {{> pageHeading title='View Users List' category='Users' }}
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
@@ -11,21 +13,20 @@
                       <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="5">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Email</th>
-                            <th>Password</th>
-                            <th>Domain</th>
-                            <th>IMAP</th>
+                            <th>Rol</th>
                         </tr>
                         </thead>
                         <tbody>
-                          {{#each emails}}
+                          {{#each accounts}}
                             <tr>
-                              <td class="text-left">{{> editableText collection="emails" field="email" userCanEdit=userCanEdit }}
+                              <td class="text-left">{{_id}}
                               </td>
-                              <td class="text-left">{{> editableText collection="emails" field="password"}}
+                              <td class="text-left">{{emails.[0].address}}
                               </td>
-                              <td class="text-left">{{typeDomain}}</td>
-                              <td class="text-left">{{imap}}</td>
+                              <td class="text-left">{{roles.[0]}}
+                              </td>
                               <td class="text-left">
                                 <a class="js-delete-account" href="#"><i class="fa fa-trash-o text-danger">
                                 </i></a>

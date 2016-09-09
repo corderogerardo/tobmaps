@@ -9,7 +9,7 @@ Meteor.methods({
 	 * @param  {Email Object} from the email form.
 	 * @return {Boolean} Return true if the email was insected correctly, false if does not.
 	 */
-	addAEmailAol: function(account){
+	/*addAEmailAol: function(account){
 		if((this.userId) && (account.email.replace(/.*@/, "") == "aol.com") ){
 			account.imap = 'Accessable';
 			account.typeDomain = account.email.replace(/.*@/, ""); 
@@ -17,7 +17,7 @@ Meteor.methods({
 			account.createdBy = this.userId;
 			return Emails.insert(account);
 		}
-	},
+	},*/
   addAEmailYahoo: function(userId, account){
   	if(! this.userId) {
 				throw new Meteor.Error('not-authorized');
@@ -69,7 +69,7 @@ Meteor.methods({
 			throw new Meteor.Error(account.email);
 		}
 	},
-	addMultiAol: function(userId, account){
+	addAEmailAol: function(userId, account){
 		if(! this.userId) {
 				throw new Meteor.Error('not-authorized');
 		}

@@ -29,6 +29,12 @@ Template.navigation.events({
       Router.go("register.show", {_id: Meteor.userId()});
     }
   },
+  'click .js-show-users-view':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("usersView.show", {_id: Meteor.userId()});
+    }
+  },
   'click .js-show-yahoo':function(event){
     event.preventDefault();
     if(Meteor.user()){
