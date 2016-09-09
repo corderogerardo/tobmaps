@@ -39,17 +39,18 @@
  * @Module {Casperjs Utils}
  */
  var utils = require("utils");
-/**
- *	We take the args we passed from meteorjs app.
- * @Args {args}
- */
- var whiteList = casper.cli.args;
+
 /**
  * The yahoo URL where login
  * @type {String}
  */
  var url = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
 
+	 /**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+ var whiteList = casper.cli.args;
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
@@ -74,96 +75,99 @@
 	 */
 	 var password = account.pwd;
 
-	 casper.thenOpen(url,function(){
-		this.echo(username+' '+password);
-		this.echo("You're in CASPER.THENOPEN");
-		this.fill('form[name="f1"]',
-		{
-			loginfmt: username,
-			passwd: password
-		},true);
-		this.wait(10000);
-	 });
+ casper.thenOpen(url,function(){
+	this.echo(username+' '+password);
+	this.echo("You're in CASPER.THENOPEN");
+	this.echo("The white list passed as arguments should show: "+whiteList);
+	this.fill('form[name="f1"]',
+	{
+		loginfmt: username,
+		passwd: password
+	},true);
+	this.wait(10000);
+ });
 
-	 casper.then(function(){
-		this.waitForText("Junk Email", function(){
-			this.clickLabel("Junk Email");
+ casper.then(function(){
+	this.waitForText("Junk Email", function(){
+		this.clickLabel("Junk Email");
+	});
+	this.wait(5000);
+	/*this.capture("ClickToJunt");*/
+ });
+
+ var ids = [];
+ var results;
+ var emails=[];
+ var email;
+ var countOutJunk=0;
+ casper.then(function(){
+	results = this.evaluate(function(){
+		ids = [];
+		$.each($("div[autoid='_lvv_m'] > div > div > div > div > div"),function(x,y){
+			ids.push($(y).attr("id"));
 		});
-		this.wait(5000);
-		/*this.capture("ClickToJunt");*/
-	 });
+		return ids;
+	});
+	utils.dump(results);
+ });
 
-	 var ids = [];
-	 var results;
-	 var emails=[];
-	 var email;
-	 var countOutJunk=0;
-	 casper.then(function(){
-		results = this.evaluate(function(){
-			ids = [];
-			$.each($("div[autoid='_lvv_m'] > div > div > div > div > div"),function(x,y){
-				ids.push($(y).attr("id"));
-			});
-			return ids;
+ casper.then(function(){
+	this.echo("Mails ID: "+JSON.stringify(results));
+ });
+ casper.then(function(){
+	this.each(results, function iterateids(self,id){
+		self.then(function thenIterate(){
+			this.echo('div[id="'+id+'"] > div');
+			this.click('div[id="'+id+'"] > div');
+			/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
 		});
-		utils.dump(results);
-	 });
+		self.wait(5000);
+		self.then(function(){
+			this.mouse.click('span[class="bidi allowTextSelection"]');
+			this.wait(5000);
+			email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+			email = email.slice(18,email.length);
 
-	 casper.then(function(){
-		this.echo("Mails ID: "+JSON.stringify(results));
-	 });
-	 casper.then(function(){
-		this.each(results, function iterateids(self,id){
-			self.then(function thenIterate(){
-				this.echo('div[id="'+id+'"] > div');
-				this.click('div[id="'+id+'"] > div');
-				/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
-			});
-			self.wait(5000);
-			self.then(function(){
+			this.waitForSelector("div[role='document']",function(){
 				this.mouse.click('span[class="bidi allowTextSelection"]');
 				this.wait(5000);
 				email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
 				email = email.slice(18,email.length);
-
-				this.waitForSelector("div[role='document']",function(){
-					this.mouse.click('span[class="bidi allowTextSelection"]');
-					this.wait(5000);
-					email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
-					email = email.slice(18,email.length);
-					emails.push(email);
-					domain = email.replace(/.*@/, "");
-					this.wait(2000);
-					this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails);
-					this.wait(5000);
-					if(whitelist.indexOf(domain)!=-1){
-						this.clickLabel("Not junk");
-						countOutJunk++;
-					}
-				});
-
+				emails.push(email);
+				domain = email.replace(/.*@/, "");
+				this.wait(2000);
+				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " WhiteList: "+whiteList);
+				this.wait(5000);
+				/*whiteList = whiteList.split(",");*/
+				this.echo("WhiteList of casper args: "+ whiteList);
+				if(whiteList.indexOf(domain)!=-1){
+					this.clickLabel("Not junk");
+					countOutJunk++;
+				}
 			});
-		});
-	 });
 
-	 casper.then(function(){
-		this.echo("How many emails were in junk? "+emails.length+" Mails out of Junk: "+countOutJunk);
-		this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
-			this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
 		});
-	 });
-	 casper.then(function(){
-		this.wait(1000);
-	 });
-	 casper.then(function(){
-		this.waitForText("Sign out",function(){
-			this.clickLabel("Sign out");
-		});
-	 });
+	});
+ });
 
-	 casper.then(function(){
-		this.wait(10000);
-	 });
+ casper.then(function(){
+	this.echo("How many emails were in junk? "+emails.length+" Mails out of Junk: "+countOutJunk);
+	this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
+		this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
+	});
+ });
+ casper.then(function(){
+	this.wait(1000);
+ });
+ casper.then(function(){
+	this.waitForText("Sign out",function(){
+		this.clickLabel("Sign out");
+	});
+ });
+
+ casper.then(function(){
+	this.wait(10000);
+ });
 
 }); // end for each loop
 

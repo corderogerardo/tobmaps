@@ -11,12 +11,10 @@
 						<fieldset>
 							{{> afQuickField name='listname'}}
 							{{> afQuickField name='typelist'}}
-							{{> afQuickField name='domains' multiple=true tags=true options=listDomains }}
+							{{> afQuickField name='domains' multiple=true tags=true options=listDomains class="form-control"}}
 						</fieldset>
 						<button type="submit" class="btn btn-primary btn-sm">Save</button>
 						<button type="reset" class="btn btn-default btn-sm">Cancel</button>
-						<button type="button" class="btn btn-info btn-sm pull-right js-go-schedules">Go to Schedule.</button>
-						<button type="button" class="btn btn-info btn-sm pull-right js-new-domain">New domain</button>
 						{{/autoForm}}
 					</div>
 				</div>

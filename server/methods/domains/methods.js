@@ -4,15 +4,27 @@ Meteor.methods({
 			throw new Meteor.Error('not-authorized');
 		}
 		if(this.userId){
-			var dom = Domains.findOne({
-				domain:domf.domain
+			var user = this.userId;
+			var domains = domf.domain.replace(/\s/g,"").split(",");
+			domains.forEach(function (domain) {
+				var dom;
+				if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)){
+					dom = Domains.findOne({
+						domain:domain
+					});
+				}
+				if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain) && !dom){
+					/*console.log("Is valid? "+ /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain));*/
+					check(domain,String);
+					var domin = {
+						domain:domain,
+						createdOn:new Date(),
+						createdBy:user,
+					};
+					/*console.log(domin);*/
+					return  Domains.insert(domin);
+				}
 			});
-			if(!dom){
-				check(domf.domain,String);
-				domf.createdOn = new Date();
-				domf.createdBy = this.userId;
-				return  Domains.insert(domf);
-			}
 		}
 	},
 	updateDomain:function(doc){
