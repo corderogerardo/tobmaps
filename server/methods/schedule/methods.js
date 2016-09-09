@@ -66,12 +66,20 @@ var process_exec_sync = function (command) {
 			]
 		}).fetch();
 
+		var userSchedules = Schedules.find({
+			$or:[
+				{
+					createdBy:this.userId
+				}
+			]
+		}).fetch();
+
 		var accounts = [
 		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
 		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
 		{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
 		];
-		console.log(yahooAccounts);
+		console.log(userSchedules);
 		if(domain==="yahoo"){
 			for (var i = 0; i < yahooAccounts.length; i++) {
 				var username = yahooAccounts[i]["email"];

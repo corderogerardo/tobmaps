@@ -7,12 +7,13 @@
  * Import CasperJS module and create an instance with configurations.
  */
  var casper = require('casper').create({
+	/*clientScripts: ['jquery.min.js'],*/
 	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
 	logLevel: 'debug',
 	viewportSize:
 	{
-		width: 1360,
+		width: 1300,
 		height: 760
 	},
 	pageSettings:
@@ -45,13 +46,6 @@
  */
  var blacklist = casper.cli.args;
 
- casper.on('page.error',function(msg,trace){
-	this.echo('Error: '+msg,'Error');
-	for(var i=0;i<trace.length;i++){
-		var step = trace[i];
-		this.echo(' '+step.file + '(line '+step.line+')', 'ERROR');
-	}
- });
 /**
  * The yahoo URL where login
  * @type {String}
@@ -93,6 +87,8 @@
  */
  casper.thenOpen(url,function(){
 	this.echo("You're in CASPER.THENOPEN");
+		this.echo("The black list passed as arguments should show: "+blacklist);
+
 		/**
 		* With Casper.fill method we send the username values of the form
 		* With Casper.fill method we send the password values of the form
@@ -142,7 +138,7 @@
 	this.each(results, function iterateids(self,id){
 		self.then(function thenIterate(){
 			this.echo('div[id="'+id+'"] > div');
-			this.click('div[id="'+i'use strict';d+'"] > div');
+			this.click('div[id="'+id+'"] > div');
 			/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
 		});
 		self.wait(5000);
@@ -162,8 +158,10 @@
 				emails.push(email);
 				domain = email.replace(/.*@/, "");
 				this.wait(2000);
-				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails);
+				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " BlackList: "+blacklist);
 				this.wait(5000);
+				/*blacklist = blacklist.split(",");*/
+				this.echo("BlackList of casper args: "+ blacklist);
 			/**
 			 * If the domain is in the blacklist I click to Junk to move to junk folder.
 			 * @param  {Number} blacklist.indexOf(domain)! indexOf Method to know if in the blacklist or not.
