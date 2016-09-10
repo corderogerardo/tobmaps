@@ -174,21 +174,22 @@
 
 			 casper.waitForSelector("button[id='btn-not-spam']", function() {
 				this.click("button[id='btn-not-spam']");
-				this.wait(10000);
+				this.wait(20000);
 			 });
 			});
 
 		 /**** end ****/
 
-		 casper.thenOpen(url);
+		 casper.thenOpen("https://login.yahoo.com/config/login/?.crumb=dOJjoHbQxC4&logout=1&.direct=1&.done=https://www.yahoo.com/&logout_all=1");
 		/**
 		 * waitForSelector waits for the div.not-you selector associate to logout button.
 		 * then when the button loads we click the logout function
 		 */
+		/*
 		 casper.waitForSelector("div.not-you",function(){
 			this.click("a#login-signout");
-			this.wait(5000);
-		 });
+			this.wait(10000);
+		 });*/
 
 	});// End casper.then function
 
@@ -198,6 +199,4 @@
  * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
  * calling this method is mandatory in order to run the Casper navigation suite.
  */
- casper.run(function(){
-	this.exit();
- });
+casper.run();

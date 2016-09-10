@@ -1,5 +1,5 @@
 /**
- * Yahoo Casper's Bot that move emails from Spam to Inbox
+ * Yahoo Casper's Bot that move emails from inbox to spam
  * @type {CasperJS Bot}
  */
 
@@ -12,8 +12,8 @@
 	logLevel: "debug",
 	viewportSize:
 	{
-		width: 1300,
-		height: 700
+		width: 1360,
+		height: 760
 	},
 	pageSettings:
 	{
@@ -22,7 +22,6 @@
 	localToRemoteUrlAccessEnabled: true,
 	loadPlugins: true,
 	XSSAuditingEnabled: true
-
  });
 
 /**
@@ -39,18 +38,17 @@
  * Used import the casperjs utils library
  * @Module {Casperjs Utils}
  */
- utils = require("utils");
-
+ var utils = require("utils");
 /**
  *	We take the args we passed from meteorjs app.
  * @Args {args}
  */
- whiteList = casper.cli.args;
+ var whiteList = casper.cli.args;
 /**
  * The yahoo URL where login
  * @type {String}
  */
- var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com";
+ var url = "https://login.yahoo.com/config/mail?.intl=us&.done=https%3A%2F%2Fmg.mail.yahoo.com%3A443%2Fneo%2Flaunch%3F.rand%3Degtpucj7f6kvm";
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
@@ -67,7 +65,6 @@
  * Iterate the array to process each account saved.
  */
  accounts.forEach(function(account) {
-
 	/**
 	 * Username from email to login
 	 * @type {String}
@@ -78,44 +75,64 @@
 	 * @type {[type]}
 	 */
 	 var password = account.pwd;
+
 	/**
 	 * We added a new navigation step with this casperjs function that receive our
 	 * yahoo url
 	 */
 	 casper.thenOpen(url, function() {
-
-		this.waitForSelector("input[name='username']", function() {
-			this.sendKeys("input[name='username']", username);
-			this.wait(1000);
-		});
-
-		this.waitForSelector("form#mbr-login-form button[type=submit][value='authtype']", function() {
+		/**
+		 * Casper.then we add a new navigation step to the bot.
+		 */
+		 casper.then(function(){
+			/**
+			 * With Casper.fill method we send the username values of the form
+			 * @type {String}
+			 */
+			 casper.fill('form[id="mbr-login-form"]', {
+				username : username
+			 }, false);
+			});
+		/**
+		 * waitForSelector Waits until the form-login button element selector expression does not exist in remote DOM to process a next step
+		 */
+		 this.waitForSelector("form#mbr-login-form button[type=submit][value='authtype']", function() {
 			this.click("form#mbr-login-form button[type=submit][value='authtype']");
 			this.wait(6000);
-		});
+		 });
 
-		this.waitForSelector("input[name='passwd']", function() {
-			this.sendKeys("input[name='passwd']", password);
-			this.wait(2000);
-		});
+		 casper.then(function(){
+		/**
+		* With Casper.fill method we send the password values of the form
+		* @type {String}
+		*/
+		casper.fill('form[id="mbr-login-form"]', {
+			passwd : password
+		}, true);
+		this.wait(5000);
+	});
 
-		this.waitForSelector("form#mbr-login-form button[name='signin']", function() {
-			this.click("form#mbr-login-form button[name='signin']");
-			this.wait(2000);
-		});
-
-		/**** Select messages out spam to inbox (list) ****/
-
-		casper.then(function(){
+		/**
+		 * Casper.then we add a new navigation step to the bot.
+		 * Select messages out spam to inbox (list)
+		 */
+		 casper.then(function(){
 			this.waitForText("Spam", function() {
 				this.clickLabel("Spam");
-				this.wait(5000);
+				this.wait(10000);
 			});
-		});
-
-		var messagesSpam;
-		casper.then(function(){
-			messagesSpam = this.evaluate(function(){
+		 });
+		/**
+		 *	Casper.then we add a new navigation step to the bot.
+		 *	We iterate over all emails messages and save their ids, title and checkbox status
+		 */
+		 var messagesSpam;
+		 casper.then(function(){
+			/**
+			 *	Casper.evaluate - Evaluates an expression in the current page DOM context - This case we iterate over all the messages in the inbox folder of the yahoo email account and save their ids in array ids.
+			 * @type {Array objects}
+			 */
+			 messagesSpam = this.evaluate(function(){
 				ids = [];
 				/**
 				 * Jquery.Each function.
@@ -125,16 +142,23 @@
 					ids.push({
 						message_id: $(this).attr("id"),
 						email: $('div.from', this).attr("title"),
-						data_cid: $('input[title="Casilla de verificación: sin marcar"]', this).attr("data-cid")
+						data_cid: $('input[title="Checkbox, not checked"]', this).attr("data-cid")
 					});
 				 });
 				 return ids;
 				});
-			utils.dump(messagesSpam);
-		});
+			 utils.dump(messagesSpam);
+			});
 
-		casper.then(function(){
-			this.each(messagesSpam, function(self, obj){
+		/**
+		 * Casper.then we add a new navigation step to the bot.
+		 */
+		 casper.then(function(){
+			/**
+			 * Casper.each method to Iterates over messagesSpam array items and execute a callback
+			 * @return {[type]}
+			 */
+			 this.each(messagesSpam, function(self, obj){
 				var tag = false;
 				self.then(function(){
 					this.each(whiteList, function(self, white){
@@ -146,28 +170,34 @@
 						this.click('input[data-cid="'+obj.data_cid+'"]');
 					}
 				});
-			});
-			casper.waitForSelector("button[id='btn-not-spam']", function() {
+			 });
+
+			 casper.waitForSelector("button[id='btn-not-spam']", function() {
 				this.click("button[id='btn-not-spam']");
-				this.wait(5000);
+				this.wait(20000);
+			 });
 			});
-		});
 
-		/**** end ****/
+		 /**** end ****/
 
-		casper.thenOpen(url);
-		/**
+		/* casper.thenOpen(url);
+		
 		 * waitForSelector waits for the div.not-you selector associate to logout button.
 		 * then when the button loads we click the logout function
 		 */
+		
+		/*
 		 casper.waitForSelector("div.not-you",function(){
 			this.click("a#login-signout");
-			this.wait(2000);
-		 });
+			this.wait(10000);
+		 });*/
 
-		});
-}); // end for each loop
+	});// End casper.then function
 
- casper.run(function(){
-	this.exit();
- });
+}); // end for accounts.each loop
+
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
+casper.run();
