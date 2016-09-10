@@ -7,14 +7,15 @@
  * Import CasperJS module and create an instance with configurations.
  */
  var casper = require("casper").create({
+	/*clientScripts: ['jquery.min.js'],*/
 	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
 	logLevel: "debug",
-	viewportSize:
+	/*viewportSize:
 	{
 		width: 1300,
 		height: 700
-	},
+	},*/
 	pageSettings:
 	{
 		userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11"
@@ -46,13 +47,6 @@
  */
  var blacklist = casper.cli.args;
 
- casper.on('page.error',function(msg,trace){
-	this.echo('Error: '+msg,'Error');
-	for(var i=0;i<trace.length;i++){
-		var step = trace[i];
-		this.echo(' '+step.file + '(line '+step.line+')', 'ERROR');
-	}
- });
 /**
  * The yahoo URL where login
  * @type {String}
@@ -62,28 +56,44 @@
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
  */
- var accounts = [];
- accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
+/*var accounts = [
+		//{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
+		{user: "tobmapx@outlook.com", pwd: 'tobMAPS-123'},
+		//{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
+		];*/
+var accounts = [];
+accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
 /**
  *	Here starts the Bot.
  */
- casper.start(url, function(){
-	/*this.capture("outlookCasperStart.png");*/
- });
+ casper.start();
+
+accounts.forEach(function(account) {
+	/**
+	 * Username from email to login
+	 * @type {String}
+	 */
+
+	 var username = account.user;
+	/**
+	 * Password from email to login
+	 * @type {[type]}
+	 */
+	 var password = account.pwd;
 
  casper.thenOpen(url, function(){
 	this.echo("You're in CASPER.THENOPEN");
 	this.fill('form[name="f1"]',
 	{
-		loginfmt: 'tobmapx@outlook.com',
-		passwd: 'tobMAPS-123'
+		loginfmt:username,
+		passwd: password
 	},true);
 	this.wait(10000);
 	/*this.capture('outlookCasperThenOpen.png');*/
  });
 
- casper.repeat(10,function(){
+ casper.repeat(3,function(){
 	casper.then(function(){
 		this.waitForText("New", function(){
 			this.clickLabel("New");
@@ -93,14 +103,14 @@
 
 	casper.then(function(){
 		this.waitForText("To",function(){
-			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmaps@yahoo.com');
+			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com');
 			this.wait(1000);
 		});
 	});
 
 	casper.then(function(){
 		this.waitForText("To", function(){
-			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmaps@yahoo.com', {keepFocus: true});
+			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com', {keepFocus: true});
 			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", casper.page.event.key.Enter , {keepFocus: true});
 			this.page.sendEvent("keypress", casper.page.event.key.Enter);
 			this.echo("send press enter to page");
@@ -144,6 +154,8 @@
  casper.then(function(){
 	this.wait(10000);
  });
+
+}); // end for each loop
 
 /**
  * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.

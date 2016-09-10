@@ -29,7 +29,7 @@ var process_exec_sync = function (command) {
  * Meteor methods in server side for schedules
  */
  Meteor.methods({
-	command: function(commandAction,domain) {
+	commandcopy: function(commandAction,domain) {
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
@@ -86,7 +86,7 @@ var process_exec_sync = function (command) {
 				console.log(username);
 				var password = yahooAccounts[i]["password"];
 				console.log(password);
-				var line = 'xvfb-run casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
+				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
 				console.log("In command method", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
@@ -114,9 +114,9 @@ var process_exec_sync = function (command) {
 				var username = outlookAccounts[i]["email"];
 				console.log(username);
 				var password = outlookAccounts[i]["password"];
-				console.log(password);
+				console.log("xvfb-run -a "+password);
 				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
-				console.log("In command method", line);
+				console.log("In command method copy", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
 				exec(line, function(error, stdout, stderr) {
@@ -140,7 +140,7 @@ var process_exec_sync = function (command) {
 		}
 
 	},
-	runCasperJS: function(command) {
+	runCasperJScopy: function(command) {
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
@@ -163,7 +163,7 @@ var process_exec_sync = function (command) {
 	 * @param  {schedule Object} from the scheduleForm form.
 	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
 	 */
-	 insertSchedule: function(schedulef){
+	 insertSchedulecopy: function(schedulef){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
@@ -182,7 +182,7 @@ var process_exec_sync = function (command) {
 			Schedules.insert(schedulef);
 		}
 	 },
-	 removeSchedule:function(schedule_id){
+	 removeSchedulecopy:function(schedule_id){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
