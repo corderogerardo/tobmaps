@@ -48,7 +48,10 @@ var process_exec_sync = function (command) {
 				createdBy:this.userId
 			}
 			]
-		}).fetch();
+		}).map(function(c){
+			return {email:c.email, email:c.email,
+							password:c.password,password:c.password}
+		});
 		var gmailAccounts = Emails.find({
 			$or:[
 			{
@@ -86,7 +89,7 @@ var process_exec_sync = function (command) {
 				console.log(username);
 				var password = yahooAccounts[i]["password"];
 				console.log(password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
+				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --accounts="'+outlookAccounts+'" --engine=slimerjs --disk-cache=no';
 				console.log("In command method", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
@@ -110,12 +113,10 @@ var process_exec_sync = function (command) {
 			}
 		}
 		if(domain==="outlook"){
-			for (var i = 0; i < outlookAccounts.length; i++) {
-				var username = outlookAccounts[i]["email"];
-				console.log(username);
-				var password = outlookAccounts[i]["password"];
+			console.log(outlookAccounts);
+			/*for (var i = 0; i < outlookAccounts.length; i++) {*/
 				console.log("xvfb-run -a "+password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
+				var line = "casperjs ../../../../../tests/"+commandAction+" yahoo.com outlook.com --accounts="+ JSON.stringify(outlookAccounts)+" --engine=slimerjs --disk-cache=no";
 				console.log("In command method copy", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
@@ -136,7 +137,7 @@ var process_exec_sync = function (command) {
 						return botcli;
 					}).run();
 				});
-			}
+			/*}*/ //end for
 		}
 
 	},

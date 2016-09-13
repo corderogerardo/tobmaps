@@ -55,7 +55,7 @@ Template.defaultActions.events({
 		if(Meteor.user()){
 			console.log('I clicked button one');
 			event.preventDefault();
-			var commandAction = 'outlook/multipleAccountsSendEmailAction.js';
+			var commandAction = 'outlook/newEmail.js';
 			var domain = 'outlook';
 			Meteor.call("commandcopy",commandAction,domain, function (error, result){
 				if(error){
