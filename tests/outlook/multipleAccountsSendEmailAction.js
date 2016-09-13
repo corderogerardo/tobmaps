@@ -7,15 +7,13 @@
  * Import CasperJS module and create an instance with configurations.
  */
  var casper = require("casper").create({
-	/*clientScripts: ['jquery.min.js'],*/
-	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
 	logLevel: "debug",
-	/*viewportSize:
+	viewportSize:
 	{
 		width: 1300,
-		height: 700
-	},*/
+		height: 760
+	},
 	pageSettings:
 	{
 		userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11"
@@ -23,6 +21,7 @@
 	localToRemoteUrlAccessEnabled: true,
 	loadPlugins: true,
 	XSSAuditingEnabled: true
+
 
  });
 
@@ -37,11 +36,6 @@
  */
  var x = require('casper').selectXPath;
 /**
- * Used import the casperjs utils library
- * @Module {Casperjs Utils}
- */
- var utils = require('utils');
-/**
  *	We take the args we passed from meteorjs app.
  * @Args {args}
  */
@@ -52,11 +46,13 @@
  * @type {String}
  */
  var url = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
+
+
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
  */
-/*var accounts = [
+/* var accounts = [
 		//{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
 		{user: "tobmapx@outlook.com", pwd: 'tobMAPS-123'},
 		//{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
@@ -69,48 +65,43 @@ accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password
  */
  casper.start();
 
-accounts.forEach(function(account) {
+ accounts.forEach(function(account) {
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
 
 	 var username = account.user;
+	 /*var username = "tobmapx@outlook.com";*/
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
 	 var password = account.pwd;
+	 /*var password = "tobMAPS-123";*/
 
- casper.thenOpen(url, function(){
-	this.echo("You're in CASPER.THENOPEN");
-	this.fill('form[name="f1"]',
-	{
-		loginfmt:username,
-		passwd: password
-	},true);
-	this.wait(10000);
-	/*this.capture('outlookCasperThenOpen.png');*/
- });
+	 casper.thenOpen(url, function(){
+		this.echo("You're in CASPER.THENOPEN");
+		this.fill('form[name="f1"]',
+		{
+			loginfmt:username,
+			passwd: password
+		},true);
+		this.wait(10000);
+		/*this.capture('outlookCasperThenOpen.png');*/
+	 });
 
- casper.repeat(3,function(){
-	casper.then(function(){
+	casper.repeat(10,function(){
+	 casper.then(function(){
 		this.waitForText("New", function(){
 			this.clickLabel("New");
 		});
 		this.wait(2000);
-	});
+	 });
 
-	casper.then(function(){
-		this.waitForText("To",function(){
-			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com');
-			this.wait(1000);
-		});
-	});
-
-	casper.then(function(){
+	 casper.then(function(){
 		this.waitForText("To", function(){
-			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com', {keepFocus: true});
+			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com ', {keepFocus: true});
 			this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", casper.page.event.key.Enter , {keepFocus: true});
 			this.page.sendEvent("keypress", casper.page.event.key.Enter);
 			this.echo("send press enter to page");
@@ -119,12 +110,12 @@ accounts.forEach(function(account) {
 	});
 
 
-	casper.then(function(){
+	 casper.then(function(){
 		this.waitForText("To",function(){
 			this.sendKeys("input[placeholder='Add a subject']", "this is killerbox");
 			this.wait(1000);
 		});
-	});
+	 });
 
 	casper.then(function(){
 		this.waitForText("To", function(){
@@ -142,18 +133,19 @@ accounts.forEach(function(account) {
 		});
 	});
 
-	casper.then(function(){
+	 casper.then(function(){
 		this.waitForText("Send", function(){
 			this.clickLabel("Send");
 		});
 		this.wait(1000);
-	});
- });
+	 });
+	});/*Casper.repeat*/
 
 
- casper.then(function(){
-	this.wait(10000);
- });
+
+	 casper.then(function(){
+		this.wait(10000);
+	 });
 
 }); // end for each loop
 

@@ -25,6 +25,7 @@
 	XSSAuditingEnabled: true
 
  });
+
 /**
  * Import the mouse module from the casper instance
  * @type {Module}
@@ -59,6 +60,14 @@
  * @type {String}
  */
  var url = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
+
+ casper.on('page.error', function(msg, trace) {
+	this.echo('Error: ' + msg, 'ERROR');
+	for(var i=0; i<trace.length; i++) {
+		var step = trace[i];
+		this.echo('   ' + step.file + ' (line ' + step.line + ')', 'ERROR');
+	}
+ });
 
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
