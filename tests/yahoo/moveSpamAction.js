@@ -53,8 +53,22 @@
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
  */
- var accounts = [];
- accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
+ 	var objAccounts = [];
+ 	var accounts = casper.cli.get("accounts");
+	accounts = accounts.replace("[","");
+	accounts = accounts.replace("]","");
+	accounts = accounts.replace(/{/g,"");
+	accounts = accounts.replace(/}/g,"");
+	accounts = accounts.replace(/email:/g,"");
+	accounts = accounts.replace(/password:/g,"");
+	accounts = accounts.split(",");
+
+	for(var i = 0;i<accounts.length;i=i+2){
+		objAccounts.push({
+			email:accounts[i],
+			password:accounts[i+1]
+		});
+	}
 
 /**
  *	Here starts the Bot.
@@ -64,17 +78,17 @@
 /**
  * Iterate the array to process each account saved.
  */
- accounts.forEach(function(account) {
+ objAccounts.forEach(function(account) {
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
-	 var username = account.user;
+	 var username = account.email;
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
-	 var password = account.pwd;
+	 var password = account.password;
 
 	/**
 	 * We added a new navigation step with this casperjs function that receive our
@@ -179,8 +193,26 @@
 			});
 
 		 /**** end ****/
+		 casper.then(function(){
+			this.waitForSelector("a[aria-label='Profile']", function(){
+				this.click("a[aria-label='Profile']");
+			});
+		 });
 
-		 //casper.thenOpen("https://login.yahoo.com/config/login/?.crumb=dOJjoHbQxC4&logout=1&.direct=1&.done=https://www.yahoo.com/&logout_all=1");
+		 casper.then(function(){
+			this.wait(10000);
+		 });
+		 
+		 casper.then(function(){
+			this.waitForText("Sign out",function(){
+				this.clickLabel("Sign out");
+			});
+		 });
+
+		 casper.then(function(){
+			this.wait(20000);
+		 });
+
 		/**
 		 * waitForSelector waits for the div.not-you selector associate to logout button.
 		 * then when the button loads we click the logout function
@@ -199,4 +231,6 @@
  * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
  * calling this method is mandatory in order to run the Casper navigation suite.
  */
-casper.run();
+casper.run(function(){
+	this.exit();
+});

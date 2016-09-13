@@ -40,7 +40,10 @@ var process_exec_sync = function (command) {
 				createdBy:this.userId
 			}
 			]
-		}).fetch();
+		}).map(function(c){
+			return {email:c.email, email:c.email,
+							password:c.password,password:c.password}
+		});
 		var outlookAccounts = Emails.find({
 			$or:[
 			{
@@ -78,12 +81,8 @@ var process_exec_sync = function (command) {
 		}).fetch();
 		console.log(userSchedules);
 		if(domain==="yahoo"){
-			for (var i = 0; i < yahooAccounts.length; i++) {
-				var username = yahooAccounts[i]["email"];
-				console.log(username);
-				var password = yahooAccounts[i]["password"];
-				console.log(password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --accounts="'+outlookAccounts+'" --engine=slimerjs --disk-cache=no';
+			//for (var i = 0; i < yahooAccounts.length; i++) {
+				var line = "casperjs ../../../../../tests/"+commandAction+" yahoo.com outlook.com --accounts="+ JSON.stringify(yahooAccounts)+" --engine=slimerjs --disk-cache=no";
 				console.log("In command method", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
@@ -102,7 +101,7 @@ var process_exec_sync = function (command) {
 						return botcli;
 					}).run();
 				});
-			}
+			//}
 		}
 		if(domain==="outlook"){
 			console.log(outlookAccounts);
