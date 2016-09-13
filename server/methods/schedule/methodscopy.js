@@ -73,12 +73,6 @@ var process_exec_sync = function (command) {
 				}
 			]
 		}).fetch();
-
-		var accounts = [
-		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-		{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
-		];
 		console.log(userSchedules);
 		if(domain==="yahoo"){
 			for (var i = 0; i < yahooAccounts.length; i++) {
@@ -90,16 +84,14 @@ var process_exec_sync = function (command) {
 				console.log("In command method", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
-				exec(line, function(error, stdout, stderr) {
-					console.log('Command Method Error: '+ error);
-					console.log('Command Method STOUT: '+ stdout);
+				exec(line, function(stderr, stdout) {
+					console.log('Command Method STDOUT: '+ stdout);
 					console.log('Command Method STDERR: '+ stderr);
 					Fiber(function() {
 						//Replies.remove({});
 						var botcli = ScheduleLoggers.insert({
 							out: JSON.stringify(stdout),
 							stderror: JSON.stringify(stderr),
-							errors:JSON.stringify(error),
 							command:line,
 							createdOn: new Date(),
 							createdBy:this.userId,

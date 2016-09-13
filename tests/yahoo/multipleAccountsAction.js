@@ -49,7 +49,7 @@
  * The yahoo URL where login
  * @type {String}
  */
- var url = "https://login.yahoo.com/?.src=ym&.intl=e1&.lang=es-US&.done=https%3a//mail.yahoo.com"
+ var url = "https://login.yahoo.com/config/mail?.intl=us&.done=https%3A%2F%2Fmg.mail.yahoo.com%3A443%2Fneo%2Flaunch%3F.rand%3Degtpucj7f6kvm"
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
@@ -78,31 +78,42 @@
 	 * yahoo url
 	 */
 	 casper.thenOpen(url, function() {
-		this.waitForSelector("input[name='username']", function() {
-			this.sendKeys("input[name='username']", username);
-			this.wait(1000);
-		});
-
-		this.waitForSelector("form#mbr-login-form button[type=submit][value='authtype']", function() {
+		/**
+		 * Casper.then we add a new navigation step to the bot.
+		 */
+		 casper.then(function(){
+			/**
+			 * With Casper.fill method we send the username values of the form
+			 * @type {String}
+			 */
+			casper.fill('form[id="mbr-login-form"]', {
+				username : username
+			 	}, false);
+			});
+		/**
+		 * waitForSelector Waits until the form-login button element selector expression does not exist in remote DOM to process a next step
+		 */
+		 this.waitForSelector("form#mbr-login-form button[type=submit][value='authtype']", function() {
 			this.click("form#mbr-login-form button[type=submit][value='authtype']");
-			this.wait(2000);
-		});
-
-		this.waitForSelector("input[name='passwd']", function() {
-			this.sendKeys("input[name='passwd']", password);
-			this.wait(1000);
-		});
-
-		this.waitForSelector("form#mbr-login-form button[name='signin']", function() {
-			this.click("form#mbr-login-form button[name='signin']");
 			this.wait(6000);
+		 });
+
+		 casper.then(function(){
+		/**
+		* With Casper.fill method we send the password values of the form
+		* @type {String}
+		*/
+		casper.fill('form[id="mbr-login-form"]', {
+			passwd : password
+			}, true);
+			this.wait(5000);
 		});
 
-		casper.repeat(5, function(){
+		casper.repeat(1, function(){
 
 			casper.then(function(){
-				this.waitForText("Escribir", function() {
-					this.clickLabel("Escribir");
+				this.waitForText("Compose", function() {
+					this.clickLabel("Compose");
 					this.wait(1000);
 				});
 			});
@@ -134,20 +145,20 @@
 			});
 
 			casper.then(function(){
-				this.waitForText("Enviar", function() {
-					this.clickLabel("Enviar");
+				this.waitForText("Send", function() {
+					this.clickLabel("Send");
 					this.wait(5000);
 				});
 			});
 
 		});
 
-		casper.thenOpen(url);
+		/*casper.thenOpen(url);
 
 		casper.waitForSelector("div.not-you",function(){
 			this.click("a#login-signout");
 			this.wait(3000);
-		});
+		});*/
 
 	}); // end casper.thenOpen function
 }); // end accounts.each loop

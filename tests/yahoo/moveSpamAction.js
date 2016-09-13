@@ -108,20 +108,20 @@
 		*/
 		casper.fill('form[id="mbr-login-form"]', {
 			passwd : password
-		}, true);
-		this.wait(5000);
-	});
+			}, true);
+			this.wait(5000);
+		});
 
 		/**
 		 * Casper.then we add a new navigation step to the bot.
-		 * Select messages out spam to inbox (list)
+		 * Select messages out inbox to spam (list)
 		 */
-		 casper.then(function(){
-			this.waitForText("Spam", function() {
-				this.clickLabel("Spam");
-				this.wait(10000);
-			});
-		 });
+		casper.then(function(){
+			this.waitForText("Inbox", function() {
+		  	this.clickLabel("Inbox");
+		  	this.wait(5000);
+		  });
+		});
 		/**
 		 *	Casper.then we add a new navigation step to the bot.
 		 *	We iterate over all emails messages and save their ids, title and checkbox status
@@ -163,24 +163,24 @@
 				self.then(function(){
 					this.each(whiteList, function(self, white){
 						if(obj.email.replace(/.*@/, "") == white){
-							tag = true;
+							tag = true;	
 						}
 					});
-					if (tag == true) {
+					if (tag == false) {
 						this.click('input[data-cid="'+obj.data_cid+'"]');
-					}
+					}	
 				});
-			 });
+			});
 
-			 casper.waitForSelector("button[id='btn-not-spam']", function() {
-				this.click("button[id='btn-not-spam']");
+			 casper.waitForSelector("button[id='main-btn-spam']", function() {
+				this.click("button[id='main-btn-spam']");
 				this.wait(20000);
-			 });
+			});
 			});
 
 		 /**** end ****/
 
-		 casper.thenOpen("https://login.yahoo.com/config/login/?.crumb=dOJjoHbQxC4&logout=1&.direct=1&.done=https://www.yahoo.com/&logout_all=1");
+		 //casper.thenOpen("https://login.yahoo.com/config/login/?.crumb=dOJjoHbQxC4&logout=1&.direct=1&.done=https://www.yahoo.com/&logout_all=1");
 		/**
 		 * waitForSelector waits for the div.not-you selector associate to logout button.
 		 * then when the button loads we click the logout function
