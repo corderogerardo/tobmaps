@@ -77,31 +77,31 @@ var accounts = casper.cli.get("accounts");
 	accounts = accounts.replace(/password:/g,"");
 	accounts = accounts.split(",");
 var emails=[];
-	for(var i = 0;i<accounts.length;i++){
-		var ob = {
+	for(var i = 0;i<accounts.length;i=i+2){
+		emails.push({
 			email:accounts[i],
 			password:accounts[i+1]
-		};
+		});
 	}
 /**
  *	Here starts the Bot.
  */
  casper.start();
 
-accounts.forEach(function(account) {
+emails.forEach(function(account) {
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
 
 	/* var username = account.email;*/
-		var username = account;
+		var username = account.email;
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
 	 /*var password = account.password;*/
-		var password = "tobMAPS-123";
+		var password = account.password;
 
  casper.thenOpen(url, function(){
 	this.echo("You're in CASPER.THENOPEN");

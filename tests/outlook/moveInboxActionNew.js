@@ -50,7 +50,7 @@
  *	We take the args we passed from meteorjs app.
  * @Args {args}
  */
- var meteorarguments = casper.cli.args;
+ var whiteList = casper.cli.args;
 /**
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
@@ -58,8 +58,8 @@
  /*var accounts = [{user: 'tobmapx@outlook.com',pwd: 'tobMAPS-123'}];*/
 
  var accounts = casper.cli.get("accounts");
- accounts = accounts.replace(/\[/g,"");
- accounts = accounts.replace(/]/g,"");
+ accounts = accounts.replace("[","");
+ accounts = accounts.replace("]","");
  accounts = accounts.replace(/{/g,"");
  accounts = accounts.replace(/}/g,"");
  accounts = accounts.replace(/email:/g,"");
@@ -72,25 +72,6 @@
 		password:accounts[i+1]
 	});
  }
-var blackList = casper.cli.get("blacklist");
-	blackList = blackList.replace("[","");
-	blackList = blackList.replace("]","");
-	blackList = blackList.replace(/\[/g,"");
-	blackList = blackList.replace(/\]/g,"");
-	blackList = blackList.replace(/{/g,"");
-	blackList = blackList.replace(/}/g,"");
-	blackList = blackList.replace(/domains:/g,"");
-	blackList = blackList.split(",");
-
-var whiteList = casper.cli.get("whitelist");
-	whiteList = whiteList.replace("[","");
-	whiteList = whiteList.replace("]","");
-	whiteList = whiteList.replace(/\[/g,"");
-	whiteList = whiteList.replace(/\]/g,"");
-	whiteList = whiteList.replace(/{/g,"");
-	whiteList = whiteList.replace(/}/g,"");
-	whiteList = whiteList.replace(/domains:/g,"");
-	whiteList = whiteList.split(",");
  var ids = [];
  var results;
  var emails=[];
@@ -104,9 +85,6 @@ var whiteList = casper.cli.get("whitelist");
 	casper.each(usersaccounts,function(selfaccount, account){*/
 		casper.thenOpen(url,function(){
 		this.echo("You're in CASPER.THENOPEN");
-			this.echo("The black list passed as arguments should show: "+blackList);
-		this.echo("The White list passed as arguments should show: "+whiteList);
-
 		this.fill('form[name="f1"]',
 		{
 /*			loginfmt: account.email,
@@ -129,7 +107,7 @@ var whiteList = casper.cli.get("whitelist");
 	 casper.then(function(){
 		results = this.evaluate(function(){
 			ids = [];
-			$.each($("div[autoid='_lvv_l'] > div > div > div > div > div"),function(x,y){
+			$.each($("div[autoid='_lvv_m'] > div > div > div > div > div"),function(x,y){
 				ids.push($(y).attr("id"));
 			});
 			return ids;

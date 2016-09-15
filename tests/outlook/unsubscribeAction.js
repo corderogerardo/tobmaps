@@ -41,20 +41,7 @@
  * @Module {Casperjs Utils}
  */
  var utils = require("utils");
-/**
- *	We take the args we passed from meteorjs app.
- * @Args {args}
- */
- var listDomains = casper.cli.args;
- var total = listDomains.length;
- var whiteList=[];
- var blacklist=[];
- for (var i = 0; i<total/2; i++) {
-	whiteList.push(listDomains[i]);
- }
- for (var i = total/2; i<=total; i++) {
-	blacklist.push(listDomains[i]);
- }
+
 /**
  * The yahoo URL where login
  * @type {String}
@@ -75,27 +62,70 @@
  */
  /*var accounts = [{user: 'tobmapx@outlook.com',pwd: 'tobMAPS-123'}];*/
 
- var accounts = [];
- accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
+/**
+ *	We take the args we passed from meteorjs app.
+ * @Args {args}
+ */
+ var meteorarguments = casper.cli.args;
+
+/*var accounts = [{user: 'tobmapx@outlook.com',pwd: 'tobMAPS-123'}];*/
+
+ var accounts = casper.cli.get("accounts");
+	accounts = accounts.replace("[","");
+	accounts = accounts.replace("]","");
+ accounts = accounts.replace(/\[/g,"");
+ accounts = accounts.replace(/\]/g,"");
+ accounts = accounts.replace(/{/g,"");
+ accounts = accounts.replace(/}/g,"");
+ accounts = accounts.replace(/email:/g,"");
+ accounts = accounts.replace(/password:/g,"");
+ accounts = accounts.split(",");
+ var usersaccounts=[];
+ for(var i = 0;i<accounts.length;i=i+2){
+	usersaccounts.push({
+		email:accounts[i],
+		password:accounts[i+1]
+	});
+ }
+var blackList = casper.cli.get("blacklist");
+	blackList = blackList.replace("[","");
+	blackList = blackList.replace("]","");
+	blackList = blackList.replace(/\[/g,"");
+	blackList = blackList.replace(/\]/g,"");
+	blackList = blackList.replace(/{/g,"");
+	blackList = blackList.replace(/}/g,"");
+	blackList = blackList.replace(/domains:/g,"");
+	blackList = blackList.split(",");
+
+var whiteList = casper.cli.get("whitelist");
+	whiteList = whiteList.replace("[","");
+	whiteList = whiteList.replace("]","");
+	whiteList = whiteList.replace(/\[/g,"");
+	whiteList = whiteList.replace(/\]/g,"");
+	whiteList = whiteList.replace(/{/g,"");
+	whiteList = whiteList.replace(/}/g,"");
+	whiteList = whiteList.replace(/domains:/g,"");
+	whiteList = whiteList.split(",");
 
  casper.start();
 
- accounts.forEach(function(account) {
+ usersaccounts.forEach(function(account) {
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
 
-	 var username = account.user;
+	 var username = account.email;
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
-	 var password = account.pwd;
+	 var password = account.password;
 
 	 casper.thenOpen(url, function(){
 		this.echo("You're in CASPER.THENOPEN");
-		this.echo("Domains: "+whiteList+" Black: "+blacklist);
+		this.echo("Emails: "+usersaccounts);
+		this.echo("Domains: "+whiteList+" Black: "+blackList);
 		this.fill('form[name="f1"]',
 		{
 			loginfmt: username,
@@ -154,11 +184,11 @@
 						emails.push(email);
 						domain = email.replace(/.*@/, "");
 						this.wait(5000);
-						this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " WhiteList: "+whiteList+ " BlackList: "+blacklist);
+						this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " WhiteList: "+whiteList+ " BlackList: "+blackList);
 						this.wait(5000);
 
 						var isOnWhiteList = whiteList.indexOf(domain);
-						var isOnBlackList = blacklist.indexOf(domain);
+						var isOnBlackList = blackList.indexOf(domain);
 
 						this.evaluate(function(isOnWhiteList, isOnBlackList){
 							alert("Evaluate - White: "+isOnWhiteList+" Black: "+isOnBlackList);
@@ -206,16 +236,18 @@
 		});
 	 });
 	 casper.then(function(){
-		this.wait(1000);
+		this.wait(2000);
 	 });
 	 casper.then(function(){
 		this.waitForText("Sign out",function(){
 			this.clickLabel("Sign out");
+			username ="";
+			password ="";
 		});
 	 });
 
 	 casper.then(function(){
-		this.wait(10000);
+		this.wait(5000);
 	 });
 
 }); // end for each loop
