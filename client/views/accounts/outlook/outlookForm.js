@@ -78,11 +78,16 @@ $.validator.setDefaults({
 Template.outlookForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
-		var string = $('[name=outlookString]').val();
-		var array = string.split(",");
-    for (var i = 0; i < array.length; i=i+2) {
-			var email = array[i];
-			var password = array[i+1];
+    var lines, lineNumber, data, length;
+		data = $('[name=outlookString]').val();
+		lines = data.split('\n');
+    lineNumber = 0;
+    for (var i = lines.length - 1; i >= 0; i--) {
+      var l = lines[i]
+      lineNumber++;
+      data = l.split(',');
+      var email = data[0];
+      var password = data[1];
 			var account = {
 				email:email,
 				password:password,

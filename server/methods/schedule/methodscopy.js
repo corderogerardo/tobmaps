@@ -79,29 +79,47 @@ var process_exec_sync = function (command) {
 				}
 			]
 		}).fetch();
+		var whitelist = Lists.find({
+			$or:[
+			{
+				typelist:"whiteList",
+				createdBy:this.userId
+			}
+			]
+		}).map(function(c){
+			return {domains:c.domains, domains:c.domains}
+		});
+		var blacklist = Lists.find({
+			$or:[
+			{
+				typelist:"blackList",
+				createdBy:this.userId
+			}
+			]
+		}).map(function(c){
+			return {domains:c.domains, domains:c.domains}
+		});
 		console.log(userSchedules);
 		if(domain==="yahoo"){
-			//for (var i = 0; i < yahooAccounts.length; i++) {
-				var line = "casperjs ../../../../../tests/"+commandAction+" yahoo.com outlook.com --accounts="+ JSON.stringify(yahooAccounts)+" --engine=slimerjs --disk-cache=no";
-				console.log("In command method", line);
-				var Fiber = Npm.require('fibers');
-				this.unblock();
-				exec(line, function(stderr, stdout) {
-					console.log('Command Method STDOUT: '+ stdout);
-					console.log('Command Method STDERR: '+ stderr);
-					Fiber(function() {
-						//Replies.remove({});
-						var botcli = ScheduleLoggers.insert({
-							out: JSON.stringify(stdout),
-							stderror: JSON.stringify(stderr),
-							command:line,
-							createdOn: new Date(),
-							createdBy:this.userId,
-						});
-						return botcli;
-					}).run();
-				});
-			//}
+			var line = "casperjs ../../../../../tests/"+commandAction+" --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(yahooAccounts)+" --engine=slimerjs --disk-cache=no";
+			console.log("In command method", line);
+			var Fiber = Npm.require('fibers');
+			this.unblock();
+			exec(line, function(stderr, stdout) {
+				console.log('Command Method STDOUT: '+ stdout);
+				console.log('Command Method STDERR: '+ stderr);
+				Fiber(function() {
+					//Replies.remove({});
+					var botcli = ScheduleLoggers.insert({
+						out: JSON.stringify(stdout),
+						stderror: JSON.stringify(stderr),
+						command:line,
+						createdOn: new Date(),
+						createdBy:this.userId,
+					});
+					return botcli;
+				}).run();
+			});
 		}
 		if(domain==="outlook"){
 			console.log(outlookAccounts);
