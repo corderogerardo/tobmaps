@@ -1,3 +1,7 @@
+/**
+ * @summary Meteor Blaze Template defaultActions Events
+ * Here I create an event handler to listen when the user click on button to activate an action.
+ */
 Template.defaultActions.events({
 	/*Outlook*/
 	"click .js-action-moveinbox-o":function(){
