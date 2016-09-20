@@ -1,0 +1,77 @@
+# STEP1: In your local machine you need to create a build of the Meteor App by console
+# move to the folder where is your project located for example:
+cd /home/userfolder/Work/tobmaps
+
+# STEP2: Now to create the build .tar.gz file of a meteor app you need to type the following command:
+meteor build /directory/
+
+# This will generate a .tar.gz file with the name of your folder project. This case generate a file called tobmaps.tar.gz in the /directory/ we specified
+
+# STEP3: Now we need to upload the .tar.gz file to the server with the following command.
+# Move to the folder where is located the .tar.gz file first
+cd /home/userfolder/Work
+# Now Upload the file to your server
+scp bundle-package.tar.gz adminuser@yourserver.com:
+# Real example
+scp tobmaps.tar.gz root@204.12.248.125:
+
+# STEP4: Now you need to enter to your server to search the file, move it to the user folder, give permission of the kind of user you are about to do deploy. For this project and others, the person who configure the server needs to create 2 different users accounts, one for production and another for development, You should not run any app in development or production as ROOT user. In this case we have an user called tobmaps, and another user called devtobmaps.
+
+## in any case you will always need to enter to the remote server with the following command:
+ssh user@server
+## Real example
+ssh root@204.12.248.125
+
+## All the upload you do arrive to the server in the folder /root/ so you need to move always to there.
+
+# STEP5: If you are about to deploy to development: You will receive the upload .tar.gz file in the folder /root/ you already moved there. You can check if the file is there with the following command
+ls
+## Now you need to move the file to the folder of the user you're about to deploy
+## In this case we move the .tar.gz file to /home/devtobmaps/ if we are going to deploy to development
+## or we move the .tar.gz file to /home/tobmaps/ if we are going to deploy to production
+## The command is:
+mv file.tar.gz /home/devtobmaps/
+## OR
+mv file.tar.gz /home/tobmaps/
+
+## Now we need to move to that user folder and to assign to that user the right permissions with the command
+sudo chown -R devtobmaps: .
+## OR
+sudo chown -R tobmaops: .
+
+# STEP6: Now we have the tar.gz file in our user folder (remember an user for development, an user for production)
+## You need to login as that user you're about to use to uncompress the .tar.gz file and deploy, with the following command:
+## In this case For development user
+sudo -u devtobmaps -H bash -l
+## In this case For production user
+sudo -u tobmaps -H bash -l
+
+# STEP7: as a development or production user we move to the folder where is located the website app. In this server the location is in /var/www/ there you will have the folders according to the app environment
+## in this case we have two folders tobmaps for production, devtobmaps for development
+## we move to the folder we are going to deploy
+## IF Production
+cd /var/www/tobmaps/
+## IF Development
+cd /var/www/devtobmaps/
+
+# STEP8: Now that you're in /var/www/production-development/ folder you need Uncompress .tar.gz file, for that you need to use the following command
+tar xzf ~/file.tar.gz
+## The symbol ~ means that as you login as production or development USER, that user has a home directory, The symbol ~ means the same as if you type /home/productionuser or /home/developmentuser , that vary according to the user you login in the lasts steps.
+## Give permission to the folder that you have extracted normally the extracted folder from a meteor app is called bundle.
+chown -R developmentuser: .
+## OR
+chown -R productionuser: .
+
+# THE FOLLOWIN STEPS ARE FOR BOTH DEVELOPMENT AND PRODUCTION APPS.
+# STEP9: Now you need to create a public folder inside bundle folder and install npm dependencies with the following commands.
+mkdir bundle/public
+## To install NPM dependencies you need to move to the folder where is the NPM configuration file with the following command
+cd bundle/programs/server
+## and install NPM dependencies with the command. NOTE: Here we should do only for the production APP, unfortunately if you only do npm install in development won't be any difference, I need to read more about how to install NPM dependencies without minify uglify and how is supposed to be the development app.
+npm install --production
+
+# STEP10: The final step is to logout from that user and restart nginx, you achieve that with the following commands:
+## to logout
+exit
+## now you should be the root user to restart nginx
+sudo service nginx restart

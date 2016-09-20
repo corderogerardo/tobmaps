@@ -44,7 +44,6 @@
  *	We take the args we passed from meteorjs app.
  * @Args {args}
  */
- var blacklist = casper.cli.args;
 
 /**
  * The yahoo URL where login
@@ -55,9 +54,41 @@
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
  */
- var accounts = [];
- accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
+var accounts = casper.cli.get("accounts");
+	accounts = accounts.replace("[","");
+	accounts = accounts.replace("]","");
+	accounts = accounts.replace(/{/g,"");
+	accounts = accounts.replace(/}/g,"");
+	accounts = accounts.replace(/email:/g,"");
+	accounts = accounts.replace(/password:/g,"");
+	accounts = accounts.split(",");
+var emails=[];
+	for(var i = 0;i<accounts.length;i=i+2){
+		emails.push({
+			email:accounts[i],
+			password:accounts[i+1]
+		});
+	}
+var blackList = casper.cli.get("blacklist");
+	blackList = blackList.replace("[","");
+	blackList = blackList.replace("]","");
+	blackList = blackList.replace(/\[/g,"");
+	blackList = blackList.replace(/\]/g,"");
+	blackList = blackList.replace(/{/g,"");
+	blackList = blackList.replace(/}/g,"");
+	blackList = blackList.replace(/domains:/g,"");
+	blackList = blackList.split(",");
+
+var whiteList = casper.cli.get("whitelist");
+	whiteList = whiteList.replace("[","");
+	whiteList = whiteList.replace("]","");
+	whiteList = whiteList.replace(/\[/g,"");
+	whiteList = whiteList.replace(/\]/g,"");
+	whiteList = whiteList.replace(/{/g,"");
+	whiteList = whiteList.replace(/}/g,"");
+	whiteList = whiteList.replace(/domains:/g,"");
+	whiteList = whiteList.split(",");
 /**
  *	Here starts the Bot.
  */
@@ -68,18 +99,18 @@
 /**
  * Iterate the array to process each account saved.
  */
- accounts.forEach(function(account) {
+ emails.forEach(function(account) {
 
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
-	 var username = account.user;
+	 var username = account.email;
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
-	 var password = account.pwd;
+	 var password = account.password;
 
 /**
  * We added a new navigation step with this casperjs function that receive our
@@ -87,7 +118,8 @@
  */
  casper.thenOpen(url,function(){
 	this.echo("You're in CASPER.THENOPEN");
-		this.echo("The black list passed as arguments should show: "+blacklist);
+		this.echo("The black list passed as arguments should show: "+blackList);
+		this.echo("The White list passed as arguments should show: "+whiteList);
 
 		/**
 		* With Casper.fill method we send the username values of the form
@@ -96,6 +128,8 @@
 		*/
 		this.fill('form[name="f1"]',
 		{
+			//tobmaps@yahoo.com
+			//spamBOT-12345678
 			loginfmt: username,
 			passwd: password
 		},true);
@@ -120,6 +154,7 @@
 		 * @return {Array}
 		 */
 		 $.each($("div[autoid='_lvv_a'] > div"),function(x,y){
+		/* $.each($("div[autoid='_lvv_9'] > div"),function(x,y){*/
 			ids.push($(y).attr("id"));
 		 });
 		 return ids;
@@ -158,15 +193,15 @@
 				emails.push(email);
 				domain = email.replace(/.*@/, "");
 				this.wait(2000);
-				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " BlackList: "+blacklist);
+				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " BlackList: "+blackList);
 				this.wait(5000);
 				/*blacklist = blacklist.split(",");*/
-				this.echo("BlackList of casper args: "+ blacklist);
+				this.echo("BlackList of casper args: "+ blackList);
 			/**
 			 * If the domain is in the blacklist I click to Junk to move to junk folder.
 			 * @param  {Number} blacklist.indexOf(domain)! indexOf Method to know if in the blacklist or not.
 			 */
-			 if(blacklist.indexOf(domain)!=-1){
+			 if(blackList.indexOf(domain)!=-1){
 				this.clickLabel("Junk");
 				countToJunk++;
 			 }
@@ -179,12 +214,13 @@
  * Casper.then navigation step to wait for the button to sing out
  */
  casper.then(function(){
-	this.echo("How many emails were in inbox? "+emails.length+" Mails move out to Junk: "+countToJunk);
 	this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
-		this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
+		this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templaphonetes_cs_0']");
 	});
  });
+
  casper.then(function(){
+	this.echo("How many emails were in inbox? "+emails.length+" Mails move out to Junk: "+countToJunk);
 	this.wait(1000);
  });
 /**

@@ -57,31 +57,67 @@
 		{user: "tobmapx@outlook.com", pwd: 'tobMAPS-123'},
 		//{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
 		];*/
-var accounts = [];
-accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password")});
 
+var accounts = casper.cli.get("accounts");
+	accounts = accounts.replace("[","");
+	accounts = accounts.replace("]","");
+	accounts = accounts.replace(/\[/g,"");
+	accounts = accounts.replace(/\]/g,"");
+	accounts = accounts.replace(/{/g,"");
+	accounts = accounts.replace(/}/g,"");
+	accounts = accounts.replace(/email:/g,"");
+	accounts = accounts.replace(/password:/g,"");
+	accounts = accounts.split(",");
+var usersaccounts=[];
+	for(var i = 0;i<accounts.length;i=i+2){
+		usersaccounts.push({
+			email:accounts[i],
+			password:accounts[i+1]
+		});
+	}
+var blackList = casper.cli.get("blacklist");
+	blackList = blackList.replace("[","");
+	blackList = blackList.replace("]","");
+	blackList = blackList.replace(/\[/g,"");
+	blackList = blackList.replace(/\]/g,"");
+	blackList = blackList.replace(/{/g,"");
+	blackList = blackList.replace(/}/g,"");
+	blackList = blackList.replace(/domains:/g,"");
+	blackList = blackList.split(",");
+
+var whiteList = casper.cli.get("whitelist");
+	whiteList = whiteList.replace("[","");
+	whiteList = whiteList.replace("]","");
+	whiteList = whiteList.replace(/\[/g,"");
+	whiteList = whiteList.replace(/\]/g,"");
+	whiteList = whiteList.replace(/{/g,"");
+	whiteList = whiteList.replace(/}/g,"");
+	whiteList = whiteList.replace(/domains:/g,"");
+	whiteList = whiteList.split(",");
 /**
  *	Here starts the Bot.
  */
  casper.start();
 
- accounts.forEach(function(account) {
+ usersaccounts.forEach(function(account) {
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
 
-	 var username = account.user;
+	 var username = account.email;
 	 /*var username = "tobmapx@outlook.com";*/
 	/**
 	 * Password from email to login
 	 * @type {[type]}
 	 */
-	 var password = account.pwd;
+	 var password = account.password;
 	 /*var password = "tobMAPS-123";*/
 
 	 casper.thenOpen(url, function(){
 		this.echo("You're in CASPER.THENOPEN");
+		this.echo("Emails: "+usersaccounts);
+		this.echo("Domains: "+whiteList+" Black: "+blackList);
 		this.fill('form[name="f1"]',
 		{
 			loginfmt:username,
@@ -137,11 +173,25 @@ accounts.push({user : casper.cli.get("username"), pwd : casper.cli.get("password
 		this.waitForText("Send", function(){
 			this.clickLabel("Send");
 		});
-		this.wait(1000);
+		this.wait(2000);
 	 });
 	});/*Casper.repeat*/
 
-
+ casper.then(function(){
+		this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
+			this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
+		});
+	 });
+	 casper.then(function(){
+		this.wait(5000);
+	 });
+	 casper.then(function(){
+		this.waitForText("Sign out",function(){
+			this.clickLabel("Sign out");
+			username ="";
+			password ="";
+		});
+	 });
 
 	 casper.then(function(){
 		this.wait(10000);
