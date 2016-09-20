@@ -50,8 +50,8 @@ var process_exec_sync = function (command) {
 			]
 		}).map(function(c){
 			return {email:c.email, email:c.email,
-							password:c.password,password:c.password}
-		});
+				password:c.password,password:c.password}
+			});
 		var gmailAccounts = Emails.find({
 			$or:[
 			{
@@ -69,11 +69,32 @@ var process_exec_sync = function (command) {
 			]
 		}).fetch();
 
+		var blackList = Lists.find({
+			$or:[
+			{
+				typelist:"blackList",
+				createdBy:this.userId
+			}
+			]
+		}).map(function(c){
+			return {domains:c.domains, domains:c.domains}
+		});
+		var whiteList = Lists.find({
+			$or:[
+			{
+				typelist:"whiteList",
+				createdBy:this.userId
+			}
+			]
+		}).map(function(c){
+			return {domains:c.domains, domains:c.domains}
+		});
+
 		var userSchedules = Schedules.find({
 			$or:[
-				{
-					createdBy:this.userId
-				}
+			{
+				createdBy:this.userId
+			}
 			]
 		}).fetch();
 
@@ -89,7 +110,7 @@ var process_exec_sync = function (command) {
 				console.log(username);
 				var password = yahooAccounts[i]["password"];
 				console.log(password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --accounts="'+outlookAccounts+'" --engine=slimerjs --disk-cache=no';
+				var line = 'casperjs ../../../../../tests/'+commandAction+' --accounts="'+outlookAccounts+'" --engine=slimerjs --disk-cache=no';
 				console.log("In command method", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();
@@ -116,7 +137,7 @@ var process_exec_sync = function (command) {
 			console.log(outlookAccounts);
 			/*for (var i = 0; i < outlookAccounts.length; i++) {*/
 				console.log("xvfb-run -a "+password);
-				var line = "casperjs ../../../../../tests/"+commandAction+" yahoo.com outlook.com --accounts="+ JSON.stringify(outlookAccounts)+" --engine=slimerjs --disk-cache=no";
+				var line = "casperjs ../../../../../tests/"+commandAction+"  --blacklist="+JSON.stringify(blackList) +" --whitelist="+ JSON.stringify(whiteList)+" --accounts="+ JSON.stringify(outlookAccounts)+" --engine=slimerjs --disk-cache=no";
 				console.log("In command method copy", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();

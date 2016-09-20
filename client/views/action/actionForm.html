@@ -8,12 +8,12 @@
 							<h5>Form to register an Action</h5>
 					</div>
 					<div class="ibox-content">
-						{{#autoForm collection="Actions" action=this id="actionForm" type="method" meteormethod="addAction"}}
+						{{#autoForm collection="Actions" action=this id="actionForm" }}
 						<fieldset>
 							{{> afQuickField name='name'}}
+							{{> afQuickField name='actions' options=definableActions firstOption=false}}
 							{{> afQuickField name='description' rows=3}}
 							{{> afQuickField name='isp'}}
-							{{> afQuickField name='typelist'}}
 						</fieldset>
 						<button type="submit" class="btn btn-primary btn-sm">Save</button>
 						<button type="reset" class="btn btn-default btn-sm">Cancel</button>

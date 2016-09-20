@@ -120,7 +120,7 @@ git clone repository
 # 2. You can create the bundle.tar.gz package from your local machine
 meteor bundle bundle-package.tar.gz
 # another option
-meteor build --directory /directory
+meteor build /directory
 
 # Now if you choose to create the build from your local machine, you need to upload the build-package.tar.gz to the server.
 # In your local machine or development environment, in your console, move to the folder directory where you have your build-package.tar.gz and write this command to upload the file to the server.
@@ -160,22 +160,22 @@ STEP 10 : Configuring Nginx and Passenger
 sudo nano /etc/nginx/conf.d/myapp.conf
 # Put this configuration inside the file:
 server {
-    listen 80;
-    server_name yourserver.com;
+		listen 80;
+		server_name yourserver.com;
 
-    # Tell Nginx and Passenger where your app's 'public' directory is
-    root /var/www/myapp/bundle/public;
+		# Tell Nginx and Passenger where your app's 'public' directory is
+		root /var/www/myapp/bundle/public;
 
-    # Turn on Passenger
-    passenger_enabled on;
-    # Tell Passenger that your app is a Meteor app
-    passenger_app_type node;
-    passenger_startup_file main.js;
+		# Turn on Passenger
+		passenger_enabled on;
+		# Tell Passenger that your app is a Meteor app
+		passenger_app_type node;
+		passenger_startup_file main.js;
 
-    # Tell your app where MongoDB is
-    passenger_env_var MONGO_URL mongodb://localhost:27017/myappdb;
-    # Tell your app what its root URL is
-    passenger_env_var ROOT_URL http://yourserver.com;
+		# Tell your app where MongoDB is
+		passenger_env_var MONGO_URL mongodb://localhost:27017/myappdb;
+		# Tell your app what its root URL is
+		passenger_env_var ROOT_URL http://yourserver.com;
 }
 
 # Restart Nginx Service

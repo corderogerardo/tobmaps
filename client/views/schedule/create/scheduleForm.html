@@ -9,18 +9,16 @@
 					</div>
 					<div class="ibox-content">
 						{{#autoForm collection="Schedules" id="schedulesForm" type="method" meteormethod="insertSchedule"}}
-						<fieldset class="col-sm-6">
+						<fieldset>
 							{{> afQuickField name='name'}}
 							{{> afQuickField name='description'}}
 
-							{{> afQuickField name='days' multiple=true tags=true }}
+							{{> afQuickField name='days' firstOption=false}}
 
-							{{> afQuickField name='hours' multiple=true tags=true options=hours }}
-						</fieldset>
-						<fieldset class="col-sm-6">
+							{{> afQuickField name='hours' options=hours firstOption=false}}
 							{{> afQuickField name='awakening'}}
 
-							{{> afQuickField name='actions' multiple=true tags=true options=actions }}
+							{{> afQuickField name='actions' options=actions }}
 
 							{{> afQuickField name='whitelist' options=whitelist }}
 
