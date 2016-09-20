@@ -28,7 +28,7 @@ Template.register.onRendered(function(){
         email:email,
         password:password,
       };
-      Meteor.call('addUserAccount',account, function(error){
+      Meteor.call('addAccount',account, function(error){
         if(error){
             if(error.reason == "Email already exists."){
                 validator.showErrors({

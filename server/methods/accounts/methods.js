@@ -2,6 +2,7 @@
 /**
  * Meteor methods in server side for accounts
  */
+
 Meteor.methods({
 
 	/**
@@ -14,11 +15,15 @@ Meteor.methods({
 	addRoles:function(userId){
     Roles.addUsersToRoles(userId, ['User']);
   },
-  addUserAccount: function(account){
-		return Accounts.createUser({
+  addAccount: function(account){
+		var userId = Accounts.createUser({
       email: account.email,
       password: account.password
     });
+    console.log(userId);
+    if(userId){
+    	return Accounts.sendVerificationEmail(userId);
+    }
 	},
 	 /* removeAccount: Method that validate if there is an user logged to remove an email to it's the collection.
 	 * @param  {User Object} userId
