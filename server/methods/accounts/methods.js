@@ -4,17 +4,20 @@
  */
 
 Meteor.methods({
-
 	/**
-	 * insertEmail: Method that validate if there is an user logged to insert an email to it's the collection.
+	 * addRoles: Method that set a User rol when the user login first time 
+	 * @param {User Object} userId
+	 */
+	addRoles:function(userId){
+    Roles.addUsersToRoles(userId, ['User']);
+  },
+  /**
+	 * addAccount: Method that validate if there is an user logged to insert an email to it's the collection
+	 * and send a verification email.
 	 * @param  {User Object} userId
 	 * @param  {Email Object} from the email form.
 	 * @return {Boolean} Return true if the email was insected correctly, false if does not.
 	 */
-	
-	addRoles:function(userId){
-    Roles.addUsersToRoles(userId, ['User']);
-  },
   addAccount: function(account){
 		var userId = Accounts.createUser({
       email: account.email,

@@ -5,16 +5,16 @@
 	// bootstrap the admin user if they exist -- You'll be replacing the id later
 	
 	smtp = {
-    username: 'tobmapsAdm',
+    username: 'username@example.com',
     password: 'password',
-    server: 'smtp.gmail.com',
+    server: 'smtp.example.com',
     port: 465
   };
 
   process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
   Accounts.emailTemplates = {
-    from: 'Administrator <example@domain.com>',
+    from: smtp.username,
     siteName: 'YourSite',
     verifyEmail: {
       subject: function(user) {
