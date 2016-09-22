@@ -1,4 +1,3 @@
-
 /**
  * @summary Meteor Blaze Template actionForm onRendered
  * I used to initialize the Select Multiple Jquery chosen-select element into the DOM.
@@ -34,5 +33,17 @@ Template.actionForm.helpers({
 		arractions.push({label:"unsubscribeAction",value:"unsubscribeAction"});
 		arractions.push({label:"multipleAccountsSendEmailAction",value:"multipleAccountsSendEmailAction"});
 		return arractions;
+	}
+});
+/**
+ * @summary Meteor Blaze Template actionForm Events
+ * Here I create an event handler to listen then the user click on cancel button to reset form.
+ */
+Template.actionForm.events({
+	'click button[type=reset]':function(event){
+		event.preventDefault();
+		$('.chosen-select').val('').trigger('chosen:updated');
+		$('#actionForm').trigger('reset');
+		$('#actionForm > button[type="submit"]').removeAttr('disabled');
 	}
 });
