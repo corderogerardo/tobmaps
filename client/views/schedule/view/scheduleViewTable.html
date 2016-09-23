@@ -41,9 +41,7 @@
 	<tr class="gradeX">
 		<td>{{ name }}</td>
 		<td>
-			{{#each actions}}
-			<span class="label label-primary">{{> scheduleTableItemsActionsName botId=this }}</span>
-			{{/each}}
+			{{> scheduleTableItemsActionsName botId=actions }}
 		</td>
 		<td>
 			<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-schedule" type="button"></button>
@@ -51,5 +49,7 @@
 	</tr>
 </template>
 <template name="scheduleTableItemsActionsName">
-	{{ getById botId}}
+{{#each getById botId}}
+	<span class="label label-primary">{{this}}</span>
+{{/each}}
 </template>
