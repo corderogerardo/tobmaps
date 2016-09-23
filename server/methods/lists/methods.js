@@ -1,3 +1,14 @@
+/**
+ * @summary    Meteor Server Side Methods for Lists Module
+ * insertList: Method used to insert new Lists, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert List.
+ * @param      {User Object} userId from logged user
+ * @param      {Action Object} from the Action Form
+ * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
+ *
+ * removeList: Method used to remove Lists, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete List.
+ * @param  {String} id of the actual List
+ * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
+ */
 Meteor.methods({
 	insertList:function(listf){
 		if(!this.userId){
@@ -9,7 +20,7 @@ Meteor.methods({
 			check(listf.domains,Array);
 			listf.createdOn = new Date();
 			listf.createdBy = this.userId;
-			Lists.insert(listf);
+			return Lists.insert(listf);
 		}
 	},
 	updateList:function(doc){

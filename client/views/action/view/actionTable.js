@@ -1,6 +1,6 @@
 /**
- * @summary Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
- * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets.
+ * @summary Meteor Subscribe for Actions is the way we use to take the actions data from publications and pass to client user template.
+ * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
  */
 Meteor.subscribe("actions");
 

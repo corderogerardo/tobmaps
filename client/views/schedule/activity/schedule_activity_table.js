@@ -1,4 +1,8 @@
-Template.schedule_view_table.events({
+/**
+ * @summary Meteor Blaze Template schedule_activity_table Events
+ * Here I create an event handler to listen then the user click on cancel button activate to test schedules activations
+ */
+Template.schedule_activity_table.events({
 	'click .js-active-botone':function(event){
 		console.log('I clicked button one');
 		event.preventDefault();

@@ -1,173 +1,173 @@
 <template name="scheduleBeta">
-<div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-          <form class="js-form-schedule" role="form">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Schedule Weekly Cron</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-6 b-r">
-                            <div class="col-sm-12">
-												<div class="form-group">
-												<label for="Schedule Name">Schedule Name</label>
-												<input type="text" name="nameSchedule" id="nameSchedule" class="form-control" placeholder="Schedule Name" value="" required="required" title="">
-												</div>
-												<div class="form-group">
-												<label for="Schedule Description">Schedule Description</label>
-												<textarea class="form-control" rows="2" id="descriptionSchedule" placeholder="Description"></textarea>
-												</div>
-                            </div>
-	                            <div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Monday">
-	                                <label class="onoffswitch-label" for="Monday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-2">
-									<label for="">Monday</label>
-	                            </div>
-	                            </div>
-	                            <div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Tuesday">
-	                                <label class="onoffswitch-label" for="Tuesday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-3">
-									<label for="">Tuesday</label>
-	                            </div>
-	                            </div>
-	                            <div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Wednesday">
-	                                <label class="onoffswitch-label" for="Wednesday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-3">
-									<label for="">Wednesday</label>
-	                            </div>
-	                            </div>
-<div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Thurstday">
-	                                <label class="onoffswitch-label" for="Thurstday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-3">
-									<label for="">Thurstday</label>
-	                            </div>
-	                            </div>
-<div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Friday">
-	                                <label class="onoffswitch-label" for="Friday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-3">
-									<label for="">Friday</label>
-	                            </div>
-	                            </div>
-						<div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Saturday">
-	                                <label class="onoffswitch-label" for="Saturday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-3">
-									<label for="">Saturday</label>
-	                            </div>
-	                    </div>
-	                    <div class="col-sm-12">
-	                            <div class="col-sm-2">
-	                            	<div class="switch">
-	                            	<div class="onoffswitch">
-	                                <input type="checkbox" checked class="onoffswitch-checkbox" id="Sunday">
-	                                <label class="onoffswitch-label" for="Sunday">
-	                                    <span class="onoffswitch-inner"></span>
-	                                    <span class="onoffswitch-switch"></span>
-	                                </label>
-	                            	</div>
-	                        		</div>
-	                            </div>
-	                            <div class="col-sm-3">
-									<label for="">Sunday</label>
-	                            </div>
-	                    </div>
-
-
-                            </div>
-                            <div class="col-sm-6">
-
-<div class="form-group">
-	<p>
-			<label for="Select the hours to be executed.">Select the hours to be executed.</label>
-	</p>
-	{{> multiselectComponent}}
-</div>
-                                	<div class="form-group">
-                                		<label for="">Awakening</label>
-                                		<input type="number" name="" id="awakening" class="form-control" value="" min="0" max="60" step="" required="required" title="time">
-                                	</div>
-                                	<div class="form-group">
-                                		<label for="">Select Actions</label>
-                                		<br>
-
-                                		{{> multiselectActions}}
-
-
-                                	</div>
-                            </div>
-                        </div>
-                <div class="row">
-	                <div class="col-lg-12">
-						<div>
-							<button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Save</strong></button>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<form class="js-form-schedule" role="form">
+				<div class="col-lg-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>Schedule Weekly Cron</h5>
 						</div>
-	                </div>
-                </div>
-              </div><!-- End Ibox-content -->
-             </div><!-- End ibox float-e-margins -->
-            </div><!-- End col-lg-12 -->
-         </form><!-- End form -->
-         </div>
-</div>
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-sm-6 b-r">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="Schedule Name">Schedule Name</label>
+											<input type="text" name="nameSchedule" id="nameSchedule" class="form-control" placeholder="Schedule Name" value="" required="required" title="">
+										</div>
+										<div class="form-group">
+											<label for="Schedule Description">Schedule Description</label>
+											<textarea class="form-control" rows="2" id="descriptionSchedule" placeholder="Description"></textarea>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Monday">
+													<label class="onoffswitch-label" for="Monday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<label for="">Monday</label>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Tuesday">
+													<label class="onoffswitch-label" for="Tuesday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<label for="">Tuesday</label>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Wednesday">
+													<label class="onoffswitch-label" for="Wednesday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<label for="">Wednesday</label>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Thurstday">
+													<label class="onoffswitch-label" for="Thurstday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<label for="">Thurstday</label>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Friday">
+													<label class="onoffswitch-label" for="Friday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<label for="">Friday</label>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Saturday">
+													<label class="onoffswitch-label" for="Saturday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<label for="">Saturday</label>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="col-sm-2">
+											<div class="switch">
+												<div class="onoffswitch">
+													<input type="checkbox" checked class="onoffswitch-checkbox" id="Sunday">
+													<label class="onoffswitch-label" for="Sunday">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<label for="">Sunday</label>
+										</div>
+									</div>
+
+
+								</div>
+								<div class="col-sm-6">
+
+									<div class="form-group">
+										<p>
+											<label for="Select the hours to be executed.">Select the hours to be executed.</label>
+										</p>
+										{{> multiselectComponent}}
+									</div>
+									<div class="form-group">
+										<label for="">Awakening</label>
+										<input type="number" name="" id="awakening" class="form-control" value="" min="0" max="60" step="" required="required" title="time">
+									</div>
+									<div class="form-group">
+										<label for="">Select Actions</label>
+										<br>
+
+										{{> multiselectActions}}
+
+
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div>
+										<button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Save</strong></button>
+									</div>
+								</div>
+							</div>
+						</div><!-- End Ibox-content -->
+					</div><!-- End ibox float-e-margins -->
+				</div><!-- End col-lg-12 -->
+			</form><!-- End form -->
+		</div>
+	</div>
 </template>

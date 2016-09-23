@@ -2,7 +2,7 @@
  * This render the graph's bots activity to the template
  * @return {Graph rendered} -
  */
- Template.schedule_view_graph.rendered = function(){
+ Template.schedule_activity_graph.onRendered( function(){
 		// Data and options for charts
 		/**
 		 * The object barOptions holds the internal configurations for the graph. Here you can change the series, lines, axis , color[add a new color per each data], grid.
@@ -139,4 +139,4 @@
 		 * This the Jquery function that take the id of the graph container and pass the data and configuration to draw the data.
 		 */
 		 $.plot($("#flot-line-chart-schedule"), [barData,barDataTwo,barDataTree], barOptions);
-		};
+});

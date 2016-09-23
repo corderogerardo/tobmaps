@@ -25,9 +25,7 @@ var process_exec_sync = function (command) {
 	return future.wait();
 };
 
-/**
- * Meteor methods in server side for schedules
- */
+
  Meteor.methods({
 	command: function(commandAction,domain) {
 		if(!this.userId){
@@ -158,10 +156,16 @@ var process_exec_sync = function (command) {
 		return true;
 	},
 	/**
+	 * @summary   Meteor Server Side Methods for Schedules Module
 	 * insertSchedule: Method that validate if there is an user logged to insert a schedule to it's collection.
 	 * @param  {User Object} userId User logged
 	 * @param  {schedule Object} from the scheduleForm form.
 	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
+	 *
+	 *
+	 * removeSchedule: Method used to remove Schedules, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete Schedule.
+	 * @param  {String} id of the actual Schedule
+	 * @return {Boolean} Return true if the schedule was deleted correctly, false if does not.
 	 */
 	 insertSchedule: function(schedulef){
 		if(!this.userId){
@@ -173,13 +177,13 @@ var process_exec_sync = function (command) {
 			check(schedulef.days,Array);
 			check(schedulef.hours,Array);
 			check(schedulef.awakening,Number);
-			check(schedulef.actions,Array);
+			check(schedulef.actions,String);
 			check(schedulef.whitelist,String);
 			check(schedulef.blacklist,String);
 			schedulef.schedulelogged = [''];
 			schedulef.createdOn = new Date();
 			schedulef.createdBy = this.userId;
-			Schedules.insert(schedulef);
+			return Schedules.insert(schedulef);
 		}
 	 },
 	 removeSchedule:function(schedule_id){

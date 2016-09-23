@@ -77,9 +77,9 @@ Template.defaultActions.events({
 		if(Meteor.user()){
 			console.log('I clicked button one');
 			event.preventDefault();
-			var commandAction = 'yahoo/moveInboxAction.js';
+			var commandAction = 'yahoo/moveSpamAction.js';
 			var domain = 'yahoo';
-			Meteor.call("commandcopy",commandAction,domain, function (error, result){
+			Meteor.call("command",commandAction,domain, function (error, result){
 				if(error){
 					console.log(error);
 					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+error,'This error happen when running this bot! '+commandAction);
@@ -96,7 +96,7 @@ Template.defaultActions.events({
 			event.preventDefault();
 			var commandAction = 'yahoo/moveSpamAction.js';
 			var domain = 'yahoo';
-			Meteor.call("commandcopy",commandAction,domain, function (error, result){
+			Meteor.call("command",commandAction,domain, function (error, result){
 				if(error){
 					console.log(error);
 					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+error,'This error happen when running this bot! '+commandAction);
@@ -113,7 +113,7 @@ Template.defaultActions.events({
 			event.preventDefault();
 			var commandAction = 'yahoo/unsubscribeAction.js';
 			var domain = 'yahoo';
-			Meteor.call("commandcopy",commandAction,domain, function (error, result){
+			Meteor.call("command",commandAction,domain, function (error, result){
 				if(error){
 					console.log(error);
 					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+error,'This error happen when running this bot! '+commandAction);
@@ -128,9 +128,9 @@ Template.defaultActions.events({
 		if(Meteor.user()){
 			console.log('I clicked button one');
 			event.preventDefault();
-			var commandAction = 'yahoo/multipleAccountsAction.js';
+			var commandAction = 'yahoo/multipleAccountsSendEmailAction.js';
 			var domain = 'yahoo';
-			Meteor.call("commandcopy",commandAction,domain, function (error, result){
+			Meteor.call("command",commandAction,domain, function (error, result){
 				if(error){
 					console.log(error);
 					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+error,'This error happen when running this bot! '+commandAction);

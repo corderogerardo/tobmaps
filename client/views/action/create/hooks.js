@@ -1,5 +1,5 @@
 /**
- * @summary Object for Hooks of form actionForm
+ * @summary Object for AutoForm Hooks of actionForm
  *
  * [hooksObjects
  * I listen for submit event of a form,
@@ -11,7 +11,7 @@
  *  success message to user, if there are errors send an error message]
  * @type {Object}
  */
-var hooksObjects = {
+var hooksActions = {
 	onSubmit:function(insertDoc){
 		var values = [];
 		$('.search-choice > a').each(function(index,value){
@@ -35,15 +35,14 @@ var hooksObjects = {
 		$('#actionForm').trigger('reset');
 		$('#actionForm > button[type="submit"]').removeAttr('disabled');
 		return false;
-	},
-
+	}
 };
 /**
  * @summary Meteor AutoForm Hooks for actionForm form
- * [actionForm is the form and the hooksObjects is the
+ * [actionForm is the form and the hooksActions is the
  * object create before this.]
  * @type {[type]}
  */
 AutoForm.hooks({
-	actionForm:hooksObjects
+	actionForm:hooksActions
 });
