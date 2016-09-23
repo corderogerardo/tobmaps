@@ -35,28 +35,52 @@ Template.navigation.events({
       Router.go("usersView.show", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-yahoo':function(event){
+  'click .js-show-yahoo-register':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("yahoo.show", {_id: Meteor.userId()});
+      Router.go("yahoo.show-add", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-gmail':function(event){
+  'click .js-show-yahoo-view':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("gmail.show", {_id: Meteor.userId()});
+      Router.go("yahoo.show-view", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-outlook':function(event){
+  'click .js-show-gmail-register':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("outlook.show", {_id: Meteor.userId()});
+      Router.go("gmail.show-add", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-aol':function(event){
+  'click .js-show-gmail-view':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("aol.show", {_id: Meteor.userId()});
+      Router.go("gmail.show-view", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-outlook-register':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("outlook.show-add", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-outlook-view':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("outlook.show-view", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-aol-register':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("aol.show-add", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-aol-view':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("aol.show-view", {_id: Meteor.userId()});
     }
   },
   'click .js-show-schedule-view':function(event){

@@ -122,7 +122,6 @@ var process_exec_sync = function (command) {
 		});
 		console.log(userSchedules);
 		if(domain==="yahoo"){
-<<<<<<< HEAD
 			var line = "casperjs ../../../../../tests/"+commandAction+" --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(yahooAccounts)+" --engine=slimerjs --disk-cache=no";
 			console.log("In command method", line);
 			var Fiber = Npm.require('fibers');
@@ -142,35 +141,6 @@ var process_exec_sync = function (command) {
 					return botcli;
 				}).run();
 			});
-=======
-			for (var i = 0; i < yahooAccounts.length; i++) {
-				var username = yahooAccounts[i]["email"];
-				console.log(username);
-				var password = yahooAccounts[i]["password"];
-				console.log(password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' --accounts="'+outlookAccounts+'" --engine=slimerjs --disk-cache=no';
-				console.log("In command method", line);
-				var Fiber = Npm.require('fibers');
-				this.unblock();
-				exec(line, function(error, stdout, stderr) {
-					console.log('Command Method Error: '+ error);
-					console.log('Command Method STOUT: '+ stdout);
-					console.log('Command Method STDERR: '+ stderr);
-					Fiber(function() {
-						//Replies.remove({});
-						var botcli = ScheduleLoggers.insert({
-							out: JSON.stringify(stdout),
-							stderror: JSON.stringify(stderr),
-							errors:JSON.stringify(error),
-							command:line,
-							createdOn: new Date(),
-							createdBy:this.userId,
-						});
-						return botcli;
-					}).run();
-				});
-			}
->>>>>>> gerardo
 		}
 		if(domain==="outlook"){
 			console.log(outlookAccounts);

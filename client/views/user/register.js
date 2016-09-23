@@ -15,7 +15,7 @@ Template.register.rendered = function(){
 /**
  * onRendered functions to execute a function when the “register” template is first created and then when the “register” template is rendered.
  * @param  {[class='js-register-form']} )
- * @param  {[name='emaio']} )
+ * @param  {[name='email']} )
  * @param  {[name='password']} )
  * @return {[Meteor.call(function(error))]}
  */

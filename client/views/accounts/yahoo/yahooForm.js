@@ -5,7 +5,7 @@
  * @param  {[class='js-add-account']} )
  * @param  {[name='email']} )
  * @param  {[name='password']} )
- * @return {[Meteor.call(function(error))]}
+ * @return {[Meteor.call(function(err, res))]}
  */
 Template.yahooForm.onRendered(function(){
   var validator = $('.js-add-account').validate({
@@ -16,8 +16,8 @@ Template.yahooForm.onRendered(function(){
         email:email,
         password:password,
       };
-      Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(error){
-        if(error){
+      Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err, res){
+        if(err){
           validator.showErrors({
             email: "The domain is invalid."   
           });
