@@ -5,7 +5,7 @@
 
 -- Software Stack on Production:
 1. MongoDB Enterprise 3.3.2
-2. Node.js LTS 4.4.7
+2. Node.js LTS 4.5
 2. NodeJS "Forever" module to start application in the background.
 
 STEP 1: Install additional packages for Linux Enterprise Server. This provides the server with the information to complete the next steps.
@@ -15,12 +15,12 @@ sudo yum install -y epel-release yum-utils
 sudo yum-config-manager --enable epel
 yum update -y
 
-STEP 2: Install NodeJS 4.4.7 LTS Version.
+STEP 2: Install NodeJS 4.5 LTS Version.
 DOCUMENTATION: 'https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora'
 
 curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -
 yum -y install nodejs
-# To check the version of nodejs to be 4.4.7 and NPM version.
+# To check the version of nodejs to be 4.5 and NPM version.
 node -v
 npm -v
 # If npm version is 2.15 you need to upgrade NPM
@@ -120,7 +120,7 @@ git clone repository
 # 2. You can create the bundle.tar.gz package from your local machine
 meteor bundle bundle-package.tar.gz
 # another option
-meteor build --directory /directory
+meteor build /directory
 
 # Now if you choose to create the build from your local machine, you need to upload the build-package.tar.gz to the server.
 # In your local machine or development environment, in your console, move to the folder directory where you have your build-package.tar.gz and write this command to upload the file to the server.
@@ -160,22 +160,22 @@ STEP 10 : Configuring Nginx and Passenger
 sudo nano /etc/nginx/conf.d/myapp.conf
 # Put this configuration inside the file:
 server {
-    listen 80;
-    server_name yourserver.com;
+		listen 80;
+		server_name yourserver.com;
 
-    # Tell Nginx and Passenger where your app's 'public' directory is
-    root /var/www/myapp/bundle/public;
+		# Tell Nginx and Passenger where your app's 'public' directory is
+		root /var/www/myapp/bundle/public;
 
-    # Turn on Passenger
-    passenger_enabled on;
-    # Tell Passenger that your app is a Meteor app
-    passenger_app_type node;
-    passenger_startup_file main.js;
+		# Turn on Passenger
+		passenger_enabled on;
+		# Tell Passenger that your app is a Meteor app
+		passenger_app_type node;
+		passenger_startup_file main.js;
 
-    # Tell your app where MongoDB is
-    passenger_env_var MONGO_URL mongodb://localhost:27017/myappdb;
-    # Tell your app what its root URL is
-    passenger_env_var ROOT_URL http://yourserver.com;
+		# Tell your app where MongoDB is
+		passenger_env_var MONGO_URL mongodb://localhost:27017/myappdb;
+		# Tell your app what its root URL is
+		passenger_env_var ROOT_URL http://yourserver.com;
 }
 
 # Restart Nginx Service

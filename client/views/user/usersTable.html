@@ -1,0 +1,50 @@
+<template name="usersTable">
+    <!-- Page heading -->
+    {{> pageHeading title='View Users List' category='Users' }}
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Accounts List</h5>
+                    </div>
+                    <div class="ibox-content">
+                      <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {{#each accounts}}
+                            <tr>
+                              <td class="text-left">{{_id}}
+                              </td>
+                              <td class="text-left">{{emails.[0].address}}
+                              </td>
+                              <td class="text-left">{{roles.[0]}}
+                              </td>
+                              <td class="text-left">
+                                <a class="js-delete-account" href="#"><i class="fa fa-trash-o text-danger">
+                                </i></a>
+                              </td>
+                            </tr>
+                          {{/each}}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

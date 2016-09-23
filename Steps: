@@ -1,0 +1,15 @@
+Steps:
+git checkout gerardo
+git fetch origin
+git pull origin gerardo
+git status
+git log
+Deberia salir el ultimo commit que es el del login-module.
+
+git merge fernando
+
+git checkout fernando
+
+git status
+git log
+Deberia salir el ultimo commit : login - module
