@@ -51,30 +51,30 @@
                 <li class="">
                     <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Actions</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
-                        <li class=""><a class='js-show-actions' href="#">Add</a></li>
-                        <li class=""><a class='js-show-users-view' href="#">View</a></li>
+                        <li class=""><a class='js-show-actions-register' href="#">Create</a></li>
+                        <li class=""><a class='js-show-actions-view' href="#">View</a></li>
                     </ul>
                 </li>
                 {{/if}}
                 <li class="">
                     <a href="#"><i class="fa fa-cloud"></i> <span class="nav-label">Domains</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
-                        <li class=""><a class='js-show-domains' href="#">Add</a></li>
+                        <li class=""><a class='js-show-domains-register' href="#">Add</a></li>
                         <li class=""><a class='js-show-domains-view' href="#">View</a></li>
                     </ul>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fa fa-list"></i> <span class="nav-label">List</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Lists</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
-                        <li class=""><a class='js-show-lists' href="#">Add</a></li>
-                        <li class=""><a class='js-show-domains-view' href="#">View</a></li>
+                        <li class=""><a class='js-show-lists-register' href="#">Create</a></li>
+                        <li class=""><a class='js-show-lists-view' href="#">View</a></li>
                     </ul>
                 </li>
                 <li class="{{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist'}}">
-                    <a href="schedule"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Schedule</span><span class="fa arrow"></span></a>
+                    <a href="schedule"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Schedules</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse {{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist' className='in'}}">
+                        <li class="{{isActiveRoute regex='graphRickshaw'}}"><a class="js-show-schedule-register" href="#">Create</a></li>
                         <li class="{{isActiveRoute regex='graphFlot'}}"><a class="js-show-schedule-view" href="#">View</a></li>
-                        <li class="{{isActiveRoute regex='graphRickshaw'}}"><a class="js-show-schedule-create" href="#">Create</a></li>
                     </ul>
                 </li>
                 <li>

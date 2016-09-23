@@ -83,34 +83,52 @@ Template.navigation.events({
       Router.go("aol.show-view", {_id: Meteor.userId()});
     }
   },
+  'click .js-show-schedule-register':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("schedule.show-add", {_id: Meteor.userId()});
+    }
+  },
   'click .js-show-schedule-view':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("scheduleView.show", {_id: Meteor.userId()});
+      Router.go("schedule.show-view", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-schedule-create':function(event){
+  'click .js-show-actions-register':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("scheduleFormView.show", {_id: Meteor.userId()});
+      Router.go("actions.show-add", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-actions':function(event){
+  'click .js-show-actions-view':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("actions.show", {_id: Meteor.userId()});
+      Router.go("actions.show-view", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-domains':function(event){
+  'click .js-show-domains-register':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("domains.show", {_id: Meteor.userId()});
+      Router.go("domains.show-add", {_id: Meteor.userId()});
     }
   },
-  'click .js-show-lists':function(event){
+  'click .js-show-domains-view':function(event){
     event.preventDefault();
     if(Meteor.user()){
-      Router.go("lists.show", {_id: Meteor.userId()});
+      Router.go("domains.show-view", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-lists-register':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("lists.show-add", {_id: Meteor.userId()});
+    }
+  },
+  'click .js-show-lists-view':function(event){
+    event.preventDefault();
+    if(Meteor.user()){
+      Router.go("lists.show-view", {_id: Meteor.userId()});
     }
   },
 })
