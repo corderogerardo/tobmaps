@@ -7,7 +7,7 @@
  * @param  {[name='password']} )
  * @return {[Meteor.call(function(error))]}
  */
-Template.yahooForm.onRendered(function(){
+Template.aolForm.onRendered(function(){
   var validator = $('.js-add-account').validate({
     submitHandler: function(){
       var email = $('[name=email]').val();
@@ -16,7 +16,7 @@ Template.yahooForm.onRendered(function(){
         email:email,
         password:password,
       };
-      Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(error){
+      Meteor.call('addAEmailAol', Meteor.userId(), account, function(error){
         if(error){
           validator.showErrors({
             email: "The domain is invalid."   
@@ -30,12 +30,12 @@ Template.yahooForm.onRendered(function(){
   });
   $('.js-multi-form').validate({
     rules: {
-        yahhoString: {
+        aolString: {
             required: true
         },
     },
     messages: {
-      yahhoString: {
+      aolString: {
           required: "You must enter an email address and password."
       },
     }
@@ -75,14 +75,19 @@ $.validator.setDefaults({
  * @param  {string} acounts and passwords
  * @param  {account} orders the string in mail and password pairs 
  */
-Template.yahooForm.events({
+Template.aolForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
-		var string = $('[name=yahhoString]').val();
-		var array = string.split(",");
-    for (var i = 0; i < array.length; i=i+2) {
-			var email = array[i];
-			var password = array[i+1];
+		var lines, lineNumber, data, length;
+    data = $('[name=aolString]').val();
+		lines = data.split('\n');
+    lineNumber = 0;
+    for (var i = lines.length - 1; i >= 0; i--) {
+			var l = lines[i]
+      lineNumber++;
+      data = l.split(',');
+      var email = data[0];
+			var password = data[1];
 			var account = {
 				email:email,
 				password:password,
@@ -90,7 +95,7 @@ Template.yahooForm.events({
 			/**
 			 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
 			 */
-			Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err,res){
+			Meteor.call('addAEmailAol', Meteor.userId(), account, function(err,res){
         if(err){
           console.log("Error "+err);
           toastr.error('The account is invalid '+err,'Account could not be added!');

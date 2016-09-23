@@ -40,7 +40,10 @@ var process_exec_sync = function (command) {
 				createdBy:this.userId
 			}
 			]
-		}).fetch();
+		}).map(function(c){
+			return {email:c.email, email:c.email,
+							password:c.password,password:c.password}
+		});
 		var outlookAccounts = Emails.find({
 			$or:[
 			{
@@ -97,41 +100,47 @@ var process_exec_sync = function (command) {
 			}
 			]
 		}).fetch();
-
-		var accounts = [
-		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-		{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
-		];
+		var whitelist = Lists.find({
+			$or:[
+			{
+				typelist:"whiteList",
+				createdBy:this.userId
+			}
+			]
+		}).map(function(c){
+			return {domains:c.domains, domains:c.domains}
+		});
+		var blacklist = Lists.find({
+			$or:[
+			{
+				typelist:"blackList",
+				createdBy:this.userId
+			}
+			]
+		}).map(function(c){
+			return {domains:c.domains, domains:c.domains}
+		});
 		console.log(userSchedules);
 		if(domain==="yahoo"){
-			for (var i = 0; i < yahooAccounts.length; i++) {
-				var username = yahooAccounts[i]["email"];
-				console.log(username);
-				var password = yahooAccounts[i]["password"];
-				console.log(password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' --accounts="'+outlookAccounts+'" --engine=slimerjs --disk-cache=no';
-				console.log("In command method", line);
-				var Fiber = Npm.require('fibers');
-				this.unblock();
-				exec(line, function(error, stdout, stderr) {
-					console.log('Command Method Error: '+ error);
-					console.log('Command Method STOUT: '+ stdout);
-					console.log('Command Method STDERR: '+ stderr);
-					Fiber(function() {
-						//Replies.remove({});
-						var botcli = ScheduleLoggers.insert({
-							out: JSON.stringify(stdout),
-							stderror: JSON.stringify(stderr),
-							errors:JSON.stringify(error),
-							command:line,
-							createdOn: new Date(),
-							createdBy:this.userId,
-						});
-						return botcli;
-					}).run();
-				});
-			}
+			var line = "casperjs ../../../../../tests/"+commandAction+" --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(yahooAccounts)+" --engine=slimerjs --disk-cache=no";
+			console.log("In command method", line);
+			var Fiber = Npm.require('fibers');
+			this.unblock();
+			exec(line, function(stderr, stdout) {
+				console.log('Command Method STDOUT: '+ stdout);
+				console.log('Command Method STDERR: '+ stderr);
+				Fiber(function() {
+					//Replies.remove({});
+					var botcli = ScheduleLoggers.insert({
+						out: JSON.stringify(stdout),
+						stderror: JSON.stringify(stderr),
+						command:line,
+						createdOn: new Date(),
+						createdBy:this.userId,
+					});
+					return botcli;
+				}).run();
+			});
 		}
 		if(domain==="outlook"){
 			console.log(outlookAccounts);

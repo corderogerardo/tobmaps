@@ -1,9 +1,13 @@
 /* Initialize fooTable*/
-Template.yahooTables.onRendered(function(){
+Template.gmailTables.onRendered(function(){
   $('.footable').footable();
+  $('.footable2').footable();
 });
 
-/* Subscribe to read data */
+/**
+ * @summary Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
+ * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets.
+ */
 Meteor.subscribe("emails", function(){
 	return Emails.find().fetch();
 });
@@ -13,11 +17,11 @@ Meteor.subscribe("emails", function(){
  * @param  {[function]} 
  * @return {[emails] (Query projection)}
  */
-Template.yahooTables.helpers({
+Template.gmailTables.helpers({
 	emails:function(){
-		return Emails.find({createdBy:Meteor.userId(), typeDomain:'yahoo.com'}).fetch();
+		return Emails.find({createdBy:Meteor.userId(), typeDomain:'gmail.com'});
 	},
-  // return true if I am allowed to edit the current account, false otherwise
+	// return true if I am allowed to edit the current account, false otherwise
   userCanEdit : function(doc,Collection) {
     // can edit if the current account is owned by me.
     doc = Emails.findOne({createdBy:Meteor.userId()});
@@ -30,7 +34,15 @@ Template.yahooTables.helpers({
   } 
 });
 
-Template.yahooTables.events({
+/**
+ * @summary Meteor Blaze Template actionTable Events
+ * Here I create an event handler to listen when the user click on button to delete an account.
+ * First check if there is an user logged in
+ * Second looks for the account id to be deleted
+ * Third Call Method pass the id data and finally use a callback to check if the operation was performed or not to inform the user.
+ * @param this._id refer to account._id
+ */
+Template.gmailTables.events({
   'click .js-delete-account':function(){
     var account_id = this._id;
     console.log(account_id);
@@ -44,4 +56,4 @@ Template.yahooTables.events({
         }
       });
   },
-})
+});

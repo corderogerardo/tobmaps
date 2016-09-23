@@ -1,12 +1,11 @@
 /* Initialize fooTable*/
-Template.gmailTables.onRendered(function(){
+Template.usersTable.onRendered(function(){
   $('.footable').footable();
-  $('.footable2').footable();
 });
 
 /* Subscribe to read data */
-Meteor.subscribe("emails", function(){
-	return Emails.find().fetch();
+Meteor.subscribe("userData", function(){
+	return Meteor.users.find();
 });
 
 /**
@@ -14,28 +13,17 @@ Meteor.subscribe("emails", function(){
  * @param  {[function]} 
  * @return {[emails] (Query projection)}
  */
-Template.gmailTables.helpers({
-	emails:function(){
-		return Emails.find({createdBy:Meteor.userId(), typeDomain:'gmail.com'});
-	},
-	// return true if I am allowed to edit the current account, false otherwise
-  userCanEdit : function(doc,Collection) {
-    // can edit if the current account is owned by me.
-    doc = Emails.findOne({createdBy:Meteor.userId()});
-    if (doc){
-      return true;
-    }
-    else {
-      return false;
-    }
-  } 
+Template.usersTable.helpers({
+	accounts:function(){
+		return Meteor.users.find({_id:{$ne:Meteor.userId()}});
+	}, 
 });
 
-Template.gmailTables.events({
+Template.usersTable.events({
   'click .js-delete-account':function(){
     var account_id = this._id;
     console.log(account_id);
-    Meteor.call('removeAccount', Meteor.userId(), account_id, function(err,res){
+    Meteor.call('removeUserAccount', Meteor.userId(), account_id, function(err,res){
         if(err){
           console.log("Error "+err);
           toastr.error('Hi '+Meteor.user().emails[0].address+', '+err,'Account could not be deleted!');
@@ -45,4 +33,4 @@ Template.gmailTables.events({
         }
       });
   },
-});
+})

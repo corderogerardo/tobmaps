@@ -40,40 +40,98 @@
                         <li class="{{isActiveRoute regex='dashboard5'}}"><a href="{{pathFor route='dashboard5'}}">Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
                     </ul>
                 </li>
-                <li class="{{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist'}}">
-                    <a href="schedule"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Schedule</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse {{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist' className='in'}}">
-                        <li class="{{isActiveRoute regex='graphFlot'}}"><a class="js-show-schedule-view" href="#">View</a></li>
-                        <li class="{{isActiveRoute regex='graphRickshaw'}}"><a class="js-show-schedule-create" href="#">Create</a></li>
-                    </ul>
-                </li>
                 {{#if isAdminUser 'Admin'}}
-                <li class="{{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist'}}">
+                <li class="">
                     <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
-                        <li class=""><a href="">View</a></li>
                         <li class=""><a class='js-show-register' href="#">Add</a></li>
+                        <li class=""><a class='js-show-users-view' href="#">View</a></li>
                     </ul>
                 </li>
                 <li class="">
-                    <a class="js-show-actions" href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Actions</span></a>
+                    <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Actions</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li class=""><a class='js-show-actions-register' href="#">Create</a></li>
+                        <li class=""><a class='js-show-actions-view' href="#">View</a></li>
+                    </ul>
                 </li>
                 {{/if}}
                 <li class="">
-                    <a class="js-show-domains" href="#"><i class="fa fa-cloud"></i> <span class="nav-label">Domains</span></a>
-                </li>
-                <li class="">
-                    <a class="js-show-lists" href="#"><i class="fa fa-list"></i> <span class="nav-label">Lists</span></a>
-                </li>
-                 <li class="">
-                    <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Accounts</span><span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-cloud"></i> <span class="nav-label">Domains</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse ">
-                        <li class=""><a class="js-show-yahoo" href="#">Yahoo</a></li>
-                        <li class=""><a class="js-show-gmail" href="#">Gmail</a></li>
-                        <li class=""><a class="js-show-outlook" href="#">Outlook</a></li>
-                        <li class=""><a class="js-show-aol" href="#">AOL</a></li>
+                        <li class=""><a class='js-show-domains-register' href="#">Add</a></li>
+                        <li class=""><a class='js-show-domains-view' href="#">View</a></li>
                     </ul>
                 </li>
+                <li class="">
+                    <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Lists</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse ">
+                        <li class=""><a class='js-show-lists-register' href="#">Create</a></li>
+                        <li class=""><a class='js-show-lists-view' href="#">View</a></li>
+                    </ul>
+                </li>
+                <li class="{{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist'}}">
+                    <a href="schedule"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Schedules</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse {{isActiveRoute regex='graphFlot|graphMorris|graphRickshaw|graphChartJs|graphPeity|graphSparkline|graphChartist' className='in'}}">
+                        <li class="{{isActiveRoute regex='graphRickshaw'}}"><a class="js-show-schedule-register" href="#">Create</a></li>
+                        <li class="{{isActiveRoute regex='graphFlot'}}"><a class="js-show-schedule-view" href="#">View</a></li>
+                    </ul>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Accounts </span><span class="fa arrow"></span></a>
+                  <ul class="nav nav-second-level collapse">
+                      <li>
+                          <a href="#">Yahoo <span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level">
+                              <li>
+                                  <a class="js-show-yahoo-register" href="#">Add</a>
+                              </li>
+                              <li>
+                                  <a class="js-show-yahoo-view" href="#">View</a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+                  <ul class="nav nav-second-level collapse">
+                      <li>
+                          <a href="#">Gmail <span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level">
+                              <li>
+                                  <a class="js-show-gmail-register" href="#">Add</a>
+                              </li>
+                              <li>
+                                  <a class="js-show-gmail-view" href="#">View</a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+                  <ul class="nav nav-second-level collapse">
+                      <li>
+                          <a href="#">Outlook <span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level">
+                              <li>
+                                  <a class="js-show-outlook-register" href="#">Add</a>
+                              </li>
+                              <li>
+                                  <a class="js-show-outlook-view" href="#">View</a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+                  <ul class="nav nav-second-level collapse">
+                      <li>
+                          <a href="#">AOL <span class="fa arrow"></span></a>
+                          <ul class="nav nav-third-level">
+                              <li>
+                                  <a class="js-show-aol-register" href="#">Add</a>
+                              </li>
+                              <li>
+                                  <a class="js-show-aol-view" href="#">View</a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
 
                 <li class="">
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">IMAP/SMTP</span><span class="fa arrow"></span></a>

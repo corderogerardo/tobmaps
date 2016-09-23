@@ -7,7 +7,7 @@
  * @param  {[name='password']} )
  * @return {[Meteor.call(function(error))]}
  */
-Template.gmailForm.onRendered(function(){
+Template.outlookForm.onRendered(function(){
   var validator = $('.js-add-account').validate({
     submitHandler: function(){
       var email = $('[name=email]').val();
@@ -16,7 +16,7 @@ Template.gmailForm.onRendered(function(){
         email:email,
         password:password,
       };
-      Meteor.call('addAEmailGmail', Meteor.userId(), account, function(error){
+      Meteor.call('addAEmailOutlook', Meteor.userId(), account, function(error){
         if(error){
           validator.showErrors({
             email: "The domain is invalid."   
@@ -30,12 +30,12 @@ Template.gmailForm.onRendered(function(){
   });
   $('.js-multi-form').validate({
     rules: {
-        gmailString: {
+        outlookString: {
             required: true
         },
     },
     messages: {
-      gmailString: {
+      outlookString: {
           required: "You must enter an email address and password."
       },
     }
@@ -75,14 +75,19 @@ $.validator.setDefaults({
  * @param  {string} acounts and passwords
  * @param  {account} orders the string in mail and password pairs 
  */
-Template.gmailForm.events({
+Template.outlookForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
-		var string = $('[name=gmailString]').val();
-		var array = string.split(",");
-    for (var i = 0; i < array.length; i=i+2) {
-			var email = array[i];
-			var password = array[i+1];
+    var lines, lineNumber, data, length;
+		data = $('[name=outlookString]').val();
+		lines = data.split('\n');
+    lineNumber = 0;
+    for (var i = lines.length - 1; i >= 0; i--) {
+      var l = lines[i]
+      lineNumber++;
+      data = l.split(',');
+      var email = data[0];
+      var password = data[1];
 			var account = {
 				email:email,
 				password:password,
@@ -90,7 +95,7 @@ Template.gmailForm.events({
 			/**
 			 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
 			 */
-			Meteor.call('addAEmailGmail', Meteor.userId(),account, function(err,res){
+			Meteor.call('addAEmailOutlook', Meteor.userId(), account, function(err,res){
         if(err){
           console.log("Error "+err);
           toastr.error('The account is invalid '+err,'Account could not be added!');
