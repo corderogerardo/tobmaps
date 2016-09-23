@@ -25,6 +25,17 @@ Template.scheduleViewTable.helpers({
 		return Schedules.find().fetch();
 	},
 });
+
+/**
+ * @summary Meteor Blaze Template scheduleViewTable Helpers
+ * @param  {Schedules} schedules Get all the schedules passed from publications.
+ *
+ */
+Template.scheduleTableItems.helpers({
+	actionsData:function(){
+		return Actions.find().fetch();
+	},
+});
 /**
  * @summary Meteor Blaze Template scheduleTableItemsActionsName Helpers
  * @param  {Actions} getById search over actions with given id and get the name.
@@ -32,10 +43,10 @@ Template.scheduleViewTable.helpers({
  */
 Template.scheduleTableItemsActionsName.helpers({
 	getById:function(botId){
-		var name = Actions.findOne({
+		var actions = Actions.findOne({
 			_id:botId
-		}).name;
-		return name;
+		}).actions;
+		return actions;
 	}
 });
 /**
