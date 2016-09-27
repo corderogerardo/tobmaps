@@ -162,249 +162,18 @@
 		  * Loop with all actions
 		  */
 			actions.forEach(function(action){
+
 				if(action === 'moveSpamAction'){
-					/**
-					 * Casper.then we add a new navigation step to the bot.
-					 * Select messages out inbox to spam (list)
-					 */
-					casper.then(function(){
-						this.waitForText("Inbox", function() {
-					  	this.clickLabel("Inbox");
-					  	this.wait(5000);
-					  });
-					});
-
-					/**
-					 *	Casper.then we add a new navigation step to the bot.
-					 *	We iterate over all emails messages and save their ids, title and checkbox status
-					 */
-					 var messagesSpam;
-					 casper.then(function(){
-						/**
-						 *	Casper.evaluate - Evaluates an expression in the current page DOM context - This case we iterate over all the messages in the inbox folder of the yahoo email account and save their ids in array ids.
-						 * @type {Array objects}
-						 */
-						 messagesSpam = this.evaluate(function(){
-							ids = [];
-							/**
-							 * Jquery.Each function.
-							 * @return {Object}
-							 */
-							 $.each($("div.list-view-item"), function(x,y){
-								ids.push({
-									message_id: $(this).attr("id"),
-									email: $('div.from', this).attr("title"),
-									data_cid: $('input[title="Checkbox, not checked"]', this).attr("data-cid")
-								});
-							 });
-							 return ids;
-							});
-						 utils.dump(messagesSpam);
-						});
-
-					/**
-					 * Casper.then we add a new navigation step to the bot.
-					 */
-					 casper.then(function(){
-						/**
-						 * Casper.each method to Iterates over messagesSpam array items and execute a callback
-						 * @return {[type]}
-						 */
-						 this.each(messagesSpam, function(self, obj){
-							var tag = false;
-							self.then(function(){
-								this.each(whiteList, function(self, white){
-									if(obj.email.replace(/.*@/, "") == white){
-										tag = true;	
-									}
-								});
-								if (tag == false) {
-									this.click('input[data-cid="'+obj.data_cid+'"]');
-								}	
-							});
-						});
-
-						 casper.waitForSelector("button[id='main-btn-spam']", function() {
-							this.click("button[id='main-btn-spam']");
-							this.wait(20000);
-						});
-					});
-				/**** end ****/
+					moveSpamMessages(whiteList);
 				}
-				if(action === 'unsubscribeAction'){
-					/**
-					 * Casper.then we add a new navigation step to the bot.
-					 * Select messages out inbox to spam (list)
-					 */
-						casper.then(function(){
-							this.waitForText("Inbox", function() {
-						  	this.clickLabel("Inbox");
-						  	this.wait(5000);
-						  });
-						});
-
-						var messages;
-						casper.then(function(){
-							messages = this.evaluate(function(){
-								ids = [];
-								$.each($("div.list-view-item"), function(x,y){
-									ids.push({
-										message_id: $(this).attr("id"),
-										email: $('div.from', this).attr("title")
-									});
-								});
-								return ids;
-							});
-							utils.dump(messages);
-						});
-
-						casper.then(function(){
-							this.each(messages, function(self, obj){
-								var tag = false;
-								self.then(function(){
-									this.each(whiteList, function(self, white){
-										if(obj.email.replace(/.*@/, "") == white){
-											tag = true;
-										}
-									});
-									if (tag == true) {
-										this.click('div[id="'+obj.message_id+'"]');
-										this.wait(3000);
-										casper.then(function(){
-											this.evaluate(function(){
-												$.each($("div.thread-body a"), function(){
-													if($(this).text() != "unsubscribe"){
-														this.click("div.thread-body a");
-													}
-												});
-											});
-											this.wait(2000);
-										});
-										casper.then(function(){
-											this.waitForText("Inbox", function() {
-												this.clickLabel("Inbox");
-												this.wait(8000);
-											});
-										});
-									}
-								});
-							});
-						});
-
-				/**** end ****/
-				}
+				/*if(action === 'unsubscribeAction'){
+					unsubscribe(whiteList);
+				}*/
 				if(action === 'multipleAccountsSendEmailAction'){
-					casper.repeat(1, function(){
-						casper.then(function(){
-							this.waitForText("Compose", function() {
-								this.clickLabel("Compose");
-								this.wait(1000);
-							});
-						});
-
-						casper.waitForSelector("input[name='to-field']", function() {
-							this.click("input[name='to-field']");
-						});
-
-						casper.waitForSelector("input[name='to-field']", function() {
-							this.sendKeys("input[name='to-field']", "tobmaps@yahoo.com");
-						});
-
-						casper.waitForSelector("input[id='subject-field']", function() {
-							this.click("input[id='subject-field']");
-						});
-
-						casper.waitForSelector("input[id='subject-field']", function() {
-							this.sendKeys("input[id='subject-field']", "Send Message with links");
-						});
-
-						casper.waitForSelector("div[id='rtetext']", function() {
-							this.click("input[id='rtetext']");
-						});
-
-						casper.waitForSelector("div[id='rtetext']", function() {
-							this.sendKeys("div[id='rtetext']", "http://casperjs.org/ \n");
-							this.sendKeys("div[id='rtetext']", "https://slimerjs.org/ ");
-							this.wait(1000);
-						});
-
-						casper.then(function(){
-							this.waitForText("Send", function() {
-								this.clickLabel("Send");
-								this.wait(5000);
-							});
-						});
-
-						casper.then(function(){
-							this.wait(10000);
-					 	});
-
-					});
-				/**** end ****/
+					ramdomLinksMessages(whiteList);
 				}
 				if(action === 'moveInboxAction'){
-					casper.then(function(){
-						this.waitForText("Spam", function() {
-							this.clickLabel("Spam");
-							this.wait(10000);
-						});
-					 });
-					/**
-					 *	Casper.then we add a new navigation step to the bot.
-					 *	We iterate over all emails messages and save their ids, title and checkbox status
-					 */
-					 var messagesInbox;
-					 casper.then(function(){
-						/**
-						 *	Casper.evaluate - Evaluates an expression in the current page DOM context - This case we iterate over all the messages in the inbox folder of the yahoo email account and save their ids in array ids.
-						 * @type {Array objects}
-						 */
-						 messagesInbox = this.evaluate(function(){
-							ids = [];
-							/**
-							 * Jquery.Each function.
-							 * @return {Object}
-							 */
-							 $.each($("div.list-view-item"), function(x,y){
-								ids.push({
-									message_id: $(this).attr("id"),
-									email: $('div.from', this).attr("title"),
-									data_cid: $('input[title="Checkbox, not checked"]', this).attr("data-cid")
-								});
-							 });
-							 return ids;
-							});
-						 utils.dump(messagesInbox);
-						});
-
-					/**
-					 * Casper.then we add a new navigation step to the bot.
-					 */
-					casper.then(function(){
-						/**
-						 * Casper.each method to Iterates over messagesInbox array items and execute a callback
-						 * @return {[type]}
-						 */
-					 this.each(messagesInbox, function(self, obj){
-						var tag = false;
-						self.then(function(){
-							this.each(blackList, function(self, black){
-								if(obj.email.replace(/.*@/, "") == black){
-									tag = true;
-								}
-							});
-							if (tag == false) {
-								this.click('input[data-cid="'+obj.data_cid+'"]');
-							}
-						});
-					 });
-
-					 casper.waitForSelector("button[id='btn-not-spam']", function() {
-						this.click("button[id='btn-not-spam']");
-						this.wait(20000);
-					 });
-					});
-					/*** end ***/
+					moveInboxMessages(blackList);
 				}
 			/*** end loop actions ***/
 			});
@@ -446,3 +215,257 @@
 casper.run(function(){
 	this.exit();
 });
+
+
+/** Functions with the actions for yahoo accounts */
+
+function moveSpamMessages(whiteList) {
+	casper.then(function(){
+		this.waitForText("Inbox", function() {
+	  	this.clickLabel("Inbox");
+	  	this.wait(5000);
+	  });
+	});
+
+	/**
+	 *	Casper.then we add a new navigation step to the bot.
+	 *	We iterate over all emails messages and save their ids, title and checkbox status
+	 */
+	var messagesSpam;
+	casper.then(function(){
+		/**
+		 *	Casper.evaluate - Evaluates an expression in the current page DOM context - This case we iterate over all the messages in the inbox folder of the yahoo email account and save their ids in array ids.
+		 * @type {Array objects}
+		 */
+		messagesSpam = this.evaluate(function(){
+			ids = [];
+			/**
+			 * Jquery.Each function.
+			 * @return {Object}
+			 */
+			$.each($("div.list-view-item"), function(x,y){
+				ids.push({
+					message_id: $(this).attr("id"),
+					email: $('div.from', this).attr("title"),
+					data_cid: $('input[title="Checkbox, not checked"]', this).attr("data-cid")
+				});
+			});
+			return ids;
+		});
+		utils.dump(messagesSpam);
+	});
+
+	/**
+	 * Casper.then we add a new navigation step to the bot.
+	 */
+	casper.then(function(){
+		/**
+		 * Casper.each method to Iterates over messagesSpam array items and execute a callback
+		 * @return {[type]}
+		 */
+		this.each(messagesSpam, function(self, obj){
+			var tag = false;
+			self.then(function(){
+				this.each(whiteList, function(self, white){
+					if(obj.email.replace(/.*@/, "") == white){
+						tag = true;	
+					}
+				});
+				if (tag == false) {
+					this.click('input[data-cid="'+obj.data_cid+'"]');
+				}	
+			});
+		});
+
+		casper.waitForSelector("button[id='main-btn-spam']", function() {
+			this.click("button[id='main-btn-spam']");
+			this.wait(20000);
+		});
+	});
+
+	casper.then(function(){
+		this.wait(5000);
+	});
+}
+
+function moveInboxMessages(blackList){
+	casper.then(function(){
+		this.waitForText("Spam", function() {
+			this.clickLabel("Spam");
+			this.wait(10000);
+		});
+	});
+		/**
+		 *	Casper.then we add a new navigation step to the bot.
+		 *	We iterate over all emails messages and save their ids, title and checkbox status
+		 */
+	var messagesSpam;
+	casper.then(function(){
+			/**
+			 *	Casper.evaluate - Evaluates an expression in the current page DOM context - This case we iterate over all the messages in the inbox folder of the yahoo email account and save their ids in array ids.
+			 * @type {Array objects}
+			 */
+		messagesSpam = this.evaluate(function(){
+			ids = [];
+			/**
+			 * Jquery.Each function.
+			 * @return {Object}
+			 */
+			 $.each($("div.list-view-item"), function(x,y){
+				ids.push({
+					message_id: $(this).attr("id"),
+					email: $('div.from', this).attr("title"),
+					data_cid: $('input[title="Checkbox, not checked"]', this).attr("data-cid")
+				});
+			 });
+			 return ids;
+		});
+		utils.dump(messagesSpam);
+	});
+
+		/**
+		 * Casper.then we add a new navigation step to the bot.
+		 */
+	casper.then(function(){
+			/**
+			 * Casper.each method to Iterates over messagesSpam array items and execute a callback
+			 * @return {[type]}
+			 */
+		this.each(messagesSpam, function(self, obj){
+			var tag = false;
+			self.then(function(){
+				this.each(blackList, function(self, black){
+					if(obj.email.replace(/.*@/, "") == black){
+						tag = true;
+					}
+				});
+				if (tag == false) {
+					this.click('input[data-cid="'+obj.data_cid+'"]');
+				}
+			});
+		});
+
+		casper.waitForSelector("button[id='btn-not-spam']", function() {
+			this.click("button[id='btn-not-spam']");
+			this.wait(20000);
+		});
+	});
+
+	casper.then(function(){
+		this.wait(10000);
+	});
+}
+
+function unsubscribe(whiteList){
+	casper.then(function(){
+		this.waitForText("Inbox", function() {
+	  	this.clickLabel("Inbox");
+	  	this.wait(5000);
+	  });
+	});
+
+	var messages;
+	casper.then(function(){
+		messages = this.evaluate(function(){
+			ids = [];
+			$.each($("div.list-view-item"), function(x,y){
+				ids.push({
+					message_id: $(this).attr("id"),
+					email: $('div.from', this).attr("title")
+				});
+			});
+			return ids;
+		});
+		utils.dump(messages);
+	});
+
+	casper.then(function(){
+		this.each(messages, function(self, obj){
+			var tag = false;
+			self.then(function(){
+				this.each(whiteList, function(self, white){
+					if(obj.email.replace(/.*@/, "") == white){
+						tag = true;
+					}
+				});
+				if (tag == true) {
+					this.click('div[id="'+obj.message_id+'"]');
+					this.wait(3000);
+					casper.then(function(){
+						this.evaluate(function(){
+							$.each($("div.thread-body a"), function(){
+								if($(this).text() != "unsubscribe"){
+									this.click("div.thread-body a");
+								}
+							});
+						});
+						this.wait(2000);
+					});
+					casper.then(function(){
+						this.waitForText("Inbox", function() {
+							this.clickLabel("Inbox");
+							this.wait(8000);
+						});
+					});
+				}
+			});
+		});
+	});
+}
+
+function ramdomLinksMessages(whiteList){
+	casper.then(function(){
+		this.waitForText("Buzón", function() {
+			this.clickLabel("Buzón");
+			this.wait(2000);
+		});
+	});
+
+	var messages;
+	casper.then(function(){
+		messages = this.evaluate(function(){
+			ids = [];
+			$.each($("div.list-view-item"), function(x,y){
+				ids.push({
+					message_id: $(this).attr("id"),
+					email: $('div.from', this).attr("title")
+				});
+			});
+			return ids;
+		});
+		utils.dump(messages);
+	});
+
+	casper.then(function(){
+		this.each(messages, function(self, obj){
+			var tag = false;
+			self.then(function(){
+				this.each(whiteList, function(self, white){
+					if(obj.email.replace(/.*@/, "") == white){
+						tag = true;
+					}
+				});
+				if (tag == false) {
+					this.click('div[id="'+obj.message_id+'"]');
+					this.wait(3000);
+					casper.then(function(){
+						this.evaluate(function(){
+							$.each($("div.thread-body a"), function(){
+								if((Math.floor((Math.random() * 2) + 1)) == 1){
+									this.click("div.thread-body a");
+								}
+							});
+						});
+						this.wait(2000);
+					});
+					casper.then(function(){
+						this.waitForText("Buzón", function() {
+							this.clickLabel("Buzón");
+							this.wait(5000);
+						});
+					});
+				}
+			});
+		});
+	});
+}
