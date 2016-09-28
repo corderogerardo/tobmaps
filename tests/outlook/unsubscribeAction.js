@@ -1,3 +1,5 @@
+// patching phantomjs' require()
+var require = patchRequire(require);
 /**
  * Oulook Casper's Bot used to catch error when login
  * @type {CasperJS Bot}

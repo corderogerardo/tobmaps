@@ -1,9 +1,15 @@
+// my module, stored in universe.js
+// patching phantomjs' require()
+var require = patchRequire(require);
+
+// now you're ready to go
+var utils = require('utils');
 /**
  * Oulook Casper's Bot used to login into account and move
  * @type {CasperJS Bot}
  */
 
-exports.moveInbox = function(){
+var moveInbox = function(){
 casper.then(function(){
 	this.waitForText("Junk Email", function(){
 		this.clickLabel("Junk Email");
@@ -70,3 +76,5 @@ this.wait(10000);
 }); // casper.then*/
 
 };//End export.module
+
+exports.moveInbox = moveInbox;
