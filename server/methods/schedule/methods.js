@@ -1,6 +1,14 @@
 
 var exec = Npm.require('child_process').exec;
 
+var cron = Npm.require('node-schedule');
+
+var rule = new cron.RecurrenceRule();
+
+rule.dayOfWeek = [0, 2, 4];
+rule.hour = [14, 15, 16];
+rule.minute = [36, 40];
+
 var process_exec_sync = function (command) {
 	 // Load future from fibers
 	 var Future = Npm.require("fibers/future");
@@ -24,7 +32,6 @@ var process_exec_sync = function (command) {
 	// wait for future
 	return future.wait();
 };
-
 
  Meteor.methods({
 	command: function(commandAction,domain) {
@@ -318,23 +325,25 @@ var process_exec_sync = function (command) {
 		  * [line description]
 		  * @type {String}
 		  */
-		 	var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
-			console.log("In command method", line);
-			var Fiber = Npm.require('fibers');
-			this.unblock();
-			exec(line, function(stderr, stdout) {
-				console.log('Command Method STDOUT: '+ stdout);
-				console.log('Command Method STDERR: '+ stderr);
-				Fiber(function() {
-					var botcli = ScheduleLoggers.insert({
-						out: JSON.stringify(stdout),
-						stderror: JSON.stringify(stderr),
-						command:line,
-						createdOn: new Date(),
-						createdBy:this.userId,
-					});
-					return botcli;
-				}).run();
+			cron.scheduleJob(rule, function(){
+	    	console.log(schedule_id, 'Schedule Active');
+				var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
+				console.log("In command method", line);
+				var Fiber = Npm.require('fibers');
+				exec(line, function(stderr, stdout) {
+					console.log('Command Method STDOUT: '+ stdout);
+					console.log('Command Method STDERR: '+ stderr);
+					Fiber(function() {
+						var botcli = ScheduleLoggers.insert({
+							out: JSON.stringify(stdout),
+							stderror: JSON.stringify(stderr),
+							command:line,
+							createdOn: new Date(),
+							createdBy:this.userId,
+						});
+						return botcli;
+					}).run();
+				});
 			});
 		}
 	}

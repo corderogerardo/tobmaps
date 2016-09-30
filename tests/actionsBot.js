@@ -166,11 +166,11 @@
 				if(action === 'moveSpamAction'){
 					moveSpamMessages(whiteList);
 				}
-				/*if(action === 'unsubscribeAction'){
+				if(action === 'unsubscribeAction'){
 					unsubscribe(whiteList);
-				}*/
+				}
 				if(action === 'multipleAccountsSendEmailAction'){
-					ramdomLinksMessages(whiteList);
+					//ramdomLinksMessages(whiteList);
 				}
 				if(action === 'moveInboxAction'){
 					moveInboxMessages(blackList);
@@ -282,10 +282,6 @@ function moveSpamMessages(whiteList) {
 			this.wait(20000);
 		});
 	});
-
-	casper.then(function(){
-		this.wait(5000);
-	});
 }
 
 function moveInboxMessages(blackList){
@@ -349,10 +345,6 @@ function moveInboxMessages(blackList){
 			this.click("button[id='btn-not-spam']");
 			this.wait(20000);
 		});
-	});
-
-	casper.then(function(){
-		this.wait(10000);
 	});
 }
 

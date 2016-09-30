@@ -9,16 +9,16 @@ Meteor.startup(function () {
 	 * @type {Object}
 	 */
 	smtp = {
-    username: 'username@example.com',
-    password: 'password',
-    server: 'smtp.example.com',
+    username: 'tobmapsadm@gmail.com',
+    password: 'tobmaps12345678',
+    server: 'smtp.gmail.com',
     port: 465
   };
   /**
    * MAIL_URL: Set the environment variable with the parameters obtained from the SMTP object
    * @type {String} 
    */
-  //process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
+  process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 
   /**
    * emailTemplates: Personalize the appearance of verification email 
@@ -27,10 +27,10 @@ Meteor.startup(function () {
    */
   Accounts.emailTemplates = {
     from: smtp.username,
-    siteName: 'YourSite',
+    siteName: 'tobmapsAdm <'+smtp.username+'>',
     verifyEmail: {
       subject: function(user) {
-        return 'Verification email from tobmaps.com';
+        return '[TobMaps] Verify You Email Address';
       },
       text: function(user, url) {
         return 'Hi,\n' +
@@ -60,4 +60,4 @@ Meteor.startup(function () {
 	if (userx){
 		Roles.addUsersToRoles(userx._id, ['User']);
 	}
-	});
+});

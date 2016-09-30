@@ -87,3 +87,7 @@ Template.scheduleViewTable.events({
 		}
 	}
 });
+
+Template.scheduleTableItems.onRendered(function(){
+	
+});
