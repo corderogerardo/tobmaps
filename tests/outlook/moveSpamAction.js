@@ -26,7 +26,7 @@ results = casper.evaluate(function(){
 	 * Jquery.Each function.
 	 * @return {Array}
 	 */
-	 $.each($("div[autoid='_lvv_a'] > div"),function(x,y){
+	 $.each($("div[aria-label='conversation'] > div > div > div > div > div"),function(x,y){
 	/* $.each($("div[autoid='_lvv_9'] > div"),function(x,y){*/
 		ids.push($(y).attr("id"));
 	 });
@@ -89,15 +89,8 @@ casper.each(results, function iterateids(self,id){
 };//End module Exports
 
 exports.moveSpam = moveSpam;
-
-var moveInbox = function(){
-casper.then(function(){
-	this.waitForText("Junk Email", function(){
-		this.clickLabel("Junk Email");
-	});
-	this.wait(3000);
-	/*this.capture("ClickToJunt");*/
-});
+/*Move out spam to inbox*/
+var moveInbox = function(whiteList){
 
 casper.then(function(){
 results = this.evaluate(function(){
@@ -162,7 +155,7 @@ exports.moveInbox = moveInbox;
 
 var sendEmails = function(){
 
-casper.repeat(10,function(){
+casper.repeat(2,function(){
 	 casper.then(function(){
 		this.waitForText("New", function(){
 			this.clickLabel("New");
@@ -236,12 +229,12 @@ this.wait(10000);
 
 exports.sendEmails = sendEmails;
 
-var unsubscribe = function(){
+var unsubscribe = function(whiteList,blackList){
 
 casper.then(function(){
 results = this.evaluate(function(){
 	ids = [];
-	$.each($("div[autoid='_lvv_a'] > div"),function(x,y){
+	$.each($("div[aria-label='conversation'] > div > div > div > div > div"),function(x,y){
 		ids.push($(y).attr("id"));
 	});
 	return ids;

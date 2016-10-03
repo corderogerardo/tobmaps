@@ -10,29 +10,6 @@ var utils = require('utils');
  */
 
 var moveInbox = function(){
-casper.then(function(){
-	this.waitForText("Junk Email", function(){
-		this.clickLabel("Junk Email");
-	});
-	this.wait(3000);
-	/*this.capture("ClickToJunt");*/
-});
-
-casper.then(function(){
-results = this.evaluate(function(){
-	ids = [];
-	$.each($("div[autoid='_lvv_l'] > div > div > div > div > div"),function(x,y){
-		ids.push($(y).attr("id"));
-	});
-	return ids;
-});
-utils.dump(results);
-this.wait(2000);
-});
-
-casper.then(function(){
-this.echo("Mails ID: "+JSON.stringify(results));
-});
 
 casper.then(function(){
 this.each(results, function iterateids(self,id){

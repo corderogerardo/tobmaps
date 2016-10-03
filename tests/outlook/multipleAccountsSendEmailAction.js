@@ -55,25 +55,4 @@ casper.repeat(10,function(){
 	this.wait(2000);
  });
 });/*Casper.repeat*/
-
-casper.then(function(){
-	this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
-		this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
-	});
-});
-casper.then(function(){
-this.wait(5000);
-});
-casper.then(function(){
-this.waitForText("Sign out",function(){
-	this.clickLabel("Sign out");
-	username ="";
-	password ="";
-});
-});
-
-casper.then(function(){
-this.wait(10000);
-});
-
 };//End module.exports

@@ -1,4 +1,3 @@
-var outlookcasper = require('moveSpamAction');
 /**
  * Oulook Casper's Bot used to login into account and move
  * @type {CasperJS Bot}
@@ -7,10 +6,10 @@ var outlookcasper = require('moveSpamAction');
 /**
  * Import CasperJS module and create an instance with configurations.
  */
-	/*clientScripts: ['jquery.min.js'],*/
-	/*clientScripts: ['../../../../../tests/jquery.min.js'],*/
+ /*clientScripts: ['jquery.min.js'],*/
+ /*clientScripts: ['../../../../../tests/jquery.min.js'],*/
  var casper = require("casper").create({
-	clientScripts: ['jquery.min.js'],
+	/*clientScripts: ['jquery.min.js'],*/
 	verbose: true,
 	logLevel: "debug",
 	viewportSize:
@@ -27,7 +26,7 @@ var outlookcasper = require('moveSpamAction');
 	XSSAuditingEnabled: true
  });
 
-casper.on('page.error', function(msg, trace) {
+ casper.on('page.error', function(msg, trace) {
 	this.echo('Error: ' + msg, 'ERROR');
 	for(var i=0; i<trace.length; i++) {
 		var step = trace[i];
@@ -80,96 +79,96 @@ casper.on('page.error', function(msg, trace) {
  */
  var aolurl = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
 
-/*var accounts = casper.cli.get("accounts");*/
-var accounts = '[{"email":"test@gmail.com","password":"test123"},{"email":"test2@gmail.com","password":"test1234"},{"email":"test3@gmail.com","password":"test1234"},{"email":"test4@gmail.com","password":"test1234"},{"email":"test5@gmail.com","password":"test1234"},{"email":"test6@gmail.com","password":"test1234"},{"email":"test7@gmail.com","password":"test1234"},{"email":"test8@gmail.com","password":"test1234"},{"email":"test9@gmail.com","password":"test1234"},{"email":"test10@gmail.com","password":"test1234"},{"email":"test11@gmail.com","password":"test1234"},{"email":"test12@gmail.com","password":"test1234"},{"email":"test13@gmail.com","password":"test1234"},{"email":"tobmapx@outlook.com","password":"tobMAPS-123"},{"email":"ogeretle@outlook.com","password":"goMAD.123"},{"email":"mastercasper@outlook.com","password":"casper.123"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"}]';
-accounts = accounts.replace(/\[/g,"");
-accounts = accounts.replace(/]/g,"");
-accounts = accounts.replace(/{/g,"");
-accounts = accounts.replace(/}/g,"");
-accounts = accounts.replace(/email:/g,"");
-accounts = accounts.replace(/password:/g,"");
+ /*var accounts = casper.cli.get("accounts");*/
+ var accounts = '[{"email":"test@gmail.com","password":"test123"},{"email":"test2@gmail.com","password":"test1234"},{"email":"test3@gmail.com","password":"test1234"},{"email":"test4@gmail.com","password":"test1234"},{"email":"test5@gmail.com","password":"test1234"},{"email":"test6@gmail.com","password":"test1234"},{"email":"test7@gmail.com","password":"test1234"},{"email":"test8@gmail.com","password":"test1234"},{"email":"test9@gmail.com","password":"test1234"},{"email":"test10@gmail.com","password":"test1234"},{"email":"test11@gmail.com","password":"test1234"},{"email":"test12@gmail.com","password":"test1234"},{"email":"test13@gmail.com","password":"test1234"},{"email":"tobmapx@outlook.com","password":"tobMAPS-123"},{"email":"ogeretle@outlook.com","password":"goMAD.123"},{"email":"mastercasper@outlook.com","password":"casper.123"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"},{"email":"tobmaps@yahoo.com","password":"spamBOT-12345678"}]';
+ accounts = accounts.replace(/\[/g,"");
+ accounts = accounts.replace(/]/g,"");
+ accounts = accounts.replace(/{/g,"");
+ accounts = accounts.replace(/}/g,"");
+ accounts = accounts.replace(/email:/g,"");
+ accounts = accounts.replace(/password:/g,"");
 
-accounts = accounts.replace(/"/g,"");
-accounts = accounts.replace(/:/g,"");
+ accounts = accounts.replace(/"/g,"");
+ accounts = accounts.replace(/:/g,"");
 
-accounts = accounts.replace(/email/g,"");
-accounts = accounts.replace(/password/g,"");
+ accounts = accounts.replace(/email/g,"");
+ accounts = accounts.replace(/password/g,"");
 
 
-accounts = accounts.split(",");
-var objAccounts=[];
-for(var i = 0;i<accounts.length;i=i+2){
+ accounts = accounts.split(",");
+ var objAccounts=[];
+ for(var i = 0;i<accounts.length;i=i+2){
 	objAccounts.push({
 		email:accounts[i],
 		password:accounts[i+1]
 	});
-}
-/*var accounts = [{user: 'tobmapx@outlook.com',pwd: 'tobMAPS-123'}];*/
+ }
+ /*var accounts = [{user: 'tobmapx@outlook.com',pwd: 'tobMAPS-123'}];*/
 
 /**
  *	BlackList Variable
  * The blackList array is where we save the user domains the user specified in schedule as the selected blacklist, passed in the args when we use the meteor method.
  * @type {Array}
  */
-/*var blackList = casper.cli.get("blacklist");*/
-var blackList = '[{"domains":["yahoo.com"]}]';
-	blackList = blackList.replace("[","");
-	blackList = blackList.replace("]","");
-	blackList = blackList.replace(/\[/g,"");
-	blackList = blackList.replace(/\]/g,"");
-	blackList = blackList.replace(/{/g,"");
-	blackList = blackList.replace(/}/g,"");
-	blackList = blackList.replace(/domains:/g,"");
+ /*var blackList = casper.cli.get("blacklist");*/
+ var blackList = '[{"domains":["yahoo.com"]}]';
+ blackList = blackList.replace("[","");
+ blackList = blackList.replace("]","");
+ blackList = blackList.replace(/\[/g,"");
+ blackList = blackList.replace(/\]/g,"");
+ blackList = blackList.replace(/{/g,"");
+ blackList = blackList.replace(/}/g,"");
+ blackList = blackList.replace(/domains:/g,"");
 
-blackList = blackList.replace(/"/g,"");
-blackList = blackList.replace(/:/g,"");
+ blackList = blackList.replace(/"/g,"");
+ blackList = blackList.replace(/:/g,"");
 
-blackList = blackList.replace(/domains/g,"");
+ blackList = blackList.replace(/domains/g,"");
 
-	blackList = blackList.split(",");
+ blackList = blackList.split(",");
 /**
  *	WhiteList Variable
  * The whiteList array is where we save the user domains the user specified in schedule as the selected whitelist, passed in the args when we use the meteor method.
  * @type {Array}
  */
-/*var whiteList = casper.cli.get("whitelist");*/
-var whiteList ='[{"domains":["outlook.com","hotmail.com"]}]';
-	whiteList = whiteList.replace("[","");
-	whiteList = whiteList.replace("]","");
-	whiteList = whiteList.replace(/\[/g,"");
-	whiteList = whiteList.replace(/\]/g,"");
-	whiteList = whiteList.replace(/{/g,"");
-	whiteList = whiteList.replace(/}/g,"");
-	whiteList = whiteList.replace(/domains:/g,"");
+ /*var whiteList = casper.cli.get("whitelist");*/
+ var whiteList ='[{"domains":["outlook.com","hotmail.com"]}]';
+ whiteList = whiteList.replace("[","");
+ whiteList = whiteList.replace("]","");
+ whiteList = whiteList.replace(/\[/g,"");
+ whiteList = whiteList.replace(/\]/g,"");
+ whiteList = whiteList.replace(/{/g,"");
+ whiteList = whiteList.replace(/}/g,"");
+ whiteList = whiteList.replace(/domains:/g,"");
 
-whiteList = whiteList.replace(/"/g,"");
-whiteList = whiteList.replace(/:/g,"");
+ whiteList = whiteList.replace(/"/g,"");
+ whiteList = whiteList.replace(/:/g,"");
 
-whiteList = whiteList.replace(/domains/g,"");
+ whiteList = whiteList.replace(/domains/g,"");
 
-	whiteList = whiteList.split(",");
+ whiteList = whiteList.split(",");
 
-/*var actions = casper.cli.get("actions");*/
-var actions ='[{"actions":["multipleAccountsSendEmailAction","unsubscribeAction","moveSpamAction"]}]';
-	actions = actions.replace("[","");
-	actions = actions.replace("]","");
-	actions = actions.replace(/\[/g,"");
-	actions = actions.replace(/\]/g,"");
-	actions = actions.replace(/{/g,"");
-	actions = actions.replace(/}/g,"");
-	actions = actions.replace(/actions:/g,"");
+ /*var actions = casper.cli.get("actions");*/
+ var actions ='[{"actions":["multipleAccountsSendEmailAction","unsubscribeAction","moveSpamAction","moveInboxAction"]}]';
+ actions = actions.replace("[","");
+ actions = actions.replace("]","");
+ actions = actions.replace(/\[/g,"");
+ actions = actions.replace(/\]/g,"");
+ actions = actions.replace(/{/g,"");
+ actions = actions.replace(/}/g,"");
+ actions = actions.replace(/actions:/g,"");
 
-actions = actions.replace(/"/g,"");
-actions = actions.replace(/:/g,"");
+ actions = actions.replace(/"/g,"");
+ actions = actions.replace(/:/g,"");
 
-actions = actions.replace(/actions/g,"");
+ actions = actions.replace(/actions/g,"");
 
-	actions = actions.split(",");
+ actions = actions.split(",");
 
-console.log("Data: "+accounts);
-console.log("Data: "+whiteList);
-console.log("Data: "+blackList);
-console.log("Data: "+actions);
+ console.log("Data: "+accounts);
+ console.log("Data: "+whiteList);
+ console.log("Data: "+blackList);
+ console.log("Data: "+actions);
 
 /**
  *	We take the args we passed from meteorjs app.
@@ -180,9 +179,9 @@ console.log("Data: "+actions);
 /**
  *	Here start the Bots.
  */
-casper.start(function(self, index,objAccounts, whiteList, blackList, actions,outlookurl,yahoourl){
+ casper.start(function(self, index,objAccounts, whiteList, blackList, actions,outlookurl,yahoourl){
 
-});
+ });
 
 /**
  * Here we need to think how to build the functions
@@ -205,173 +204,433 @@ casper.start(function(self, index,objAccounts, whiteList, blackList, actions,out
  *
  */
 
-objAccounts.forEach(function(account,index){
-	console.log("This account "+JSON.stringify(account));
-	console.log("the black list "+JSON.stringify(blackList));
-	console.log("the outlookurl"+JSON.stringify(outlookurl));
-	console.log("the actions "+JSON.stringify(actions));
+ objAccounts.forEach(function(account,index){
 
-var accountDomain = account.email.replace(/.*@/, "");
-console.log(accountDomain);
-
-if(accountDomain=="outlook.com"){
+	var accountDomain = account.email.replace(/.*@/, "");
+	var actualaccount = account.email;
+	if(accountDomain=="outlook.com"){
+		var results;
+		var ids;
 	/**
 	 * Username from email to login
 	 * @type {String}
 	 */
 
-	/* var username = "tobmapx@outlook.com";*/
-	var username = account.email;
+	 /* var username = "tobmapx@outlook.com";*/
+	 var username = account.email;
 	/**
-	 * Password from email to login
+	 * Password from email to loginactions
 	 * @type {[type]}
 	 */
-	/* var password = "tobMAPS-123";*/
-	var password = account.password;
-casper.thenOpen(outlookurl,function(){
-	this.echo("You're in CASPER.THENOPEN");
+	 /* var password = "tobMAPS-123";*/
+	 var password = account.password;
+	 casper.then(function(){
+		this.wait(2000);
+	 });
+
+	 casper.thenOpen(outlookurl,function(){
+		this.echo("You're in CASPER.THENOPEN");
 		/**
 		 * With Casper.fill method we send the username values of the form
 		 * With Casper.fill method we send the password values of the form
 		 * @type {String}
 		 */
-		this.fill('form[name="f1"]',
-		{
+		 this.fill('form[name="f1"]',
+		 {
 			//tobmaps@yahoo.com
 			//spamBOT-12345678
 			loginfmt: username,
 			passwd: password
 		},true);
-		this.wait(10000);
-	});
-
-
+		 this.wait(10000);
+		});
 
 // HERE IS GOING TO BE CALLED THE FUNCTIONS MODULES IMPORTED
 // Iterate over all the actions to activate them
 casper.then(function(){
 	actions.forEach(function(action,index){
-		moveSpamMessagesOutlook(whiteList);
-		console.log("Action: "+action);
-		/*if(action=="moveSpamAction"){
+		if(action=="moveSpamAction"){
 			console.log("Here enter to MOVESPAM");
-
+			clickInboxOutlook();
+			takeIdsInboxOutlook();
+			moveSpamMessagesOutlook(blackList);
 		}
 		if(action=="moveInboxAction"){
-			console.log("Here enter to MOVEInbox");
+			console.log("Here enter to MOVEINBOX, out of Junk/spam");
+			clickJunkOutlook();
+			takeIdsSpamOutlook();
+			moveInboxMessagesOutlook(whiteList);
 		}
-		if(action ==="multipleAccountsSendEmailAction"){
+		if(action=="multipleAccountsSendEmailAction"){
 			console.log("Here enter to SendManyMAils");
+			clickInboxOutlook();
+			sendManyMessagesOutlook();
 		}
-		if(action === "unsubscribeAction"){
+		if(action== "unsubscribeAction"){
 			console.log("Here enter to unsubscribe");
-		}*/
-	});
+			clickInboxOutlook();
+			takeIdsInboxOutlook();
+			dontClickUnsubscribeOutlook(whiteList,blackList);
+		}
+
+	});/*end forEach*/
 });
-
-
-/**
+/**	this.wait(10000);
  * @summary    Logout for outlook
  * If statement to check if is the last action then check account domain and logout
  * @param  {String} accountDomain type of account domain
  * @return {[type]}               [description]
  */
-	casper.then(function(){
-		this.echo("How many emails were in junk? "+emails.length+" Mails out of Junk: "+countOutJunk);
-		this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
-			this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
-		});
-	});
-	casper.then(function(){
-		this.wait(1000);
-	});
-	casper.then(function(){
-		this.waitForText("Sign out",function(){
-			this.clickLabel("Sign out");
-		});
-	});
+clickJunkOutlook();
+clickDraftsOutlook();
+clickDeletedItemsOutlook();
+clickArchiveOutlook();
+clickInboxOutlook();
+logoutOutlook();
 }/*End IF accountDomain===outlook*/
+/*if(accountDomain=="yahoo.com"){
+
+}*/
+/*End IF accountDomain===yahoo*/
 }); /*End accounts.each*/
 
 
-/**
- * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
- * calling this method is mandatory in order to run the Casper navigation suite.
- */
-casper.run(function(){
-this.exit();
-});
-var results=[];
-var ids=[];
-var email="";
-var domain="";
-var emails=[];
-/*CasperJS Functions of Scripts for Outlook*/
-function moveSpamMessagesOutlook(whiteList){
-casper.then(function(){
-results = casper.evaluate(function(){
-	ids = [];
-	/**
-	 * Jquery.Each function.
-	 * @return {Array}
-	 */
-	 $.each($("div[autoid='_lvv_a'] > div"),function(x,y){
-	/* $.each($("div[autoid='_lvv_9'] > div"),function(x,y){*/
-		ids.push($(y).attr("id"));
-	 });
-	 return ids;
+ function takeIdsInboxOutlook(){
+	results=[];
+	casper.then(function(){
+		results = casper.evaluate(function(){
+			ids = [];
+		/**
+		 * Jquery.Each function.
+		 * @return {Array}
+		 */
+		 $.each($("div[aria-label='conversation'] > div > div > div > div > div"),function(x,y){
+			/* $.each($("div[autoid='_lvv_9'] > div"),function(x,y){*/
+				ids.push($(y).attr("id"));
+			});
+		 return ids;
+		});
 	});
-});
 
+	casper.then(function(){
+		this.echo("Mails ID: "+JSON.stringify(results));
+	});
+ }/*End function takeIdsInboxOutlook*/
+
+ function takeIdsSpamOutlook(){
+	results=[];
+	casper.then(function(){
+		results = this.evaluate(function(){
+			ids = [];
+			$.each($("div[autoid='_lvv_l'] > div > div > div > div > div"),function(x,y){
+				ids.push($(y).attr("id"));
+			});
+			return ids;
+		});
+		utils.dump(results);
+		this.wait(2000);
+	});
+	casper.then(function(){
+		this.echo("Mails ID: "+JSON.stringify(results));
+	});
+ }/*End function takeIdsInboxOutlook*/
+ function clickInboxOutlook(){
+	casper.then(function(){
+		this.waitForText("Inbox", function(){
+			this.clickLabel("Inbox");
+		});
+		this.wait(3000);
+		/*this.capture("ClickToJunt");*/
+	});
+ }
+ function clickDraftsOutlook(){
+	casper.then(function(){
+		this.waitForText("Drafts", function(){
+			this.clickLabel("Drafts");
+		});
+		this.wait(3000);
+		/*this.capture("ClickToJunt");*/
+	});
+ }
+ function clickSentItemsOutlook(){
+	casper.then(function(){
+		this.waitForText("Sent Items", function(){
+			this.clickLabel("Sent Items");
+		});
+		this.wait(3000);
+		/*this.capture("ClickToJunt");*/
+	});
+ }
+function clickDeletedItemsOutlook(){
+	casper.then(function(){
+		this.waitForText("Deleted Items", function(){
+			this.clickLabel("Deleted Items");
+		});
+		this.wait(3000);
+		/*this.capture("ClickToJunt");*/
+	});
+ }
+ function clickArchiveOutlook(){
+	casper.then(function(){
+		this.waitForText("Archive", function(){
+			this.clickLabel("Archive");
+		});
+		this.wait(3000);
+		/*this.capture("ClickToJunt");*/
+	});
+ }
+ function clickJunkOutlook(){
+	casper.then(function(){
+		this.waitForText("Junk Email", function(){
+			this.clickLabel("Junk Email");
+		});
+		this.wait(3000);
+		/*this.capture("ClickToJunt");*/
+	});
+ }
+function logoutOutlook(){
+	/*https://outlook.live.com/owa/logoff.owa*/
+	/*https://login.live.com/logout.srf?ct=1475252818&rver=6.4.6456.0&lc=8202&id=64855&ru=https:%2F%2Fblu183.mail.live.com%2Fhandlers%2FSignout.mvc%3Fservice%3DLive.Mail%26mkt%3Des-ve&mkt=es-ve*/
 casper.then(function(){
-this.echo("Mails ID: "+JSON.stringify(results));
+	this.waitForSelector("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']", function(){
+		this.click("button[autoid='__Microsoft_O365_ShellG2_MeTile_Owa_templates_cs_0']");
+	});
+ });
+ casper.then(function(){
+	this.wait(1000);
+ });
+casper.then(function(){
+	this.waitForText("Sign out",function(){
+		this.clickLabel("Sign out");
+	});
+ });
+casper.thenOpen("https://outlook.live.com/owa/logoff.owa",function(){
+	this.echo("logout yes");
 });
+casper.then(function(){
+this.wait(10000);
+});
+}
 
+ function moveSpamMessagesOutlook(blackList){
+	var email="";
+	var domain="";
+	var emails=[];
 /**
  * CasperJS Step to iterate over the ids emails search the email and extract the domain, if the domain match with a given blacklisted domain move the email to the Junk or Spam folder..
  */
-casper.then(function(){
-casper.each(results, function iterateids(self,id){
-	self.then(function thenIterate(){
-		casper.echo('div[id="'+id+'"] > div');
-		casper.click('div[id="'+id+'"] > div');
-		/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
-	});
-	self.wait(5000);
-	self.then(function(){
-		this.mouse.click('span[class="bidi allowTextSelection"]');
-		this.wait(5000);
-		email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
-		email = email.slice(18,email.length);
-		/**
-		 * Casper.waitForSelector wait to the email document appear so I can click over the message and extract the email and find the domain.
-		 */
-		 this.waitForSelector("div[role='presentation']",function(){
-		 /*this.waitForSelector("div[role='document']",function(){*/
+ casper.then(function(){
+	casper.each(results, function iterateids(self,id,index){
+		self.then(function thenIterate(){
+			casper.echo("Count "+(results.length-1));
+			casper.echo('index '+index);
+			casper.echo('#'+id+' > div');
+			casper.click('#'+id+' > div');
+			casper.mouse.click('#'+id+' > div');
+			/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
+		});
+		self.wait(5000);
+		self.then(function(){
 			this.mouse.click('span[class="bidi allowTextSelection"]');
 			this.wait(5000);
 			email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
 			email = email.slice(18,email.length);
-			emails.push(email);
-			domain = email.replace(/.*@/, "");
-			this.wait(2000);
-			this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " BlackList: "+blackList);
-			this.wait(5000);
-			/*blacklist = blacklist.split(",");*/
-			this.echo("BlackList of casper args: "+ blackList);
+		/**
+		 * Casper.waitForSelector wait to the email document appear so I can click over the message and extract the email and find the domain.
+		 */
+		 this.waitForSelector("div[role='presentation']",function(){
+			/*this.waitForSelector("div[role='document']",function(){*/
+				this.mouse.click('span[class="bidi allowTextSelection"]');
+				this.wait(5000);
+				email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+				email = email.slice(18,email.length);
+				emails.push(email);
+				domain = email.replace(/.*@/, "");
+				this.wait(2000);
+				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " BlackList: "+blackList);
+				this.wait(5000);
+				/*blacklist = blacklist.split(",");*/
+				this.echo("BlackList of casper args: "+ blackList);
 		/**
 		 * If the domain is in the blacklist I click to Junk to move to junk folder.
 		 * @param  {Number} blacklist.indexOf(domain)! indexOf Method to know if in the blacklist or not.
 		 */
 		 if(blackList.indexOf(domain)!=-1){
 			this.clickLabel("Junk");
-			countToJunk++;
 		 }
 		});
 		});
-});
-});
+
+	});
+ });
  casper.then(function(){
 	this.wait(10000);
  });
-}/*End function*/
+}/*End function moveSpamMessagesOutlook*/
+function moveInboxMessagesOutlook(whiteList){
+	casper.then(function(){
+		this.each(results, function iterateids(self,id){
+			casper.then(function thenIterate(){
+				this.echo('div[id="'+id+'"] > div');
+				this.click('div[id="'+id+'"] > div');
+				/*this.mouse.click('div[id="'+id+'"] > div > span[autoid="_lvv_j"]');*/
+				casper.wait(5000);
+			});
+			casper.then(function(){
+				this.mouse.click('span[class="bidi allowTextSelection"]');
+				this.wait(5000);
+				email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+				email = email.slice(18,email.length);
+
+				this.waitForSelector("div[role='document']",function(){
+					this.mouse.click('span[class="bidi allowTextSelection"]');
+					this.wait(5000);
+					email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+					email = email.slice(18,email.length);
+					emails.push(email);
+					domain = email.replace(/.*@/, "");
+					this.wait(2000);
+					this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " WhiteList: "+whiteList);
+					this.wait(5000);
+					this.echo("WhiteList of casper args: "+ whiteList);
+					if(whiteList.indexOf(domain)!=-1){
+						this.clickLabel("Not junk");
+						countOutJunk++;
+					}
+				});
+			});
+		});
+	});
+
+	casper.then(function(){
+		this.wait(10000);
+	});
+}/*End function moveInboxMessagesOutlook*/
+function sendManyMessagesOutlook(){
+	casper.repeat(2,function(){
+		casper.then(function(){
+			this.waitForText("New", function(){
+				this.clickLabel("New");
+			});
+			this.wait(2000);
+		});
+
+		casper.then(function(){
+			this.waitForText("To", function(){
+				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", 'tobmapx@outlook.com ', {keepFocus: true});
+				this.sendKeys("input[aria-label='To recipients. Enter an email address or a name from your contact list.']", casper.page.event.key.Enter , {keepFocus: true});
+				this.page.sendEvent("keypress", casper.page.event.key.Enter);
+				this.echo("send press enter to page");
+				this.wait(1000);
+			});
+		});
+
+
+		casper.then(function(){
+			this.waitForText("To",function(){
+				this.sendKeys("input[placeholder='Add a subject']", "this is killerbox");
+				this.wait(1000);
+			});
+		});
+
+		casper.then(function(){
+			this.waitForText("To", function(){
+				this.sendKeys("div[aria-label='Message body']","http://example.me \n");
+			});
+		});
+
+		casper.then(function(){
+			this.waitForText("To", function(){
+				this.sendKeys("div[aria-label='Message body']", 'http://paisajeweb.com.ve ', {keepFocus: true});
+				this.sendKeys("div[aria-label='Message body']", casper.page.event.key.Enter , {keepFocus: true});
+				this.page.sendEvent("keypress", casper.page.event.key.Enter);
+				this.echo("send press enter to page");
+				this.wait(1000);
+			});
+		});
+
+		casper.then(function(){
+			this.waitForText("Send", function(){
+				this.clickLabel("Send");
+			});
+			this.wait(2000);
+		});
+	});/*Casper.repeat*/
+}/*End function sendManyMessagesOutlook*/
+function dontClickUnsubscribeOutlook(whiteList,blackList){
+	casper.then(function(){
+this.each(results, function(self,id){
+	self.then(function(){
+		this.echo('div[id="'+id+'"]');
+		this.click('div[id="'+id+'"] > div');
+		this.wait(2000);
+		this.mouse.click('span[class="bidi allowTextSelection"]');
+		email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+		email = email.slice(18,email.length);
+		domain = email.replace(/.*@/, "");
+		emails=[];
+		this.then(function(){
+			this.wait(2000);
+			this.mouse.click('span[class="bidi allowTextSelection"]');
+			email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+			email = email.slice(18,email.length);
+			domain = email.replace(/.*@/, "");
+				this.echo("I take email and Domain: "+email+" "+domain);
+				this.echo("White and Black lists passed: "+whiteList+" "+blackList);
+				this.mouse.click('span[class="bidi allowTextSelection"]');
+				email = this.fetchText("a[class='_rpc_d1 o365button'] > span ");
+				email = email.slice(18,email.length);
+				emails.push(email);
+				domain = email.replace(/.*@/, "");
+				this.echo("2222 I take email and Domain: "+email+" "+domain);
+				this.echo("2222 White and Black lists passed: "+whiteList+" "+blackList);
+				this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " WhiteList: "+whiteList+ " BlackList: "+blackList);
+				this.wait(5000);
+
+				var isOnWhiteList ="";
+				isOnWhiteList = whiteList.indexOf(domain);
+				var isOnBlackList = "";
+				isOnBlackList = blackList.indexOf(domain);
+				this.echo("is on white or black lists "+isOnWhiteList+" "+isOnBlackList);
+				this.evaluate(function(isOnWhiteList, isOnBlackList){
+					$.each($("div[role='document'] a"), function(self,link){
+						self = this;
+						if(  $.trim( $(self).text() ) === 'unsubscribe') {
+							if(isOnWhiteList != -1){
+							}else{
+								if(isOnBlackList!= -1){
+									this.click(self);
+								}else{
+									var decide = Math.floor(Math.random() * 2) + 1;
+									if(decide === 1){
+										this.click(self);
+									}else{
+									}
+								}
+							}
+						}else{
+							this.click($(self));
+						}
+					});
+				},isOnWhiteList, isOnBlackList);
+				this.wait(5000);
+
+			this.wait(2000);
+		});
+	});
+});
+});
+casper.then(function(){
+this.wait(5000);
+});
+}
+
+
+
+/**
+ * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
+ * calling this method is mandatory in order to run the Casper navigation suite.
+ */
+ casper.run(function(){
+	this.exit();
+ });
