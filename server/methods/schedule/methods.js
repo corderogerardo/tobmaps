@@ -195,4 +195,147 @@ var process_exec_sync = function (command) {
 			return Schedules.remove(schedule_id);
 		}
 	 },
-	});
+	 activateSchedule:function(schedule_id){
+		if(!this.userId){
+			throw new Meteor.Error('not-authorized');
+		}
+		if(this.userId){
+			check(schedule_id,String);
+			/**
+			 * [schedule description]
+			 * @type {[type]}
+			 */
+			var schedule = Schedules.findOne({_id:schedule_id});
+			console.log(schedule);
+			/**
+			 * [description]
+			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
+			 * @return {[type]}                [description]
+			 */
+			var whitelist = Lists.find({
+				$or:[
+				{
+					_id:schedule.whitelist
+				}
+				]
+			}).map(function(c){
+				return {domains:c.domains, domains:c.domains}
+			});
+			console.log(whitelist);
+			/**
+			 * [description]
+			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
+			 * @return {[type]}                [description]
+			 */
+			var blacklist = Lists.find({
+				$or:[
+				{
+					_id:schedule.blacklist
+				}
+				]
+			}).map(function(c){
+				return {domains:c.domains, domains:c.domains}
+			});
+			console.log(blacklist);
+			/**
+			 * [description]
+			 * @param  {[type]} c){				return {actions:c.actions, actions:c.actions}			} [description]
+			 * @return {[type]}                [description]
+			 */
+			var actions = Actions.find({
+				$or:[
+				{
+					_id:schedule.actions
+				}
+				]
+			}).map(function(c){
+				return {actions:c.actions, actions:c.actions}
+			});
+			console.log(actions);
+			/**
+			 * [description]
+			 * @param  {[type]} c){				return {email:c.email, email:c.email,								password:c.password,password:c.password}			} [description]
+			 * @return {[type]}                [description]
+			 */
+			var actionObject = Actions.findOne({_id:schedule.actions});
+			
+			if(actionObject.isp === 'yahoo'){
+				var accounts = Emails.find({
+					$or:[
+						{
+							createdBy:schedule.createdBy,
+							typeDomain:'yahoo.com'
+						}
+					]
+					}).map(function(c){
+					return {email:c.email, email:c.email,
+									password:c.password,password:c.password}
+				});
+				console.log(accounts);
+			}
+			else if(actionObject.isp === 'gmail'){
+				var accounts = Emails.find({
+					$or:[
+						{
+							createdBy:schedule.createdBy,
+							typeDomain:'gmail.com'
+						}
+					]
+					}).map(function(c){
+					return {email:c.email, email:c.email,
+									password:c.password,password:c.password}
+				});
+				console.log(accounts);
+			}
+			else if(actionObject.isp === 'gmail'){
+				var accounts = Emails.find({
+					$or:[
+						{
+							createdBy:schedule.createdBy,
+							typeDomain:'gmail.com'
+						}
+					]
+					}).map(function(c){
+					return {email:c.email, email:c.email,
+									password:c.password,password:c.password}
+				});
+				console.log(accounts)
+			}
+			else{
+				var accounts = Emails.find({
+					$or:[
+						{
+							createdBy:schedule.createdBy
+						}
+					]
+					}).map(function(c){
+					return {email:c.email, email:c.email,
+									password:c.password,password:c.password}
+				});
+				console.log(accounts)
+			}
+			/**
+		  * [line description]
+		  * @type {String}
+		  */
+		 	var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
+			console.log("In command method", line);
+			var Fiber = Npm.require('fibers');
+			this.unblock();
+			exec(line, function(stderr, stdout) {
+				console.log('Command Method STDOUT: '+ stdout);
+				console.log('Command Method STDERR: '+ stderr);
+				Fiber(function() {
+					var botcli = ScheduleLoggers.insert({
+						out: JSON.stringify(stdout),
+						stderror: JSON.stringify(stderr),
+						command:line,
+						createdOn: new Date(),
+						createdBy:this.userId,
+					});
+					return botcli;
+				}).run();
+			});
+		}
+	}
+});

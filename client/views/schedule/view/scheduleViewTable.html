@@ -14,7 +14,7 @@
 									<tr>
 										<th>Schedule Name</th>
 										<th>Actions</th>
-										<th>Update - Delete</th>
+										<th>Activate - Delete</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -44,7 +44,8 @@
 			{{> scheduleTableItemsActionsName botId=actions }}
 		</td>
 		<td>
-			<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-schedule" type="button"></button>
+			<button class="btn btn-primary btn-md fa fa-play fa-lg js-activate-schedule" type="button"></button>
+			<button class="btn btn-danger btn-md fa fa-trash fa-lg js-delete-schedule" type="button"></button>
 		</td>
 	</tr>
 </template>
