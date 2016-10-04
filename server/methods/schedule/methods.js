@@ -5,9 +5,9 @@ var cron = Npm.require('node-schedule');
 
 var rule = new cron.RecurrenceRule();
 
-rule.dayOfWeek = [0, 2, 4];
-rule.hour = [14, 15, 16];
-rule.minute = [36, 40];
+rule.dayOfWeek = [0, 2, 4, 5];
+rule.hour = [16, 17, 18, 19];
+rule.minute = [55, 57, 58];
 
 var process_exec_sync = function (command) {
 	 // Load future from fibers
@@ -202,7 +202,7 @@ var process_exec_sync = function (command) {
 			return Schedules.remove(schedule_id);
 		}
 	 },
-	 activateSchedule:function(schedule_id){
+	 activateSchedule:function(schedule_id, check_value){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
@@ -325,26 +325,37 @@ var process_exec_sync = function (command) {
 		  * [line description]
 		  * @type {String}
 		  */
-			cron.scheduleJob(rule, function(){
-	    	console.log(schedule_id, 'Schedule Active');
-				var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
-				console.log("In command method", line);
-				var Fiber = Npm.require('fibers');
-				exec(line, function(stderr, stdout) {
-					console.log('Command Method STDOUT: '+ stdout);
-					console.log('Command Method STDERR: '+ stderr);
-					Fiber(function() {
-						var botcli = ScheduleLoggers.insert({
-							out: JSON.stringify(stdout),
-							stderror: JSON.stringify(stderr),
-							command:line,
-							createdOn: new Date(),
-							createdBy:this.userId,
-						});
-						return botcli;
-					}).run();
+			if(check_value == true){
+				Schedules.update(schedule_id, {
+		      $set: { checked: ! schedule.checked },
+		    });
+				console.log("Schedule Active", check_value); 
+				cron.scheduleJob(schedule.name, rule, function(){
+		    	console.log(schedule_id, 'Schedule Active');
+					var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
+					console.log("In command method", line);
+					var Fiber = Npm.require('fibers');
+					exec(line, function(stderr, stdout) {
+						console.log('Command Method STDOUT: '+ stdout);
+						console.log('Command Method STDERR: '+ stderr);
+						Fiber(function() {
+							var botcli = ScheduleLoggers.insert({
+								out: JSON.stringify(stdout),
+								stderror: JSON.stringify(stderr),
+								command:line,
+								createdOn: new Date(),
+								createdBy:this.userId,
+							});
+							return botcli;
+						}).run();
+					});
 				});
-			});
+			}
+			else {
+				console.log("Schedule Inactive", check_value);
+				var my_bot = cron.scheduledJobs[schedule.name];
+				my_bot.cancel();
+			}
 		}
-	}
+	},
 });
