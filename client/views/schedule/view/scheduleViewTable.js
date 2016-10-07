@@ -85,9 +85,36 @@ Template.scheduleViewTable.events({
 				}
 			});
 		}
-	}
+	},
+	"change .js-check-switch":function(){
+		if(Meteor.user()){
+			var schedule_id= this._id;
+			console.log(schedule_id);
+			var changeCheckbox = document.querySelector('.js-check-switch')
+			changeCheckbox.onchange;
+			var check_value = changeCheckbox.checked;
+			Meteor.call("activateSchedule",schedule_id, check_value, function(err,res){
+				if(err){
+					console.log("Error "+err);
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be activate!');
+				}else{
+					console.log("Success "+res);
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have activate this schedule.','Schedule Active!');
+				}
+			});
+		}
+	},
 });
 
-Template.scheduleTableItems.onRendered(function(){
-
-});
+Template.scheduleTableItems.rendered = function(){
+  // Initialize switchery
+/*
+  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-check-switch'));
+ 
+	elems.forEach(function(html) {
+	  var switchery = new Switchery(html, { color: '#1AB394' });
+	});
+*/
+	var elem = document.querySelector('.js-check-switch');
+	var init = new Switchery(elem, { color: '#1AB394' });
+};
