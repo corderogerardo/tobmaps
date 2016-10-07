@@ -33,76 +33,69 @@ var process_exec_sync = function (command) {
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
-		var yahooAccounts = Emails.find({
+		var allAccounts = Emails.find({
 			$or:[
 			{
-				typeDomain:"yahoo.com",
-				createdBy:this.userId
-			}
-			]
-		}).map(function(c){
-			return {email:c.email, email:c.email,
-							password:c.password,password:c.password}
-		});
-		var outlookAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"outlook.com",
 				createdBy:this.userId
 			}
 			]
 		}).map(function(c){
 			return {email:c.email, email:c.email,
 				password:c.password,password:c.password}
-			});
-		var gmailAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"gmail.com",
-				createdBy:this.userId
-			}
-			]
-		}).fetch();
-		var aolAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"aol.com",
-				createdBy:this.userId
-			}
-			]
-		}).fetch();
-
-		var blackList = Lists.find({
-			$or:[
-			{
-				typelist:"blackList",
-				createdBy:this.userId
-			}
-			]
-		}).map(function(c){
-			return {domains:c.domains, domains:c.domains}
-		});
-		var whiteList = Lists.find({
-			$or:[
-			{
-				typelist:"whiteList",
-				createdBy:this.userId
-			}
-			]
-		}).map(function(c){
-			return {domains:c.domains, domains:c.domains}
 		});
 
 		var userSchedules = Schedules.find({
 			$or:[
 			{
-				createdBy:this.userId
+				createdBy:this.userId,
 			}
 			]
-		}).fetch();
-		var whitelist = Lists.find({
+		},{skip: 0, limit: 1}).map(function(c){
+			return {days:c.days, days:c.days,
+						hours:c.hours,hours:c.hours,
+						awakening:c.awakening, awakening:c.awakening,
+						actions:c.actions,actions:c.actions,
+						whitelist:c.whitelist, whitelist:c.whitelist,
+						blacklist:c.blacklist,blacklist:c.blacklist}
+		});
+		var daysArr=userSchedules[0].days;
+		var daysArrNum=[];
+		daysArr.forEach(function(day,index){
+			switch(day){
+				case "sunday":
+				daysArrNum.push(0);
+				break;
+				case "monday":
+				daysArrNum.push(1);
+				break;
+				case "tuesday":
+				daysArrNum.push(2);
+				break;
+				case "wednesday":
+				daysArrNum.push(3);
+				break;
+				case "thurstday":
+				daysArrNum.push(4);
+				break;
+				case "friday":
+				daysArrNum.push(5);
+				break;
+				case "saturday":
+				daysArrNum.push(6);
+				break;
+				default:
+				break;
+			}
+		});
+
+		var scheduleActions = Actions.find({_id:userSchedules[0].actions
+		},{skip: 0, limit: 1}).map(function(c){
+			return {actions:c.actions, actions:c.actions}
+		});
+		var scheduleWhitelist = Lists.find({
 			$or:[
 			{
+				_id:userSchedules[0].whitelist,
 				typelist:"whiteList",
 				createdBy:this.userId
 			}
@@ -110,9 +103,10 @@ var process_exec_sync = function (command) {
 		}).map(function(c){
 			return {domains:c.domains, domains:c.domains}
 		});
-		var blacklist = Lists.find({
+		var scheduleBlacklist = Lists.find({
 			$or:[
 			{
+				_id:userSchedules[0].blacklist,
 				typelist:"blackList",
 				createdBy:this.userId
 			}
@@ -120,9 +114,9 @@ var process_exec_sync = function (command) {
 		}).map(function(c){
 			return {domains:c.domains, domains:c.domains}
 		});
-		console.log(userSchedules);
+		console.log("User Schedules: "+JSON.stringify(userSchedules));
 		if(domain==="yahoo"){
-			var line = "casperjs ../../../../../tests/"+commandAction+" --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(yahooAccounts)+" --engine=slimerjs --disk-cache=no";
+			var line = "casperjs ../../../../../tests/"+commandAction+" --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(allAccounts)+" --engine=slimerjs --disk-cache=no --proxy=180.177.157.62:80";
 			console.log("In command method", line);
 			var Fiber = Npm.require('fibers');
 			this.unblock();
@@ -143,10 +137,12 @@ var process_exec_sync = function (command) {
 			});
 		}
 		if(domain==="outlook"){
-			console.log(outlookAccounts);
+			console.log(allAccounts);
+			console.log(daysArr);
+			console.log(daysArrNum.sort());
+
 			/*for (var i = 0; i < outlookAccounts.length; i++) {*/
-				console.log("xvfb-run -a "+password);
-				var line = "casperjs ../../../../../tests/"+commandAction+"  --blacklist="+JSON.stringify(blackList) +" --whitelist="+ JSON.stringify(whiteList)+" --accounts="+ JSON.stringify(outlookAccounts)+" --engine=slimerjs --disk-cache=no";
+				var line = "casperjs ../../../../../tests/"+commandAction+"  --blacklist="+JSON.stringify(scheduleBlacklist) +" --whitelist="+ JSON.stringify(scheduleWhitelist)+" --accounts="+ JSON.stringify(allAccounts)+" --actions="+JSON.stringify(scheduleActions)+" --engine=slimerjs --disk-cache=no";
 				console.log("In command method copy", line);
 				var Fiber = Npm.require('fibers');
 				this.unblock();

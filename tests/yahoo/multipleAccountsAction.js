@@ -88,7 +88,7 @@
 			 */
 			casper.fill('form[id="mbr-login-form"]', {
 				username : username
-			 	}, false);
+				}, false);
 			});
 		/**
 		 * waitForSelector Waits until the form-login button element selector expression does not exist in remote DOM to process a next step

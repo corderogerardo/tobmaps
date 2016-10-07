@@ -88,6 +88,7 @@ observe-sequence@1.0.12
 okgrow:router-autoscroll@0.1.8
 ordered-dict@1.0.8
 package-version-parser@3.0.9
+percolate:synced-cron@1.3.2
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
 promise@0.8.4
