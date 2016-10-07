@@ -1,32 +1,15 @@
+// my module, stored in universe.js
+// patching phantomjs' require()
+var require = patchRequire(require);
+
+// now you're ready to go
+var utils = require('utils');
 /**
  * Oulook Casper's Bot used to login into account and move
  * @type {CasperJS Bot}
  */
 
-exports.moveInbox = function(){
-casper.then(function(){
-	this.waitForText("Junk Email", function(){
-		this.clickLabel("Junk Email");
-	});
-	this.wait(3000);
-	/*this.capture("ClickToJunt");*/
-});
-
-casper.then(function(){
-results = this.evaluate(function(){
-	ids = [];
-	$.each($("div[autoid='_lvv_l'] > div > div > div > div > div"),function(x,y){
-		ids.push($(y).attr("id"));
-	});
-	return ids;
-});
-utils.dump(results);
-this.wait(2000);
-});
-
-casper.then(function(){
-this.echo("Mails ID: "+JSON.stringify(results));
-});
+var moveInbox = function(){
 
 casper.then(function(){
 this.each(results, function iterateids(self,id){
@@ -70,3 +53,5 @@ this.wait(10000);
 }); // casper.then*/
 
 };//End export.module
+
+exports.moveInbox = moveInbox;

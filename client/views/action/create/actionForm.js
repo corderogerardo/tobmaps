@@ -32,6 +32,7 @@ Template.actionForm.helpers({
 		arractions.push({label:"moveSpamAction",value:"moveSpamAction"});
 		arractions.push({label:"unsubscribeAction",value:"unsubscribeAction"});
 		arractions.push({label:"multipleAccountsSendEmailAction",value:"multipleAccountsSendEmailAction"});
+		arractions.push({label:"moveInboxAction",value:"moveInboxAction"});
 		return arractions;
 	}
 });

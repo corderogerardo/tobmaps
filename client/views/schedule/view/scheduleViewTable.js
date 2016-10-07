@@ -58,6 +58,20 @@ Template.scheduleTableItemsActionsName.helpers({
  * @param this._id refer to schedule._id
  */
 Template.scheduleViewTable.events({
+	"click .js-activate-schedule":function(){
+		if(Meteor.user()){
+			var schedule_id= this._id;
+			Meteor.call("activateSchedule",schedule_id,function(err,res){
+				if(err){
+					console.log("Error "+err);
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'List could not be deleted!');
+				}else{
+					console.log("Success "+res);
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this List.','List deleted!');
+				}
+			});
+		}
+	},
 	"click .js-delete-schedule":function(){
 		if(Meteor.user()){
 			var schedule_id= this._id;
@@ -72,4 +86,8 @@ Template.scheduleViewTable.events({
 			});
 		}
 	}
+});
+
+Template.scheduleTableItems.onRendered(function(){
+	
 });
