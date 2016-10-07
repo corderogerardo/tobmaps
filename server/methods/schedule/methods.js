@@ -5,9 +5,9 @@ var cron = Npm.require('node-schedule');
 
 var rule = new cron.RecurrenceRule();
 
-rule.dayOfWeek = [0, 2, 4];
+rule.dayOfWeek = [0, 2, 5];
 rule.hour = [14, 15, 16];
-rule.minute = [36, 40];
+rule.minute = [01, 05];
 
 var process_exec_sync = function (command) {
 	 // Load future from fibers
@@ -38,39 +38,6 @@ var process_exec_sync = function (command) {
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
-		var yahooAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"yahoo.com",
-				createdBy:this.userId
-			}
-			]
-		}).fetch();
-		var outlookAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"outlook.com",
-				createdBy:this.userId
-			}
-			]
-		}).fetch();
-		var gmailAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"gmail.com",
-				createdBy:this.userId
-			}
-			]
-		}).fetch();
-		var aolAccounts = Emails.find({
-			$or:[
-			{
-				typeDomain:"aol.com",
-				createdBy:this.userId
-			}
-			]
-		}).fetch();
-
 		var userSchedules = Schedules.find({
 			$or:[
 				{
@@ -265,7 +232,7 @@ var process_exec_sync = function (command) {
 			 * @return {[type]}                [description]
 			 */
 			var actionObject = Actions.findOne({_id:schedule.actions});
-			
+
 			if(actionObject.isp === 'yahoo'){
 				var accounts = Emails.find({
 					$or:[
@@ -322,12 +289,12 @@ var process_exec_sync = function (command) {
 				console.log(accounts)
 			}
 			/**
-		  * [line description]
-		  * @type {String}
-		  */
+			* [line description]
+			* @type {String}
+			*/
 			cron.scheduleJob(rule, function(){
-	    	console.log(schedule_id, 'Schedule Active');
-				var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
+				console.log(schedule_id, 'Schedule Active');
+				var line = "casperjs ../../../../../tests/outlookactions.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
 				console.log("In command method", line);
 				var Fiber = Npm.require('fibers');
 				exec(line, function(stderr, stdout) {
