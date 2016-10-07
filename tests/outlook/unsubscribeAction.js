@@ -1,3 +1,5 @@
+// patching phantomjs' require()
+var require = patchRequire(require);
 /**
  * Oulook Casper's Bot used to catch error when login
  * @type {CasperJS Bot}
@@ -7,21 +9,6 @@
  * Import CasperJS module and create an instance with configurations.
  */
 exports.unsubscribe = function(){
-
-casper.then(function(){
-results = this.evaluate(function(){
-	ids = [];
-	$.each($("div[autoid='_lvv_a'] > div"),function(x,y){
-		ids.push($(y).attr("id"));
-	});
-	return ids;
-});
-utils.dump(results);
-});
-
-casper.then(function(){
-this.echo("Mails ID: "+JSON.stringify(results));
-});
 
 casper.then(function(){
 this.each(results, function(self,id){

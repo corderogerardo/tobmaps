@@ -72,6 +72,23 @@ Template.defaultActions.events({
 			});
 		}
 	},
+	"click .js-actions-o":function(){
+		if(Meteor.user()){
+			console.log('I clicked button one');
+			event.preventDefault();
+			var commandAction = 'actionsbots.js';
+			var domain = 'outlook';
+			Meteor.call("commandcopy",commandAction,domain, function (error, result){
+				if(error){
+					console.log(error);
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+error,'This error happen when running this bot! '+commandAction);
+				}if(result){
+					console.log(result);
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. Everything works nicely.','The bot finished! '+commandAction);
+				}
+			});
+		}
+	},
 	/*Yahoo*/
 	"click .js-action-moveinbox-y":function(){
 		if(Meteor.user()){
