@@ -42,8 +42,8 @@
 /**
  *	We take the args we passed from meteorjs app.
  * @Args {args}
- */	
- 	var whiteList = casper.cli.get("whiteList");
+ */
+	var whiteList = casper.cli.get("whiteList");
 	whiteList = whiteList.replace("[","");
 	whiteList = whiteList.replace("]","");
 	whiteList = whiteList.replace(/\[/g,"");
@@ -51,7 +51,7 @@
 	whiteList = whiteList.replace(/{/g,"");
 	whiteList = whiteList.replace(/}/g,"");
 	whiteList = whiteList.replace(/domains:/g,"");
-	whiteList = whiteList.split(","); 
+	whiteList = whiteList.split(",");
 
 	var blackList = casper.cli.get("blackList");
 	blackList = blackList.replace("[","");
@@ -71,7 +71,7 @@
 	actions = actions.replace(/{/g,"");
 	actions = actions.replace(/}/g,"");
 	actions = actions.replace(/actions:/g,"");
-	actions = actions.split(",");  
+	actions = actions.split(",");
 
 /**
  * The yahoo URL where login
@@ -82,8 +82,8 @@
  * The accounts array is where we save the user and password data we passed in the args when we use the method.
  * @type {Array}
  */
- 	var objAccounts = [];
- 	var accounts = casper.cli.get("accounts");
+	var objAccounts = [];
+	var accounts = casper.cli.get("accounts");
 	accounts = accounts.replace("[","");
 	accounts = accounts.replace("]","");
 	accounts = accounts.replace(/{/g,"");
@@ -123,7 +123,7 @@
 	 * We added a new navigation step with this casperjs function that receive our
 	 * yahoo url
 	 */
-	
+
 	 if(username.replace(/.*@/, "") === 'yahoo.com'){
 
 		 casper.thenOpen(yahooURL, function() {
@@ -135,7 +135,7 @@
 				 * With Casper.fill method we send the email values of the form
 				 * @type {String}
 				 */
-			 	casper.fill('form[id="mbr-login-form"]', {
+				casper.fill('form[id="mbr-login-form"]', {
 					username : username
 				 }, false);
 			});
@@ -159,8 +159,8 @@
 			});
 
 		 /**
-		  * Loop with all actions
-		  */
+			* Loop with all actions
+			*/
 			actions.forEach(function(action){
 
 				if(action === 'moveSpamAction'){
@@ -177,13 +177,13 @@
 				}
 			/*** end loop actions ***/
 			});
-			 
+
 
 			 /**
 			 * waitForSelector waits for the div.not-you selector associate to logout button.
 			 * then when the button loads we click the logout function
 			 */
-			
+
 			casper.then(function(){
 				this.waitForSelector("a[aria-label='Profile']", function(){
 					this.click("a[aria-label='Profile']");
@@ -193,7 +193,7 @@
 			casper.then(function(){
 				this.wait(10000);
 			});
-			 
+
 			casper.then(function(){
 				this.waitForText("Sign out",function(){
 					this.clickLabel("Sign out");
@@ -222,9 +222,9 @@ casper.run(function(){
 function moveSpamMessages(whiteList) {
 	casper.then(function(){
 		this.waitForText("Inbox", function() {
-	  	this.clickLabel("Inbox");
-	  	this.wait(5000);
-	  });
+			this.clickLabel("Inbox");
+			this.wait(5000);
+		});
 	});
 
 	/**
@@ -268,12 +268,12 @@ function moveSpamMessages(whiteList) {
 			self.then(function(){
 				this.each(whiteList, function(self, white){
 					if(obj.email.replace(/.*@/, "") == white){
-						tag = true;	
+						tag = true;
 					}
 				});
 				if (tag == false) {
 					this.click('input[data-cid="'+obj.data_cid+'"]');
-				}	
+				}
 			});
 		});
 
@@ -359,9 +359,9 @@ function moveInboxMessages(blackList){
 function unsubscribe(whiteList){
 	casper.then(function(){
 		this.waitForText("Inbox", function() {
-	  	this.clickLabel("Inbox");
-	  	this.wait(5000);
-	  });
+			this.clickLabel("Inbox");
+			this.wait(5000);
+		});
 	});
 
 	var messages;
