@@ -1,14 +1,6 @@
 
 var exec = Npm.require('child_process').exec;
 
-var cron = Npm.require('node-schedule');
-
-var rule = new cron.RecurrenceRule();
-
-rule.dayOfWeek = [0, 2, 4, 5];
-rule.hour = [16, 17, 18, 19];
-rule.minute = [55, 57, 58];
-
 var process_exec_sync = function (command) {
 	 // Load future from fibers
 	 var Future = Npm.require("fibers/future");
@@ -33,102 +25,15 @@ var process_exec_sync = function (command) {
 	return future.wait();
 };
 
- Meteor.methods({
-	command: function(commandAction,domain) {
-		if(!this.userId){
-			throw new Meteor.Error('not-authorized');
-		}
-		var userSchedules = Schedules.find({
-			$or:[
-				{
-					createdBy:this.userId
-				}
-			]
-		}).fetch();
 
-		var accounts = [
-		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-		{user: "tobmaps@yahoo.com", pwd: "spamBOT-12345678"},
-		{loginfmt: 'tobmapx@outlook.com',passwd: 'tobMAPS-123'}
-		];
-		console.log(userSchedules);
-		if(domain==="yahoo"){
-			for (var i = 0; i < yahooAccounts.length; i++) {
-				var username = yahooAccounts[i]["email"];
-				console.log(username);
-				var password = yahooAccounts[i]["password"];
-				console.log(password);
-				var line = 'xvfb-run casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
-				console.log("In command method", line);
-				var Fiber = Npm.require('fibers');
-				this.unblock();
-				exec(line, function(error, stdout, stderr) {
-					console.log('Command Method Error: '+ error);
-					console.log('Command Method STOUT: '+ stdout);
-					console.log('Command Method STDERR: '+ stderr);
-					Fiber(function() {
-						//Replies.remove({});
-						var botcli = ScheduleLoggers.insert({
-							out: JSON.stringify(stdout),
-							stderror: JSON.stringify(stderr),
-							errors:JSON.stringify(error),
-							command:line,
-							createdOn: new Date(),
-							createdBy:this.userId,
-						});
-						return botcli;
-					}).run();
-				});
-			}
-		}
-		if(domain==="outlook"){
-			for (var i = 0; i < outlookAccounts.length; i++) {
-				var username = outlookAccounts[i]["email"];
-				console.log(username);
-				var password = outlookAccounts[i]["password"];
-				console.log(password);
-				var line = 'casperjs ../../../../../tests/'+commandAction+' yahoo.com outlook.com --username="'+username+'" --password="'+password+'" --engine=slimerjs --disk-cache=no';
-				console.log("In command method", line);
-				var Fiber = Npm.require('fibers');
-				this.unblock();
-				exec(line, function(error, stdout, stderr) {
-					console.log('Command Method Error: '+ error);
-					console.log('Command Method STOUT: '+ stdout);
-					console.log('Command Method STDERR: '+ stderr);
-					Fiber(function() {
-						//Replies.remove({});
-						var botcli = ScheduleLoggers.insert({
-							out: JSON.stringify(stdout),
-							stderror: JSON.stringify(stderr),
-							errors:JSON.stringify(error),
-							command:line,
-							createdOn: new Date(),
-							createdBy:this.userId,
-						});
-						return botcli;
-					}).run();
-				});
-			}
-		}
+var cron = Npm.require('node-schedule');
 
-	},
-	runCasperJS: function(command) {
-		if(!this.userId){
-			throw new Meteor.Error('not-authorized');
-		}
-		// This method call won't return immediately, it will wait for the
-		// asynchronous code to finish, so we call unblock to allow this client
-		// to queue other method calls (see Meteor docs)
-		this.unblock();
-		// run synchonous system command
-		var result = process_exec_sync(command);
-		// check for error
-		if (result.error) {
-			throw new Meteor.Error("exec-fail", "Error running CasperJS: " + result.error.message);
-		}
-		// success
-		return true;
-	},
+var Fiber = Npm.require('fibers');
+
+
+var rule = new cron.RecurrenceRule();
+
+Meteor.methods({
 	/**
 	 * @summary   Meteor Server Side Methods for Schedules Module
 	 * insertSchedule: Method that validate if there is an user logged to insert a schedule to it's collection.
@@ -179,129 +84,133 @@ var process_exec_sync = function (command) {
 			 * [schedule description]
 			 * @type {[type]}
 			 */
-			var schedule = Schedules.findOne({_id:schedule_id});
-			console.log(schedule);
+			 var schedule = Schedules.findOne({_id:schedule_id});
+			 console.log(schedule);
+			 var daysArr=schedule.days;
+			 var daysArrNum=[];
+			 daysArr.forEach(function(day,index){
+				switch(day){
+					case "sunday":
+					daysArrNum.push(0);
+					break;
+					case "monday":
+					daysArrNum.push(1);
+					break;
+					case "tuesday":
+					daysArrNum.push(2);
+					break;
+					case "wednesday":
+					daysArrNum.push(3);
+					break;
+					case "thurstday":
+					daysArrNum.push(4);
+					break;
+					case "friday":
+					daysArrNum.push(5);
+					break;
+					case "saturday":
+					daysArrNum.push(6);
+					break;
+					default:
+					break;
+				}
+			 });
+			 var schedulehours = schedule.hours.map(Number);
+			 console.log("Days array: "+daysArrNum);
+			 console.log("Hours: "+schedulehours);
+			 console.log("Minutes: "+schedule.awakening);
+			 rule.dayOfWeek = daysArrNum;
+
+			 rule.hour = schedulehours;
+
+			 rule.minute = [schedule.awakening];
 			/**
 			 * [description]
 			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
 			 * @return {[type]}                [description]
 			 */
-			var whitelist = Lists.find({
-				$or:[
-				{
-					_id:schedule.whitelist
-				}
-				]
-			}).map(function(c){
-				return {domains:c.domains, domains:c.domains}
-			});
-			console.log(whitelist);
-			/**
-			 * [description]
-			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
-			 * @return {[type]}                [description]
-			 */
-			var blacklist = Lists.find({
-				$or:[
-				{
-					_id:schedule.blacklist
-				}
-				]
-			}).map(function(c){
-				return {domains:c.domains, domains:c.domains}
-			});
-			console.log(blacklist);
-			/**
-			 * [description]
-			 * @param  {[type]} c){				return {actions:c.actions, actions:c.actions}			} [description]
-			 * @return {[type]}                [description]
-			 */
-			var actions = Actions.find({
-				$or:[
-				{
-					_id:schedule.actions
-				}
-				]
-			}).map(function(c){
-				return {actions:c.actions, actions:c.actions}
-			});
-			console.log(actions);
+
 			/**
 			 * [description]
 			 * @param  {[type]} c){				return {email:c.email, email:c.email,								password:c.password,password:c.password}			} [description]
 			 * @return {[type]}                [description]
 			 */
-			var actionObject = Actions.findOne({_id:schedule.actions});
 
-			if(actionObject.isp === 'yahoo'){
-				var accounts = Emails.find({
-					$or:[
-						{
-							createdBy:schedule.createdBy,
-							typeDomain:'yahoo.com'
-						}
-					]
-					}).map(function(c){
-					return {email:c.email, email:c.email,
-									password:c.password,password:c.password}
-				});
-				console.log(accounts);
-			}
-			else if(actionObject.isp === 'gmail'){
-				var accounts = Emails.find({
-					$or:[
-						{
-							createdBy:schedule.createdBy,
-							typeDomain:'gmail.com'
-						}
-					]
-					}).map(function(c){
-					return {email:c.email, email:c.email,
-									password:c.password,password:c.password}
-				});
-				console.log(accounts);
-			}
-			else if(actionObject.isp === 'gmail'){
-				var accounts = Emails.find({
-					$or:[
-						{
-							createdBy:schedule.createdBy,
-							typeDomain:'gmail.com'
-						}
-					]
-					}).map(function(c){
-					return {email:c.email, email:c.email,
-									password:c.password,password:c.password}
-				});
-				console.log(accounts)
-			}
-			else{
-				var accounts = Emails.find({
-					$or:[
+			/**
+			* [line description]
+			* @type {String}
+			*/
+			var allAccounts = Emails.find({
+						$or:[
 						{
 							createdBy:schedule.createdBy
 						}
-					]
+						]
 					}).map(function(c){
-					return {email:c.email, email:c.email,
-									password:c.password,password:c.password}
-				});
-				console.log(accounts)
-			}
+						return {email:c.email, email:c.email,
+							password:c.password,password:c.password}
+						});
+					console.log(allAccounts);
+					var whitelist = Lists.find({
+						$or:[
+						{
+							_id:schedule.whitelist
+						}
+						]
+					}).map(function(c){
+						return {domains:c.domains, domains:c.domains}
+					});
+					console.log(whitelist);
 			/**
-		  * [line description]
-		  * @type {String}
-		  */
+			 * [description]
+			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
+			 * @return {[type]}                [description]
+			 */
+			 var blacklist = Lists.find({
+				$or:[
+				{
+					_id:schedule.blacklist
+				}
+				]
+			 }).map(function(c){
+				return {domains:c.domains, domains:c.domains}
+			 });
+			 console.log(blacklist);
+			/**
+			 * [description]
+			 * @param  {[type]} c){				return {actions:c.actions, actions:c.actions}			} [description]
+			 * @return {[type]}                [description]
+			 */
+			 var actions = Actions.find({
+				$or:[
+				{
+					_id:schedule.actions
+				}
+				]
+			 }).map(function(c){
+				return {actions:c.actions, actions:c.actions}
+			 });
+			 console.log(actions);
 			if(check_value == true){
-				Schedules.update(schedule_id, {
-		      $set: { checked: ! schedule.checked },
-		    });
-				console.log("Schedule Active", check_value); 
+				/*Schedules.update(schedule_id, {
+					$set: { checked: ! schedule.checked },
+				});*/
+				console.log("Schedule Active", check_value);
 				cron.scheduleJob(schedule.name, rule, function(){
-		    	console.log(schedule_id, 'Schedule Active');
-					var line = "casperjs ../../../../../tests/actionsBot.js --whiteList="+ JSON.stringify(whitelist)+" --blackList="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(accounts)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
+					console.log(schedule_id, 'Schedule Active');
+					console.log(allAccounts, 'that user accounts');
+					console.log(blacklist, 'that user black list');
+					console.log(whitelist, 'that user white list');
+					console.log(actions, 'that user actions');
+
+			 allAccounts.forEach(function (account,index) {
+				var line = "";
+
+				if(account.email.replace(/.*@/, "")=="outlook.com"){
+
+					line = "xvfb-run casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
 					console.log("In command method", line);
-					var Fiber = Npm.require('fibers');
+					Fiber = Npm.require('fibers');
 					exec(line, function(stderr, stdout) {
 						console.log('Command Method STDOUT: '+ stdout);
 						console.log('Command Method STDERR: '+ stderr);
@@ -314,10 +223,35 @@ var process_exec_sync = function (command) {
 								createdBy:this.userId,
 							});
 							return botcli;
-						}).run();
-					});
-				});
-			}
+						}).run(); /*END FIBER*/
+					});/*END EXEC*/
+				}/*END IF OUTLOOK.COM*/
+				if(account.email.replace(/.*@/, "")=="yahoo.com"){
+					line = "xvfb-run casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
+					console.log("In command method", line);
+					Fiber = Npm.require('fibers');
+					exec(line, function(stderr, stdout) {
+						console.log('Command Method STDOUT: '+ stdout);
+						console.log('Command Method STDERR: '+ stderr);
+						Fiber(function() {
+							var botcli = ScheduleLoggers.insert({
+								out: JSON.stringify(stdout),
+								stderror: JSON.stringify(stderr),
+								command:line,
+								createdOn: new Date(),
+								createdBy:this.userId,
+							});
+							return botcli;
+						}).run(); /*END FIBER*/
+					});/*END EXEC*/
+				}
+
+			 });/*END FOREACH*/
+
+			});/*END CRON JOB SCHEDULE*/
+
+
+			}/*END IF CHECKED TRUE*/
 			else {
 				console.log("Schedule Inactive", check_value);
 				var my_bot = cron.scheduledJobs[schedule.name];

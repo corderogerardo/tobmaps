@@ -1,3 +1,21 @@
+Template.scheduleTableItems.onRendered(function(){
+	// Initialize switchery
+/*
+	var elems = Array.prototype.slice.call(document.querySelectorAll('.js-check-switch'));
+
+	elems.forEach(function(html) {
+		var switchery = new Switchery(html, { color: '#1AB394' });
+	});
+*/
+	/*var schedules = Schedules.find().fetch();
+	schedules.forEach(function(schedule,index){
+		console.log(schedule._id);
+
+			eval("var elem"+schedule._id+" = document.querySelector('.js-check-switch'"+schedule._id+"')");
+			var init = new Switchery(elem, { color: '#1AB394' });
+	});*/
+
+});
 /**
  * @summary Meteor Subscribe for Schedule is the way we use to take the schedules data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
@@ -106,15 +124,3 @@ Template.scheduleViewTable.events({
 	},
 });
 
-Template.scheduleTableItems.rendered = function(){
-  // Initialize switchery
-/*
-  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-check-switch'));
- 
-	elems.forEach(function(html) {
-	  var switchery = new Switchery(html, { color: '#1AB394' });
-	});
-*/
-	var elem = document.querySelector('.js-check-switch');
-	var init = new Switchery(elem, { color: '#1AB394' });
-};

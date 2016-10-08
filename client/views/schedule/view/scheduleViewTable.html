@@ -46,16 +46,26 @@
 			{{> scheduleTableItemsActionsName botId=actions }}
 		</td>
 		<td>
-			<input type="checkbox" class="js-check-switch" checked="{{checked}}"/>
+
+			<div class="switch">
+				<div class="onoffswitch">
+				<input type="checkbox" checked="{{checked}}" class="onoffswitch-checkbox js-check-switch" id="{{_id}}">
+					<label class="onoffswitch-label" for="{{_id}}">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label>
+				</div>
+			</div>
+
 		</td>
 		<td>
 			<a class="js-delete-schedule" href="#"><i class="fa fa-trash-o text-danger fa-2x">
-      </i></a>
+			</i></a>
 		</td>
 	</tr>
 </template>
 <template name="scheduleTableItemsActionsName">
-{{#each getById botId}}
-	<span class="label label-primary">{{this}}</span>
-{{/each}}
+	{{#each getById botId}}
+	<span class="label label-primary">{{@index}}. {{this}}</span>
+	{{/each}}
 </template>
