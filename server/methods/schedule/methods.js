@@ -62,6 +62,7 @@ Meteor.methods({
 			schedulef.schedulelogged = [''];
 			schedulef.createdOn = new Date();
 			schedulef.createdBy = this.userId;
+			schedulef.state = false;
 			return Schedules.insert(schedulef);
 		}
 	 },
@@ -74,12 +75,16 @@ Meteor.methods({
 			return Schedules.remove(schedule_id);
 		}
 	 },
-	 activateSchedule:function(schedule_id, check_value){
+	 activateSchedule:function(schedule_id,check_value){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
 		if(this.userId){
 			check(schedule_id,String);
+			check(check_value,Boolean);
+			Schedules.update(schedule_id, {
+				$set: { state: check_value },
+			});
 			/**
 			 * [schedule description]
 			 * @type {[type]}
@@ -191,12 +196,11 @@ Meteor.methods({
 				return {actions:c.actions, actions:c.actions}
 			 });
 			 console.log(actions);
-			if(check_value == true){
-				/*Schedules.update(schedule_id, {
-					$set: { checked: ! schedule.checked },
-				});*/
-				console.log("Schedule Active", check_value);
-				cron.scheduleJob(schedule.name, rule, function(){
+			if(schedule.state === true){
+
+				/*START CRON JOB SCHEDULE*/
+				console.log("Schedule Active", schedule.state);
+				cron.scheduleJob(schedule_id, rule, function(){
 					console.log(schedule_id, 'Schedule Active');
 					console.log(allAccounts, 'that user accounts');
 					console.log(blacklist, 'that user black list');
@@ -253,9 +257,9 @@ Meteor.methods({
 
 			}/*END IF CHECKED TRUE*/
 			else {
-				console.log("Schedule Inactive", check_value);
-				var my_bot = cron.scheduledJobs[schedule.name];
-				my_bot.cancel();
+				console.log("Schedule Inactive", schedule.state);
+				var myBot = cron.scheduledJobs[schedule_id];
+				myBot.cancel();
 			}
 		}
 	},

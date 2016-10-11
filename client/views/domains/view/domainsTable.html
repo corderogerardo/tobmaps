@@ -8,7 +8,7 @@
 					</div>
 					<div class="ibox-content">
 						<div class="table-responsive">
-							<table class="table table-striped table-bordered table-hover dataTables-example" >
+							<table class="footable table table-stripped toggle-arrow-tiny">
 								<thead>
 									<tr>
 										<th>Domain name</th>
@@ -22,13 +22,16 @@
 										<td><span class="label">{{> editableText collection="domains" field="domain" userCanEdit=userCanEdit}}</span></td>
 										<th>
 											<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-domain" type="button"></button>
-											</th>
+										</th>
 									</tr>
 									{{/each}}
 								</tbody>
 								<tfoot>
 									<tr>
-										<th colspan="3">Total Domains: {{domainsData.length}} </th>
+										<th>Total Domains: {{domainsData.length}}</th>
+										<th>
+											<ul class="pagination pull-right"></ul>
+										</th>
 									</tr>
 								</tfoot>
 							</table>

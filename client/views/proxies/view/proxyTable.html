@@ -1,0 +1,59 @@
+<template name="proxyTable">
+	{{> pageHeading title='Proxies Table' }}
+
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>List of Proxies</h5>
+					</div>
+					<div class="ibox-content">
+						<div class="table-responsive">
+							<table class="footable table table-stripped toggle-arrow-tiny" >
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>IP</th>
+										<th>Port</th>
+										<th>Type</th>
+										<th>User</th>
+										<th>Pass</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<!--	Data to be loaded from Collection-->
+									{{#each proxiesdata}}
+									<tr class="gradeX">
+										<td>{{> editableText collection="proxies" field="name" userCanEdit=userCanEdit}}</td>
+										<td>{{> editableText collection="proxies" field="ip" userCanEdit=userCanEdit}}</td>
+										<td>{{> editableText collection="proxies" field="port" userCanEdit=userCanEdit}}</td>
+										<td>{{> editableText collection="proxies" field="type" userCanEdit=userCanEdit}}</td>
+										<td>{{> editableText collection="proxies" field="user" userCanEdit=userCanEdit}}</td>
+										<td>{{> editableText collection="proxies" field="pass" userCanEdit=userCanEdit}}</td>
+
+										<td class="center">
+											<button class="btn btn-danger btn-sm fa fa-trash fa-2x js-delete-proxy"
+											></button>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+								<tfoot>
+									<tr>
+										<th colspan="5">Total Proxies: {{proxiesdata.length}}
+										</th>
+										<th colspan="2">
+											<ul class="pagination pull-right"></ul>
+										</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

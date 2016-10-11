@@ -4,6 +4,9 @@
  */
 Meteor.subscribe("lists");
 
+Template.listsTable.onRendered(function(){
+	$('.footable').footable();
+});
 /**
  * @summary Meteor Blaze Template listsTable Helpers
  * @param  {Lists} listsData Get all the lists passed from publications.

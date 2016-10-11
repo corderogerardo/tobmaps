@@ -10,12 +10,15 @@
 					</div>
 					<div class="ibox-content">
 						<div class="table-responsive">
-							<table class="table table-striped table-bordered table-hover dataTables-example" >
+							<table class="footable table table-stripped toggle-arrow-tiny" >
 								<thead>
 									<tr>
-										<th>Schedule Name</th>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Days Active</th>
+										<th>Hours Active</th>
 										<th>Actions</th>
-										<th>Activate</th>
+										<th>Active</th>
 										<th>Delete</th>
 									</tr>
 								</thead>
@@ -27,8 +30,9 @@
 								</tbody>
 								<tfoot>
 									<tr>
-										<th>Total Schedules: {{schedules.length}} </th>
-										<th colspan="2">Total actions: </th>
+										<th colspan="2">Total Schedules: {{schedules.length}} </th>
+										<th colspan="2">Total:  </th>
+										<th colspan="3"><ul class="pagination pull-right"></ul></th>
 									</tr>
 								</tfoot>
 							</table>
@@ -42,6 +46,14 @@
 <template name="scheduleTableItems">
 	<tr class="gradeX">
 		<td>{{ name }}</td>
+		<td>{{ description }}</td>
+		<td>{{#each days}}
+				<span class="label label-info">{{this}}</span>
+				{{/each}}
+		</td>
+		<td>{{#each hours}}
+				<span class="label label-default">{{this}}:00</span>
+				{{/each}}</td>
 		<td>
 			{{> scheduleTableItemsActionsName botId=actions }}
 		</td>
@@ -49,7 +61,7 @@
 
 			<div class="switch">
 				<div class="onoffswitch">
-				<input type="checkbox" checked="{{checked}}" class="onoffswitch-checkbox js-check-switch" id="{{_id}}">
+				<input type="checkbox" checked="{{state}}" class="onoffswitch-checkbox js-check-switch" id="{{_id}}">
 					<label class="onoffswitch-label" for="{{_id}}">
 						<span class="onoffswitch-inner"></span>
 						<span class="onoffswitch-switch"></span>

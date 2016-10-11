@@ -1,20 +1,5 @@
 Template.scheduleTableItems.onRendered(function(){
-	// Initialize switchery
-/*
-	var elems = Array.prototype.slice.call(document.querySelectorAll('.js-check-switch'));
-
-	elems.forEach(function(html) {
-		var switchery = new Switchery(html, { color: '#1AB394' });
-	});
-*/
-	/*var schedules = Schedules.find().fetch();
-	schedules.forEach(function(schedule,index){
-		console.log(schedule._id);
-
-			eval("var elem"+schedule._id+" = document.querySelector('.js-check-switch'"+schedule._id+"')");
-			var init = new Switchery(elem, { color: '#1AB394' });
-	});*/
-
+	$('.footable').footable();
 });
 /**
  * @summary Meteor Subscribe for Schedule is the way we use to take the schedules data from publications and pass to client user template.
@@ -108,16 +93,16 @@ Template.scheduleViewTable.events({
 		if(Meteor.user()){
 			var schedule_id= this._id;
 			console.log(schedule_id);
-			var changeCheckbox = document.querySelector('.js-check-switch')
+			var changeCheckbox = document.querySelector('.js-check-switch');
 			changeCheckbox.onchange;
 			var check_value = changeCheckbox.checked;
 			Meteor.call("activateSchedule",schedule_id, check_value, function(err,res){
 				if(err){
 					console.log("Error "+err);
-					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be activate!');
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be '+ check_value);
 				}else{
 					console.log("Success "+res);
-					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have activate this schedule.','Schedule Active!');
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have '+ check_value +' this schedule.','Schedule Active!');
 				}
 			});
 		}

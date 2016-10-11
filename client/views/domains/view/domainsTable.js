@@ -3,7 +3,9 @@
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
  */
 Meteor.subscribe("domains");
-
+Template.domainsTable.onRendered(function(){
+	$('.footable').footable();
+});
 /**
  * @summary Meteor Blaze Template domainsTable Helpers
  * @param  {Domains} domainsData Get all the domains data passed from publications.
