@@ -1,15 +1,24 @@
 /**
- * @summary    Meteor Server Side Methods for Proxies Module
- * addProxy: Method used to insert new proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
- * @param      {User Object} userId from logged user
- * @param      {Proxy Object} from the Proxy Form
- * @return {Boolean} Return true if the proxy was inserted correctly, false if does not.
+ * @summary    Proxies Module - Server side Meteor Method for Proxies
+ * @module     Proxies
  *
- * removeProxy: Method used to remove proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete proxy.
- * @param  {String} id of the actual proxy
- * @return {Boolean}    True or False
+ * Here you will find the methods for:
+ * 1. Add new Proxies-addProxy.
+ * 2. Update Proxies-updateProxy.
+ * 3. Remove Proxies-removeProxy.
+ *
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
+ *
  */
 Meteor.methods({
+	/**
+	 * 1. addProxy: Method used to insert new proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
+	 * @param      {User Object} userId from logged user
+	 * @param      {Proxy Object} from the Proxy Form
+	 * @return {Boolean} Return true if the proxy was inserted correctly, false if does not.
+	 */
 	addProxy:function(doc){
 		// Make sure the user is logged in before inserting a task
 		if(!this.userId){
@@ -47,6 +56,12 @@ Meteor.methods({
 				}});
 		}
 		},
+		/**
+		 * 3. removeProxy: Method used to remove proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete proxy.
+		 * @param  {String} id of the actual proxy
+		 * @return {Boolean}    True or False
+		 *
+		 */
 		removeProxy: function(id){
 			if (! this.userId) {
 				throw new Meteor.Error('not-authorized');

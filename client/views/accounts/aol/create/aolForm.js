@@ -1,5 +1,18 @@
-'use strict';
-
+/**
+ * @summary    Emails Module - Client side Meteor for AOL Emails Form Template.
+ * @module     Emails
+ *
+ * Here you will find the methods for:
+ * 1. aolForm Template Methods:
+ * 1.1 onRendered: Loads the footable() jquery function.
+ * 1.2 Helpers:
+ * 		emails: Search all the aol emails.userCanEdit
+ * 		userCanEdit: Return true or false if the user can edit.
+ * 1.3 Events: Listen for all the template events example: click change dblclick.
+ *
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ */
 /**
  * onRendered functions to execute a function when the “add account” template is first created and then when the “add account” template is rendered.
  * @param  {[class='js-add-account']} )
@@ -7,86 +20,86 @@
  * @param  {[name='password']} )
  * @return {[Meteor.call(function(error))]}
  */
-Template.aolForm.onRendered(function(){
-  var validator = $('.js-add-account').validate({
-    submitHandler: function(){
-      var email = $('[name=email]').val();
-      var password = $('[name=password]').val();
-      var account = {
-        email:email,
-        password:password,
-      };
-      Meteor.call('addAEmailAol', Meteor.userId(), account, function(error){
-        if(error){
-          validator.showErrors({
-            email: "The domain is invalid."   
-          });
-        	} else {
-          	toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
-            $('.js-add-account').trigger('reset');
-        	}
-      });
-    }    
-  });
-  $('.js-multi-form').validate({
-    rules: {
-        aolString: {
-            required: true
-        },
-    },
-    messages: {
-      aolString: {
-          required: "You must enter an email address and password."
-      },
-    }
-  });
-});
+ Template.aolForm.onRendered(function(){
+	var validator = $('.js-add-account').validate({
+		submitHandler: function(){
+			var email = $('[name=email]').val();
+			var password = $('[name=password]').val();
+			var account = {
+				email:email,
+				password:password,
+			};
+			Meteor.call('addAEmailAol', Meteor.userId(), account, function(error){
+				if(error){
+					validator.showErrors({
+						email: "The domain is invalid."
+					});
+				} else {
+					toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
+					$('.js-add-account').trigger('reset');
+				}
+			});
+		}
+	});
+	$('.js-multi-form').validate({
+		rules: {
+			aolString: {
+				required: true
+			},
+		},
+		messages: {
+			aolString: {
+				required: "You must enter an email address and password."
+			},
+		}
+	});
+ });
 
 /**
  * setDefaults function define a default set of rules and error messages validate functions
  * @type {Object}
  */
-$.validator.setDefaults({
-    rules: {
-        email: {
-            required: true,
-            email: true
-        },
-        password: {
-            required: true,
-            minlength: 6
-        }
-    },
-    messages: {
-        email: {
-            required: "You must enter an email address.",
-            email: "You've entered an invalid email address."
-        },
-        password: {
-            required: "You must enter a password.",
-            minlength: "Your password must be at least {0} characters."
-        }
-    }
-});
+ $.validator.setDefaults({
+	rules: {
+		email: {
+			required: true,
+			email: true
+		},
+		password: {
+			required: true,
+			minlength: 6
+		}
+	},
+	messages: {
+		email: {
+			required: "You must enter an email address.",
+			email: "You've entered an invalid email address."
+		},
+		password: {
+			required: "You must enter a password.",
+			minlength: "Your password must be at least {0} characters."
+		}
+	}
+ });
 
 /**
- * Event that takes a string and separates the pair takes a account and password and stores them in a scheme, 
+ * Event that takes a string and separates the pair takes a account and password and stores them in a scheme,
  * repite the process for each pair and call a RPC
  * @param  {string} acounts and passwords
- * @param  {account} orders the string in mail and password pairs 
+ * @param  {account} orders the string in mail and password pairs
  */
-Template.aolForm.events({
+ Template.aolForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
 		var lines, lineNumber, data, length;
-    data = $('[name=aolString]').val();
+		data = $('[name=aolString]').val();
 		lines = data.split('\n');
-    lineNumber = 0;
-    for (var i = lines.length - 1; i >= 0; i--) {
+		lineNumber = 0;
+		for (var i = lines.length - 1; i >= 0; i--) {
 			var l = lines[i]
-      lineNumber++;
-      data = l.split(',');
-      var email = data[0];
+			lineNumber++;
+			data = l.split(',');
+			var email = data[0];
 			var password = data[1];
 			var account = {
 				email:email,
@@ -95,16 +108,16 @@ Template.aolForm.events({
 			/**
 			 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
 			 */
-			Meteor.call('addAEmailAol', Meteor.userId(), account, function(err,res){
-        if(err){
-          console.log("Error "+err);
-          toastr.error('The account is invalid '+err,'Account could not be added!');
-        }else{
-          console.log("Success "+res);
-          toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
-        }
-      }); 
+			 Meteor.call('addAEmailAol', Meteor.userId(), account, function(err,res){
+				if(err){
+					console.log("Error "+err);
+					toastr.error('The account is invalid '+err,'Account could not be added!');
+				}else{
+					console.log("Success "+res);
+					toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
+				}
+			 });
+			}
+			$('.js-multi-form').trigger("reset");
 		}
-		$('.js-multi-form').trigger("reset");
-	}
-});
+	});
