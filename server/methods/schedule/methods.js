@@ -72,6 +72,15 @@ Meteor.methods({
 		}
 		if(this.userId){
 			check(schedule_id,String);
+
+			var schedule = Schedules.findOne({
+				_id:schedule_id
+			});
+
+			if(schedule.state===true){
+				throw new Meteor.Error('Schedule is active, please turn off first.');
+			}
+
 			return Schedules.remove(schedule_id);
 		}
 	 },
@@ -82,9 +91,11 @@ Meteor.methods({
 		if(this.userId){
 			check(schedule_id,String);
 			check(check_value,Boolean);
+			console.log("Schedule ID: "+schedule_id+" status: "+check_value);
 			Schedules.update(schedule_id, {
 				$set: { state: check_value },
 			});
+			var	myBot = cron.scheduledJobs[schedule_id];
 			/**
 			 * [schedule description]
 			 * @type {[type]}
@@ -146,26 +157,27 @@ Meteor.methods({
 			* @type {String}
 			*/
 			var allAccounts = Emails.find({
-						$or:[
-						{
-							createdBy:schedule.createdBy
-						}
-						]
-					}).map(function(c){
-						return {email:c.email, email:c.email,
-							password:c.password,password:c.password}
-						});
-					console.log(allAccounts);
-					var whitelist = Lists.find({
-						$or:[
-						{
-							_id:schedule.whitelist
-						}
-						]
-					}).map(function(c){
-						return {domains:c.domains, domains:c.domains}
-					});
-					console.log(whitelist);
+				$or:[
+				{
+					createdBy:schedule.createdBy
+				}
+				]
+			}).map(function(c){
+				return {email:c.email, email:c.email,
+					password:c.password,password:c.password}
+				});
+
+			console.log(allAccounts);
+			var whitelist = Lists.find({
+				$or:[
+				{
+					_id:schedule.whitelist
+				}
+				]
+			}).map(function(c){
+				return {domains:c.domains, domains:c.domains}
+			});
+			console.log(whitelist);
 			/**
 			 * [description]
 			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
@@ -189,78 +201,102 @@ Meteor.methods({
 			 var actions = Actions.find({
 				$or:[
 				{
-					_id:schedule.actions
+					_id:schedule.actions,
+					createdBy:schedule.createdBy
 				}
 				]
 			 }).map(function(c){
 				return {actions:c.actions, actions:c.actions}
 			 });
 			 console.log(actions);
-			if(schedule.state === true){
 
-				/*START CRON JOB SCHEDULE*/
-				console.log("Schedule Active", schedule.state);
-				cron.scheduleJob(schedule_id, rule, function(){
+			 var proxies = Proxies.find({
+				$or:[{
+					createdBy:schedule.createdBy
+				}]
+			 }).map(function(c){
+				return {ip:c.ip,ip:c.ip,
+					port:c.port,port:c.port,
+					user:c.user,user:c.user,
+					pass:c.pass,pass:c.pass,
+					type:c.type,type:c.type}
+				});
+			 console.log(proxies);
+
+			 if(schedule.state === true){
+
+				/**
+				 * START CRON JOB SCHEDULE
+				 *
+				 */
+				 console.log("Schedule Active", schedule.state);
+				 cron.scheduleJob(schedule_id, rule, function(){
 					console.log(schedule_id, 'Schedule Active');
 					console.log(allAccounts, 'that user accounts');
 					console.log(blacklist, 'that user black list');
 					console.log(whitelist, 'that user white list');
 					console.log(actions, 'that user actions');
+					console.log(proxies, 'that user actions');
 
-			 allAccounts.forEach(function (account,index) {
-				var line = "";
+					var toproxies = Math.floor(Math.random() * proxies.length) + 1;
 
-				if(account.email.replace(/.*@/, "")=="outlook.com"){
+					allAccounts.forEach(function (account,index) {
+						var line = "";
 
-					line = "xvfb-run casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
-					console.log("In command method", line);
-					Fiber = Npm.require('fibers');
-					exec(line, function(stderr, stdout) {
-						console.log('Command Method STDOUT: '+ stdout);
-						console.log('Command Method STDERR: '+ stderr);
-						Fiber(function() {
-							var botcli = ScheduleLoggers.insert({
-								out: JSON.stringify(stdout),
-								stderror: JSON.stringify(stderr),
-								command:line,
-								createdOn: new Date(),
-								createdBy:this.userId,
-							});
-							return botcli;
-						}).run(); /*END FIBER*/
-					});/*END EXEC*/
-				}/*END IF OUTLOOK.COM*/
-				if(account.email.replace(/.*@/, "")=="yahoo.com"){
-					line = "xvfb-run casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no";
-					console.log("In command method", line);
-					Fiber = Npm.require('fibers');
-					exec(line, function(stderr, stdout) {
-						console.log('Command Method STDOUT: '+ stdout);
-						console.log('Command Method STDERR: '+ stderr);
-						Fiber(function() {
-							var botcli = ScheduleLoggers.insert({
-								out: JSON.stringify(stdout),
-								stderror: JSON.stringify(stderr),
-								command:line,
-								createdOn: new Date(),
-								createdBy:this.userId,
-							});
-							return botcli;
-						}).run(); /*END FIBER*/
-					});/*END EXEC*/
+						if(account.email.replace(/.*@/, "")=="outlook.com"){
+
+							/*line = "xvfb-run casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
+							line = "casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+							console.log("In command method", line);
+							Fiber = Npm.require('fibers');
+							exec(line, function(stderr, stdout) {
+								console.log('Command Method STDOUT: '+ stdout);
+								console.log('Command Method STDERR: '+ stderr);
+								Fiber(function() {
+									var botcli = ScheduleLoggers.insert({
+										out: JSON.stringify(stdout),
+										stderror: JSON.stringify(stderr),
+										command:line,
+										createdOn: new Date(),
+										createdBy:this.userId,
+									});
+									return botcli;
+								}).run(); /*END FIBER*/
+							});/*END EXEC*/
+						}/*END IF OUTLOOK.COM*/
+						if(account.email.replace(/.*@/, "")=="yahoo.com"){
+						/*	line = "xvfb-run casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no" --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
+						line = "casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+							console.log("In command method", line);
+							Fiber = Npm.require('fibers');
+							exec(line, function(stderr, stdout) {
+								console.log('Command Method STDOUT: '+ stdout);
+								console.log('Command Method STDERR: '+ stderr);
+								Fiber(function() {
+									var botcli = ScheduleLoggers.insert({
+										out: JSON.stringify(stdout),
+										stderror: JSON.stringify(stderr),
+										command:line,
+										createdOn: new Date(),
+										createdBy:this.userId,
+									});
+									return botcli;
+								}).run(); /*END FIBER*/
+							});/*END EXEC*/
+						}
+
+					});/*END FOREACH*/
+
+				 });/*END CRON JOB SCHEDULE*/
+
+
+				}/*END IF CHECKED TRUE*/
+				else {
+					console.log("Schedule Inactive", schedule.state);
+					myBot = cron.scheduledJobs[schedule_id];
+					console.log("Schedules in queue ", myBot);
+					myBot.cancel();
 				}
-
-			 });/*END FOREACH*/
-
-			});/*END CRON JOB SCHEDULE*/
-
-
-			}/*END IF CHECKED TRUE*/
-			else {
-				console.log("Schedule Inactive", schedule.state);
-				var myBot = cron.scheduledJobs[schedule_id];
-				myBot.cancel();
 			}
-		}
-	},
-});
+		},
+	});

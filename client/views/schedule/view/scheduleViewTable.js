@@ -52,6 +52,22 @@ Template.scheduleTableItemsActionsName.helpers({
 		return actions;
 	}
 });
+Template.scheduleTableItemsWhiteDomains.helpers({
+	getWhiteById:function(whiteId){
+		var wdomains = Lists.findOne({
+			_id:whiteId
+		}).domains;
+		return wdomains;
+	}
+});
+Template.scheduleTableItemsBlackDomains.helpers({
+	getBlackById:function(blackId){
+		var bdomains = Lists.findOne({
+			_id:blackId
+		}).domains;
+		return bdomains;
+	}
+});
 /**
  * @summary Meteor Blaze Template scheduleViewTable Events
  * Here I create an event handler to listen when the user click on button to delete an schedule.
@@ -67,10 +83,10 @@ Template.scheduleViewTable.events({
 			Meteor.call("activateSchedule",schedule_id,function(err,res){
 				if(err){
 					console.log("Error "+err);
-					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'List could not be deleted!');
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be deleted!');
 				}else{
 					console.log("Success "+res);
-					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this List.','List deleted!');
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this Schedule.','Schedule deleted!');
 				}
 			});
 		}
@@ -81,10 +97,10 @@ Template.scheduleViewTable.events({
 			Meteor.call("removeSchedule",schedule_id,function(err,res){
 				if(err){
 					console.log("Error "+err);
-					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'List could not be deleted!');
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be deleted!');
 				}else{
 					console.log("Success "+res);
-					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this List.','List deleted!');
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this Schedule.','Schedule deleted!');
 				}
 			});
 		}
@@ -93,8 +109,7 @@ Template.scheduleViewTable.events({
 		if(Meteor.user()){
 			var schedule_id= this._id;
 			console.log(schedule_id);
-			var changeCheckbox = document.querySelector('.js-check-switch');
-			changeCheckbox.onchange;
+			var changeCheckbox = document.querySelector("#"+schedule_id);
 			var check_value = changeCheckbox.checked;
 			Meteor.call("activateSchedule",schedule_id, check_value, function(err,res){
 				if(err){

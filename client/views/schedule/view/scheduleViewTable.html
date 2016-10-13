@@ -18,6 +18,8 @@
 										<th>Days Active</th>
 										<th>Hours Active</th>
 										<th>Actions</th>
+										<th>White List</th>
+										<th>Black List</th>
 										<th>Active</th>
 										<th>Delete</th>
 									</tr>
@@ -32,7 +34,7 @@
 									<tr>
 										<th colspan="2">Total Schedules: {{schedules.length}} </th>
 										<th colspan="2">Total:  </th>
-										<th colspan="3"><ul class="pagination pull-right"></ul></th>
+										<th colspan="5"><ul class="pagination pull-right"></ul></th>
 									</tr>
 								</tfoot>
 							</table>
@@ -57,6 +59,8 @@
 		<td>
 			{{> scheduleTableItemsActionsName botId=actions }}
 		</td>
+		<td>{{> scheduleTableItemsWhiteDomains whiteId=whitelist }}</td>
+		<td>{{> scheduleTableItemsBlackDomains blackId=blacklist }}</td>
 		<td>
 
 			<div class="switch">
@@ -79,5 +83,15 @@
 <template name="scheduleTableItemsActionsName">
 	{{#each getById botId}}
 	<span class="label label-primary">{{@index}}. {{this}}</span>
+	{{/each}}
+</template>
+<template name="scheduleTableItemsWhiteDomains">
+	{{#each getWhiteById whiteId}}
+	<span class="label label-warning">{{this}}</span>
+	{{/each}}
+</template>
+<template name="scheduleTableItemsBlackDomains">
+	{{#each getBlackById blackId}}
+	<span class="label label-danger">{{this}}</span>
 	{{/each}}
 </template>
