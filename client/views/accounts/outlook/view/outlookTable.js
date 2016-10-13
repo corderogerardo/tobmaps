@@ -1,3 +1,19 @@
+/**
+ * Emails Module
+ * @module   Emails
+ * @description Client side Meteor for Outlook Emails Table Views Template.
+ *
+ * Here you will find the methods for blaze templates:
+ * 1. outlookTables Template Methods:
+ * 1.1 onRendered: Loads the footable() jquery function.
+ * 1.2 Helpers:
+ * 		emails: Search all the aol emails.userCanEdit
+ * 		userCanEdit: Return true or false if the user can edit.
+ * 1.3 Events: Listen for all the template events example: click, change, dblclick, submit.
+ * 2. Meteor subscriptions: To subscribe the emails user data.
+ *
+ *
+ */
 /* Initialize fooTable*/
 Template.outlookTables.onRendered(function(){
 		// Initialize fooTable

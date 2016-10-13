@@ -1,4 +1,6 @@
 /**
+ * Domains Module
+ * @module     {Domains} (Domains)
  * @summary Object for AutoForm Hooks of domainsForm
  *
  * [hooksObjects

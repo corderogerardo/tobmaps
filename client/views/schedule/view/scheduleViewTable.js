@@ -108,16 +108,14 @@ Template.scheduleViewTable.events({
 	"change .js-check-switch":function(){
 		if(Meteor.user()){
 			var schedule_id= this._id;
-			console.log(schedule_id);
-			var changeCheckbox = document.querySelector("#"+schedule_id);
+			var changeCheckbox = document.querySelector("#v"+schedule_id);
 			var check_value = changeCheckbox.checked;
 			Meteor.call("activateSchedule",schedule_id, check_value, function(err,res){
 				if(err){
-					console.log("Error "+err);
-					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be '+ check_value);
+					$("#v"+schedule_id).removeAttr('checked');
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Schedule could not be activated');
 				}else{
-					console.log("Success "+res);
-					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have '+ check_value +' this schedule.','Schedule Active!');
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have activated this schedule.','Schedule Active!');
 				}
 			});
 		}

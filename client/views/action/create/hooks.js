@@ -1,5 +1,7 @@
 /**
- * @summary Object for AutoForm Hooks of actionForm
+ * Actions Module
+ * @module     {Actions} (Actions)
+ * @summary Object for AutoForm Hooks of actionForm template.
  *
  * [hooksObjects
  * I listen for submit event of a form,

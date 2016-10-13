@@ -105,7 +105,6 @@ var rule = new cron.RecurrenceRule();
 		}]
 	 });
 	 allSchedules.forEach(function(schedule,index){
-		console.log(schedule)
 		var allAccounts = Emails.find({
 		$or:[
 		{
@@ -157,13 +156,8 @@ var rule = new cron.RecurrenceRule();
 			}
 		});
 		var schedulehours = schedule.hours.map(Number);
-		console.log("Days array: "+daysArrNum);
-		console.log("Hours: "+schedulehours);
-		console.log("Minutes: "+schedule.awakening);
 		rule.dayOfWeek = daysArrNum;
-
 		rule.hour = schedulehours;
-
 		rule.minute = [schedule.awakening];
 
 		var whitelist = Lists.find({
@@ -195,12 +189,12 @@ var rule = new cron.RecurrenceRule();
 			return {actions:c.actions, actions:c.actions}
 		});
 		cron.scheduleJob(schedule._id, rule, function(){
-			console.log(schedule._id, 'Schedule Active');
+			/*console.log(schedule._id, 'Schedule Active');
 			console.log(allAccounts, 'that user accounts');
 			console.log(blacklist, 'that user black list');
 			console.log(whitelist, 'that user white list');
 			console.log(actions, 'that user actions');
-			console.log(proxies, 'that user actions');
+			console.log(proxies, 'that user actions');*/
 
 			var toproxies = Math.floor(Math.random() * proxies.length) + 1;
 
@@ -211,11 +205,11 @@ var rule = new cron.RecurrenceRule();
 
 					/*line = "xvfb-run casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
 					line = "casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
-					console.log("In command method", line);
+					/*console.log("In command method", line);*/
 					Fiber = Npm.require('fibers');
 					exec(line, function(stderr, stdout) {
-						console.log('Command Method STDOUT: '+ stdout);
-						console.log('Command Method STDERR: '+ stderr);
+						/*console.log('Command Method STDOUT: '+ stdout);
+						console.log('Command Method STDERR: '+ stderr);*/
 						Fiber(function() {
 							var botcli = ScheduleLoggers.insert({
 								out: JSON.stringify(stdout),
@@ -231,11 +225,11 @@ var rule = new cron.RecurrenceRule();
 				if(account.email.replace(/.*@/, "")=="yahoo.com"){
 					/*line = "xvfb-run casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
 					line = "casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
-					console.log("In command method", line);
+					/*console.log("In command method", line);*/
 					Fiber = Npm.require('fibers');
 					exec(line, function(stderr, stdout) {
-						console.log('Command Method STDOUT: '+ stdout);
-						console.log('Command Method STDERR: '+ stderr);
+					/*	console.log('Command Method STDOUT: '+ stdout);
+						console.log('Command Method STDERR: '+ stderr);*/
 						Fiber(function() {
 							var botcli = ScheduleLoggers.insert({
 								out: JSON.stringify(stdout),

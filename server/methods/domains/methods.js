@@ -1,15 +1,23 @@
 /**
- * @summary    Meteor Server Side Methods for Domains Module
- * insertDomain: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert Domain.
- * @param      {User Object} userId from logged user
- * @param      {Domain Object} from the Domain Form
- * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
+ *@summary    Domains Module - Server side Meteor Method for Domains
+ * @module     Domains
  *
- * removeDomain: Method used to remove Domains, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete Domain.
- * @param  {String} id of the actual Domain
- * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
+ * Here you will find the methods for:
+ * 1. Add new Domains-insertDomain.
+ * 2. Update Domains-updateDomain.
+ * 3. Remove Domains-removeDomain.
+ *
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
  */
 Meteor.methods({
+	/**
+	 * @method 1. insertDomain: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert Domain.
+	 * @param      {User Object} userId from logged user
+	 * @param      {Domain Object} from the Domain Form
+	 * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
+	 */
 	insertDomain:function(domf){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
@@ -61,6 +69,11 @@ Meteor.methods({
 			}});
 		}
 	},
+	/**
+	 * @method 3. removeDomain: Method used to remove Domains, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete Domain.
+	 * @param  {String} id of the actual Domain
+	 * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
+	 */
 	removeDomain:function(domid){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
