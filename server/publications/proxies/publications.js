@@ -1,6 +1,6 @@
-Meteor.publish("actions", function(){
+Meteor.publish('proxies', function(){
 	if(this.userId){
-		return Actions.find({
+		return Proxies.find({
 			$or:[
 			{
 				createdBy:this.userId,

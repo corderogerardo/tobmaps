@@ -20,11 +20,19 @@ Meteor.methods({
 			domains.forEach(function (domain) {
 				var dom;
 				if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)){
-					dom = Domains.findOne({
-						domain:domain
-					});
+					dom = Domains.find({
+						$or:[{
+						domain:domain,
+						createdBy:user
+						}]
+					},{skip: 0, limit: 1}).map(function(c){
+			return {domain:c.domain, domain:c.domain}
+		});
+					console.log(dom.length);
+					console.log(domain);
+					console.log(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain));
 				}
-				if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain) && !dom){
+				if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain) && dom.length===0){
 					/*console.log("Is valid? "+ /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain));*/
 					check(domain,String);
 					var domin = {
@@ -59,6 +67,15 @@ Meteor.methods({
 		}
 		if(this.userId){
 			check(domid,String);
+			var domain = Domains.findOne({
+				_id:domid
+			}).domain;
+			var domainList = Lists.findOne({
+				domains:domain
+			});
+			if(domainList){
+				throw new Meteor.Error('The Domain can not be deleted because is been used in Lists.');
+			}
 			return Domains.remove(domid);
 		}
 	}

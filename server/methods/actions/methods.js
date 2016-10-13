@@ -21,6 +21,7 @@ Meteor.methods({
 			check(doc.description,String);
 			check(doc.isp,String);
 			doc.createdOn = new Date();
+			doc.createdBy = this.userId;
 			return Actions.insert(doc);
 		}
 	},
@@ -52,6 +53,13 @@ Meteor.methods({
 			}
 			if(this.userId){
 				check(id,String);
+				var scheduleAction = Schedules.findOne({
+					actions:id
+				});
+				if(scheduleAction){
+					throw new Meteor.Error('The action can not be deleted because is been used in a Schedule.');
+				}
+
 				return Actions.remove({_id:id});
 			}
 		}

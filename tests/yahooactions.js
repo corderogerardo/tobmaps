@@ -1,9 +1,9 @@
 /**
  * Import CasperJS module and create an instance with configurations.
  */
+	/*clientScripts: ['jquery.min.js'],*/
  var casper = require("casper").create({
-	clientScripts: ['jquery.min.js'],
-	/*clientScripts: ['../../../../../tests/jquery.min.js'],*/
+	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
 	logLevel: "debug",
 	viewportSize:
@@ -58,9 +58,9 @@
  * @type {String}
  */
  var yahoourl = "https://login.yahoo.com/config/mail?.intl=us&.done=https%3A%2F%2Fmg.mail.yahoo.com%3A443%2Fneo%2Flaunch%3F.rand%3Degtpucj7f6kvm";
- /*var accounts = casper.cli.get("accounts");*/
 /* ,{"email":"ogeretle@outlook.com","password":"goMAD.123"},{"email":"mastercasper@outlook.com","password":"casper.123"},{"email":"tobmaps@yahoo.com","password":"12345678tm"},{"email":"tobmaps@yahoo.com","password":"12345678tm"},{"email":"tobmaps@yahoo.com","password":"12345678tm"},{"email":"tobmaps@yahoo.com","password":"12345678tm"}*/
- var accounts = '[{"email":"tobmaps@yahoo.com","password":"12345678tm"}]';
+ /*var accounts = '[{"email":"tobmaps@yahoo.com","password":"12345678tm"}]';*/
+ var accounts = casper.cli.get("accounts");
  accounts = accounts.replace(/\[/g,"");
  accounts = accounts.replace(/]/g,"");
  accounts = accounts.replace(/{/g,"");
@@ -69,11 +69,11 @@
  accounts = accounts.replace(/password:/g,"");
 
 //for running in console
- accounts = accounts.replace(/"/g,"");
+ /*accounts = accounts.replace(/"/g,"");
  accounts = accounts.replace(/:/g,"");
 
  accounts = accounts.replace(/email/g,"");
- accounts = accounts.replace(/password/g,"");
+ accounts = accounts.replace(/password/g,"");*/
 //end running in console
 
  accounts = accounts.split(",");
@@ -91,8 +91,8 @@
  * The blackList array is where we save the user domains the user specified in schedule as the selected blacklist, passed in the args when we use the meteor method.
  * @type {Array}
  */
- var blackList = '[{"domains":["yahoo.com","outlook.com"]}]';
- /*var blackList = casper.cli.get("blacklist");*/
+/* var blackList = '[{"domains":["yahoo.com","outlook.com"]}]';*/
+ var blackList = casper.cli.get("blacklist");
  blackList = blackList.replace("[","");
  blackList = blackList.replace("]","");
  blackList = blackList.replace(/\[/g,"");
@@ -102,10 +102,11 @@
  blackList = blackList.replace(/domains:/g,"");
 
 //for running on console
- blackList = blackList.replace(/"/g,"");
+/* blackList = blackList.replace(/"/g,"");
  blackList = blackList.replace(/:/g,"");
 
- blackList = blackList.replace(/domains/g,"");
+ blackList = blackList.replace(/domains/g,"");*/
+//for running on console
 
  blackList = blackList.split(",");
 /**
@@ -113,8 +114,8 @@
  * The whiteList array is where we save the user domains the user specified in schedule as the selected whitelist, passed in the args when we use the meteor method.
  * @type {Array}
  */
- var whiteList ='[{"domains":["gmail.com","hotmail.com","corderogerardo.com.ve"]}]';
- /*var whiteList = casper.cli.get("whitelist");*/
+ /*var whiteList ='[{"domains":["gmail.com","hotmail.com","corderogerardo.com.ve"]}]';*/
+ var whiteList = casper.cli.get("whitelist");
  whiteList = whiteList.replace("[","");
  whiteList = whiteList.replace("]","");
  whiteList = whiteList.replace(/\[/g,"");
@@ -124,15 +125,15 @@
  whiteList = whiteList.replace(/domains:/g,"");
 
 //for running on console
- whiteList = whiteList.replace(/"/g,"");
+/* whiteList = whiteList.replace(/"/g,"");
  whiteList = whiteList.replace(/:/g,"");
-
- whiteList = whiteList.replace(/domains/g,"");
+ whiteList = whiteList.replace(/domains/g,"");*/
+//for running on console
 
  whiteList = whiteList.split(",");
 
- var actions ='[{"actions":["multipleAccountsSendEmailAction","unsubscribeAction","moveSpamAction","moveInboxAction"]}]';
- /*var actions = casper.cli.get("actions");*/
+ /*var actions ='[{"actions":["multipleAccountsSendEmailAction","unsubscribeAction","moveSpamAction","moveInboxAction"]}]';*/
+ var actions = casper.cli.get("actions");
  actions = actions.replace("[","");
  actions = actions.replace("]","");
  actions = actions.replace(/\[/g,"");
@@ -142,10 +143,12 @@
  actions = actions.replace(/actions:/g,"");
 
 //for running on console
- actions = actions.replace(/"/g,"");
+/* actions = actions.replace(/"/g,"");
  actions = actions.replace(/:/g,"");
 
- actions = actions.replace(/actions/g,"");
+ actions = actions.replace(/actions/g,"");*/
+//for running on console
+
 
  actions = actions.split(",");
 

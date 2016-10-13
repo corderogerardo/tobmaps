@@ -44,6 +44,15 @@ Meteor.methods({
 		}
 		if(this.userId){
 			check(listid,String);
+			var whiteSchedules = Schedules.findOne({
+				whitelist:listid,
+			});
+			var blackSchedules = Schedules.findOne({
+				blacklist:listid,
+			});
+				if(whiteSchedules || blackSchedules){
+					throw new Meteor.Error('The List can not be deleted because is been used in a Schedule.');
+				}
 			return Lists.remove(listid);
 		}
 	}

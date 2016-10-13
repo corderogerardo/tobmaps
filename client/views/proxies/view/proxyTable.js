@@ -2,8 +2,8 @@
  * @summary Meteor Subscribe for Actions is the way we use to take the actions data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
  */
-Meteor.subscribe("actions");
-Template.actionTable.onRendered(function(){
+Meteor.subscribe("proxies");
+Template.proxyTable.onRendered(function(){
 	$('.footable').footable();
 });
 /**
@@ -12,9 +12,9 @@ Template.actionTable.onRendered(function(){
  * @param  {Boolean} userCanEdit variable to check if there is an user.
  *
  */
-Template.actionTable.helpers({
-	actionsdata:function(){
-		return Actions.find().fetch();
+Template.proxyTable.helpers({
+	proxiesdata:function(){
+		return Proxies.find().fetch();
 	},
 	userCanEdit : function() {
 		if(Meteor.user()){
@@ -30,19 +30,19 @@ Template.actionTable.helpers({
  * First check if there is an user logged in
  * Second looks for the action id to be deleted
  * Third Call Method pass the id data and finally use a callback to check if the operation was performed or not to inform the user.
- * @param this._id refer to action._id
+ * @param this._id refer to proxy._id
  */
-Template.actionTable.events({
-	"click .js-delete-action":function(){
+Template.proxyTable.events({
+	"click .js-delete-proxy":function(){
 		if(Meteor.user()){
-				var action_id = this._id;
-			Meteor.call("removeAction",action_id, function(err,res){
+				var proxyId = this._id;
+			Meteor.call("removeProxy",proxyId, function(err,res){
 				if(err){
 					console.log("Error "+err);
-					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Action could not be deleted!');
+					toastr.error('Hi '+Meteor.user().emails[0].address+'. '+err,'Proxy could not be deleted!');
 				}else{
 					console.log("Success "+res);
-					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this action.','Action deleted!');
+					toastr.success('Hi '+Meteor.user().emails[0].address+'. You have deleted this Proxy.','Proxy deleted!');
 				}
 			});
 		}
