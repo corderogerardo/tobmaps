@@ -1,4 +1,20 @@
 /**
+ * Actions Module
+ * @module    Actions
+ * @description Client side Meteor for Actions Table Views Template.
+ *
+ * Here you will find the methods for blaze templates:
+ * 1. actionTable Template Methods:
+ * 1.1 onRendered: Loads the footable() jquery function.
+ * 1.2 Helpers:
+ * 		actionsdata: et all the actions passed from publications.
+ * 		userCanEdit: Return true or false if the user can edit.
+ * 1.3 Events: Listen for all the template events example: click, change, dblclick, submit.
+ * 2. Meteor subscriptions: To subscribe the emails user data.
+ *
+ *
+ */
+/**
  * @summary Meteor Subscribe for Actions is the way we use to take the actions data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
  */

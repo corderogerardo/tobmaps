@@ -1,4 +1,17 @@
 /**
+ * Actions Module
+ * @module     Actions
+ * @description Client side Meteor for Actions Form Template.
+ *
+ * Here you will find the methods for blaze templates:
+ * 1. actionForm Template Methods:
+ * 1.1 onRendered: Loads the chosen-select jquery function.
+ * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
+ * 1.3 Helpers: definableActions- Loads all the definable actions to the actionForm.
+ * 1.4 Hooks, seach for Hooks events in the file hooks.js
+ */
+
+/**
  * @summary Meteor Blaze Template actionForm onRendered
  * I used to initialize the Select Multiple Jquery chosen-select element into the DOM.
  * [onRendered I create a configuration variable then with a for pass the configuration to the select element]

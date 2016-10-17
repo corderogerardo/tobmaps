@@ -1,4 +1,14 @@
-'use strict';
+/**
+ * Emails Module
+ * @module     Emails
+ * @description Client side Meteor for Yahoo Emails Form Template.
+ *
+ * Here you will find the methods for blaze templates:
+ * 1. yahooForm Template Methods:
+ * 1.1 onRendered: Loads the validator jquery function.
+ * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
+ *
+ */
 
 /**
  * @summary Emails Module - Client side Meteor for Yahoo Emails Form Template.
@@ -29,67 +39,67 @@
  * @return {string} err - return the string value with the error message from the server side.
  * @return {string} res - return the string value with the response message from the server side.                         
  */
-Template.yahooForm.onRendered(function(){
-  var validator = $('.js-add-account').validate({
-    submitHandler: function(){
-      var email = $('[name=email]').val();
-      var password = $('[name=password]').val();
-      var account = {
-        email:email,
-        password:password,
-      };
-      Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err, res){
-        if(err){
-          validator.showErrors({
-            email: "The domain is invalid."   
-          });
-        	} else {
-          	toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
-            $('.js-add-account').trigger('reset');
-        	}
-      });
-    }    
-  });
-  $('.js-multi-form').validate({
-    rules: {
-        yahhoString: {
-            required: true
-        },
-    },
-    messages: {
-      yahhoString: {
-          required: "You must enter an email address and password."
-      },
-    }
-  });
-});
+ Template.yahooForm.onRendered(function(){
+	var validator = $('.js-add-account').validate({
+		submitHandler: function(){
+			var email = $('[name=email]').val();
+			var password = $('[name=password]').val();
+			var account = {
+				email:email,
+				password:password,
+			};
+			Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err, res){
+				if(err){
+					validator.showErrors({
+						email: "The domain is invalid."
+					});
+				} else {
+					toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
+					$('.js-add-account').trigger('reset');
+				}
+			});
+		}
+	});
+	$('.js-multi-form').validate({
+		rules: {
+			yahhoString: {
+				required: true
+			},
+		},
+		messages: {
+			yahhoString: {
+				required: "You must enter an email address and password."
+			},
+		}
+	});
+ });
 
 /**
  * setDefaults function define a default set of rules and error messages validate functions
  * @type {Object} define rules and messages to the email and password.
  */
-$.validator.setDefaults({
-    rules: {
-        email: {
-            required: true,
-            email: true
-        },
-        password: {
-            required: true,
-            minlength: 6
-        }
-    },
-    messages: {
-        email: {
-            required: "You must enter an email address.",
-            email: "You've entered an invalid email address."
-        },
-        password: {
-            required: "You must enter a password.",
-            minlength: "Your password must be at least {0} characters."
-        }
-    }
-});
+ $.validator.setDefaults({
+	rules: {
+		email: {
+			required: true,
+			email: true
+		},
+		password: {
+			required: true,
+			minlength: 6
+		}
+	},
+	messages: {
+		email: {
+			required: "You must enter an email address.",
+			email: "You've entered an invalid email address."
+		},
+		password: {
+			required: "You must enter a password.",
+			minlength: "Your password must be at least {0} characters."
+		}
+	}
+ });
 
 /**
  * Event that takes a string and separates the pair takes a account and password and stores them in a scheme, 
@@ -106,33 +116,33 @@ $.validator.setDefaults({
  * @return {string} err - return the string value with the error message from the server side.
  * @return {string} res - return the string value with the response message from the server side.
  */
-Template.yahooForm.events({
+ Template.yahooForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
-    var lines, lineNumber, data, length;
+		var lines, lineNumber, data, length;
 		data = $('[name=yahhoString]').val();
 		lines = data.split('\n');
-    lineNumber = 0;
-    for (var i = lines.length - 1; i >= 0; i--) {
-      var l = lines[i]
-      lineNumber++;
-      data = l.split(',');
-      var email = data[0];
-      var password = data[1];
+		lineNumber = 0;
+		for (var i = lines.length - 1; i >= 0; i--) {
+			var l = lines[i];
+			lineNumber++;
+			data = l.split(',');
+			var email = data[0];
+			var password = data[1];
 			var account = {
 				email:email,
 				password:password,
 			};
-			Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err,res){
-        if(err){
-          console.log("Error "+err);
-          toastr.error('The account is invalid '+err,'Account could not be added!');
-        }else{
-          console.log("Success "+res);
-          toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
-        }
-      }); 
+			 Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err,res){
+				if(err){
+					console.log("Error "+err);
+					toastr.error('The account is invalid '+err,'Account could not be added!');
+				}else{
+					console.log("Success "+res);
+					toastr.success('Hi '+Meteor.user().emails[0].address+', You have added a new account.','Account added!');
+				}
+			 });
+			}
+			$('.js-multi-form').trigger("reset");
 		}
-		$('.js-multi-form').trigger("reset");
-	}
-});
+	});

@@ -1,16 +1,20 @@
 'use strict';
 /**
- * @summary    Emails Module - Client side Meteor for AOL Emails Form Template.
- * @module     Emails
+ * Emails Module
+ * @module    Emails
+ * @description Client side Meteor for AOL Emails Form Template.
  *
- * Here you will find the methods for:
+ * Here you will find the methods for blaze templates:
  * 1. aolForm Template Methods:
+<<<<<<< HEAD
  * 1.1 onRendered: Execute a function to add aol accounts.
  * 1.2 Events: Execute a function to add multiples aol accounts.
  * 1.3 setDefaults Validator: Execute a function to set rules to the fields messages.
+=======
+ * 1.1 onRendered: Loads the validator jquery function.
+ * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
+>>>>>>> 0c4d5d1f1eca138137829c26f1b87d523e1201a2
  *
- * Meteor general methods.
- * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  */
 /**
  * onRendered functions to execute a function when the “add account” template is first created and then when the “add account” template is rendered.
@@ -95,7 +99,7 @@
 		lines = data.split('\n');
 		lineNumber = 0;
 		for (var i = lines.length - 1; i >= 0; i--) {
-			var l = lines[i]
+			var l = lines[i];
 			lineNumber++;
 			data = l.split(',');
 			var email = data[0];

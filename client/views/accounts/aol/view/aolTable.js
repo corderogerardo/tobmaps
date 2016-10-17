@@ -1,8 +1,9 @@
 /**
- * @summary    Emails Module - Client side Meteor for AOL Emails Table Views Template.
- * @module     Emails
+ * Emails
+ * @module   Emails
+ * @description Client side Meteor for AOL Emails Table Views Template.
  *
- * Here you will find the methods for:
+ * Here you will find the methods for blaze templates:
  * 1. aolTables Template Methods:
  * 1.1 onRendered: Loads the footable() jquery function.
  * 1.2 Helpers:
@@ -12,8 +13,7 @@
  * 	   Delete accounts: When the user click on button to delete an account.
  * 2. Meteor subscriptions: To subscribe the emails user data.
  *
- * Meteor general methods.
- * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
  */
 /* Initialize fooTable*/
 Template.aolTables.onRendered(function(){
@@ -73,4 +73,4 @@ Template.aolTables.onRendered(function(){
 			}
 		});
 	},
- })
+ });

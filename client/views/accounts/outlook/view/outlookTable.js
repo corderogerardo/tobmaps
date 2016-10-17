@@ -51,7 +51,7 @@ Template.outlookTables.onRendered(function(){
 });
 
 /**
- * @summary Meteor Blaze Template actionTable Events
+ * Meteor Blaze Template actionTable Events
  * Here I create an event handler to listen when the user click on button to delete an account.
  * First check if there is an user logged in
  * Second looks for the account id to be deleted
