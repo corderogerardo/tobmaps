@@ -1,10 +1,28 @@
+/**
+ * @summary Emails Module - Client side Meteor for Yahoo Emails Form Template.
+ * @module  Emails.
+ *
+ * Here you will find the methods for:
+ * 1. yahooTables Template Methods for:
+ * 1.1 onRendered: Loads the footable() jquery functions.
+ * 1.2 Helpers:
+ *     emails: Search all the yahoo emails where the type of doamin es yahoo.com.
+ *     userCanEdit: Return true or false if the user cant edit.
+ * 1.3 Events: Listen for all the template events.
+ *     Delete accounts: When the user click on button to delete an account.
+ * 2.  Meteor subscriptions: To subscribe the emails user data.
+ *
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ */
+
 /* Initialize fooTable*/
 Template.yahooTables.onRendered(function(){
   $('.footable').footable();
 });
 
 /**
- * @summary Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
+ * Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets.
  */
 Meteor.subscribe("emails", function(){
@@ -12,7 +30,7 @@ Meteor.subscribe("emails", function(){
 });
 
 /**
- * Summary The subscribe Meteor Event to filter data that will be passed to template using helpers methods
+ * The subscribe Meteor Event to filter data that will be passed to template using helpers methods
  * @param  {[function]} 
  * @return {[emails] (Query projection)}
  */
@@ -34,7 +52,7 @@ Template.yahooTables.helpers({
 });
 
 /**
- * @summary Meteor Blaze Template actionTable Events
+ * Meteor Blaze Template actionTable Events
  * Here I create an event handler to listen when the user click on button to delete an account.
  * First check if there is an user logged in
  * Second looks for the account id to be deleted

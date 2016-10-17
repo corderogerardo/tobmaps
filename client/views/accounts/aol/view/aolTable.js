@@ -6,9 +6,10 @@
  * 1. aolTables Template Methods:
  * 1.1 onRendered: Loads the footable() jquery function.
  * 1.2 Helpers:
- * 		emails: Search all the aol emails.userCanEdit
+ * 		emails: Search all the aol emails where the type of domain be aol.com.
  * 		userCanEdit: Return true or false if the user can edit.
- * 1.3 Events: Listen for all the template events example: click change dblclick.
+ * 1.3 Events: Listen for all the template events.
+ * 	   Delete accounts: When the user click on button to delete an account.
  * 2. Meteor subscriptions: To subscribe the emails user data.
  *
  * Meteor general methods.
@@ -20,7 +21,7 @@ Template.aolTables.onRendered(function(){
 });
 
 /**
- * @summary Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
+ * Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets.
  */
  Meteor.subscribe("emails", function(){
@@ -28,7 +29,8 @@ Template.aolTables.onRendered(function(){
  });
 
 /**
- * Summary The subscribe Meteor Event to filter data that will be passed to template using helpers methods
+ * The subscribe Meteor Event to filter data that will be passed to template using helpers that has a local dictionary
+ * to made available each function. 
  * @param  {[function]}
  * @return {[emails] (Query projection)}
  */
@@ -50,7 +52,7 @@ Template.aolTables.onRendered(function(){
 });
 
 /**
- * @summary Meteor Blaze Template actionTable Events
+ * Meteor Blaze Template actionTable Events
  * Here I create an event handler to listen when the user click on button to delete an account.
  * First check if there is an user logged in
  * Second looks for the account id to be deleted

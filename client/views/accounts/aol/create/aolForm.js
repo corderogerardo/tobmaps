@@ -1,14 +1,13 @@
+'use strict';
 /**
  * @summary    Emails Module - Client side Meteor for AOL Emails Form Template.
  * @module     Emails
  *
  * Here you will find the methods for:
  * 1. aolForm Template Methods:
- * 1.1 onRendered: Loads the footable() jquery function.
- * 1.2 Helpers:
- * 		emails: Search all the aol emails.userCanEdit
- * 		userCanEdit: Return true or false if the user can edit.
- * 1.3 Events: Listen for all the template events example: click change dblclick.
+ * 1.1 onRendered: Execute a function to add aol accounts.
+ * 1.2 Events: Execute a function to add multiples aol accounts.
+ * 1.3 setDefaults Validator: Execute a function to set rules to the fields messages.
  *
  * Meteor general methods.
  * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.

@@ -1,3 +1,20 @@
+/**
+ * @summary Emails Module - Client side Meteor for Outlook Emails Form Template.
+ * @module  Emails
+ *
+ * Here you will find the methods for:
+ * 1. outlookTables Template Methods for:
+ * 1.1 onRendered: Loads the footable jquery functions.
+ * 1.2 Helpers:
+ * 	   emails: Search all the outlook emails where the type of domains be outlook.com.
+ * 	   userCandEdit: Return true or false if the user can edit.
+ * 1.3 Events: Listen for all the template events.
+ * 	   Delete accounts: when the user click on button to delete an account.
+ * 2.  Meteor subscriptions: To subscribe te emails user data.
+ *
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ */
 /* Initialize fooTable*/
 Template.outlookTables.onRendered(function(){
 		// Initialize fooTable
@@ -6,7 +23,7 @@ Template.outlookTables.onRendered(function(){
 	});
 
 /**
- * @summary Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
+ * Meteor Subscribe is the way we use to take the data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets.
  */
  Meteor.subscribe("emails","outlook.com");
