@@ -1,22 +1,22 @@
 /**
- * Actions Module
- * @module     Actions
- * @description Client side Meteor for Actions Form Template.
+ * @global
+ * @memberOf Actions
+ * @name  -actionForm
+ * @summary Client side Meteor for Actions Form Template.
  *
- * Here you will find the methods for blaze templates:
- * 1. actionForm Template Methods:
- * 1.1 onRendered: Loads the chosen-select jquery function.
- * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
- * 1.3 Helpers: definableActions- Loads all the definable actions to the actionForm.
- * 1.4 Hooks, seach for Hooks events in the file hooks.js
+ * onRendered for actionForm
+ * I used to initialize the Select Multiple Jquery chosen-select element into the DOM.
+ * onRendered I create a configuration variable then with a for pass the configuration to the select element
+ * This can be a good place to apply any DOM manipulations you want, after the template is rendered for the first time.
+ *
+ * Meteor Blaze Template actionForm Helpers
+ * @param {Array} definableActions variable array
+ * where we save the definable actions to be shown to the user and the will be selected in a random.
+ *
+ * Meteor Blaze Template actionForm Events
+ * Here I create an event handler to listen then the user click on cancel button to reset form.
  */
 
-/**
- * @summary Meteor Blaze Template actionForm onRendered
- * I used to initialize the Select Multiple Jquery chosen-select element into the DOM.
- * [onRendered I create a configuration variable then with a for pass the configuration to the select element]
- * This can be a good place to apply any DOM manipulations you want, after the template is rendered for the first time.
- */
 Template.actionForm.onRendered(function(){
 	var config = {
 		'.chosen-select'           : {},
@@ -34,10 +34,7 @@ var selection = ChosenOrder.getSelectionOrder(MY_SELECT);
 });
 
 /**
- * @summary Meteor Blaze Template actionForm Helpers
- *
- * @param {Array} definableActions variable array
- * where we save the definable actions to be shown to the user and the will be selected in a random.
+
  */
 Template.actionForm.helpers({
 	definableActions: function(){
@@ -50,8 +47,7 @@ Template.actionForm.helpers({
 	}
 });
 /**
- * @summary Meteor Blaze Template actionForm Events
- * Here I create an event handler to listen then the user click on cancel button to reset form.
+
  */
 Template.actionForm.events({
 	'click button[type=reset]':function(event){

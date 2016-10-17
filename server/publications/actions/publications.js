@@ -1,6 +1,8 @@
 /**
- * @summary    Actions Module - Server side Meteor Publications for Actions
- * @module     Actions
+ * @global
+ * @memberOf Actions
+ * @name  -Publications
+ * @summary ActionsPublication - Server side Meteor Publications for Actions
  *
  * Here you will find the Meteor mongodb query to fetch all the actions data that belongs to the user session.
  *

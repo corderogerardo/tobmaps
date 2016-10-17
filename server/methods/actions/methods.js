@@ -1,23 +1,20 @@
 /**
- * @summary    Actions Module - Server side Meteor Method for Actions
- * @module     Actions
+ * @global
+ * @memberOf Actions
+ * @name  -Methods
+ * @summary ActionsMethods Server side Meteor Method for Actions
  *
- * Here you will find the methods for:
- * 1. Add new Actions-addAction.
- * 2. Update actions-updateAction.
- * 3. Remove Actions-removeAction.
+ * addAction: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
+ * @param {String} userId from logged user for validations.
+ * @param {Object} from the Action Form.
  *
- * Meteor general methods.
- * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ * removeAction: Method used to remove actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete action.
+ * @param  {String} id of the actual action
+ *
+ * check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  *
  */
 Meteor.methods({
-	/**
-	 * @method 1. addAction: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
-	 * @param      {User Object} userId from logged user for validations.
-	 * @param      {Action Object} from the Action Form.
-	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
-	 */
 	addAction:function(doc){
 		// Make sure the user is logged in before inserting a task
 		if(!this.userId){
@@ -55,11 +52,6 @@ Meteor.methods({
 				}});
 		}
 		},
-		/**
-		 * @method 3. removeAction: Method used to remove actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete action.
-		 * @param  {String} id of the actual action
-		 * @return {Boolean}    True or False
-		 */
 		removeAction: function(id){
 			if (! this.userId) {
 				throw new Meteor.Error('not-authorized');
@@ -72,7 +64,6 @@ Meteor.methods({
 				if(scheduleAction){
 					throw new Meteor.Error('The action can not be deleted because is been used in a Schedule.');
 				}
-
 				return Actions.remove({_id:id});
 			}
 		}
