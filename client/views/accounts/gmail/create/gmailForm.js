@@ -1,13 +1,16 @@
 /**
- * Emails Module
- * @module    Emails
- * @description Client side Meteor for Gmail Emails Form Template.
+ * @summary Emails Module - Client side Meteor for Gmail Emails Form Template.
+ * @module  Emails
  *
- * Here you will find the methods for blaze templates:
+ * Here you will find the methods for:
  * 1. gmailForm Template Methods:
- * 1.1 onRendered: Loads the validator jquery function.
- * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
- *
+ * 1.1 onRendered: Execute a function to add gmail accounts.
+ * 1.2 Events: 
+ *  js-multi-form: Execute a function to add mulplites gmail accounts.
+ * 1.3 setDefaults Validator: Execute a function to set rules to the fields messages.
+ *  
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  */
 
 /**

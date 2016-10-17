@@ -1,14 +1,18 @@
 /**
- * Emails Module
- * @module     Emails
- * @description Client side Meteor for Outlook Emails Form Template.
+ * @summary Emails Module - Client side Meteor for Outlook Emails Form Template.
+ * @module  Emails
  *
- * Here you will find the methods for blaze templates:
+ * Here you will find the methods for:
  * 1. outlookForm Template Methods:
- * 1.1 onRendered: Loads the validator jquery function.
- * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
+ * 1.1 onRendered: Execute a function to add outlook accounts.
+ * 1.2 Events
+ *   js-multi-form: Execute a function to add multiples outlook accounts.
+ * 1.3 setDefaults Validator: Execute a function to set rules to the fields messages.
  *
+ * Meteor general methods.
+ * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  */
+
 /**
  * onRendered functions to execute a function when the “add account” template is first created and then when the “add account” template is rendered.
  * @param  {[class='js-add-account']} )
