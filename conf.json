@@ -1,0 +1,12 @@
+{
+	"source": {
+		"include": [ "lib","client","server","tests" ],
+		"exclude": [ ".idea",".meteor","node_modules","node_shrinkwrap","client/plugins","client/stylesheets","lib/moment.min.js","tests/jquery.min.js" ],
+		"includePattern": ".+\\.js(doc)?$",
+		"excludePattern": "(^|\\/|\\\\)_"
+	},
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": ["jsdoc","closure"]
+	}
+}
