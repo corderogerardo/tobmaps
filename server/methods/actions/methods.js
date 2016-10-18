@@ -2,6 +2,7 @@
  * @global
  * @memberOf Actions
  * @name  -Methods
+ * @locus server/methods/actions
  * @summary ActionsMethods Server side Meteor Method for Actions
  *
  * addAction: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.

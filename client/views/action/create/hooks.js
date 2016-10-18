@@ -1,7 +1,8 @@
 /**
  * @global
  * @memberOf Actions
- * @name  -HooksforActionForm
+ * @name  -Hooks-ActionForm
+ * @locus client/view/action/create
  * @summary Object for AutoForm Hooks of actionForm template.
  *
  * hooksObjects

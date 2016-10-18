@@ -2,6 +2,7 @@
  * @global
  * @memberOf Actions
  * @name  -actionForm
+ * @locus client/view/action/create
  * @summary Client side Meteor for Actions Form Template.
  *
  * onRendered for actionForm

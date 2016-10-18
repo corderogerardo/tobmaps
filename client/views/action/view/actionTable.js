@@ -2,6 +2,7 @@
  * @global
  * @memberOf Actions
  * @name  -actionTable
+ * @locus client/view/action/view
  * @summary Client side Meteor for Actions Table Views Template.
  *
  * Here you will find the methods for blaze templates:
