@@ -2,18 +2,23 @@
  * @global
  * @memberOf Actions
  * @name  -actionForm
- * @summary Client side Meteor for Actions Form Template.
+ * @locus client/view/action/create
+ * @summary Meteor Blaze Template actionForm.
  *
- * onRendered for actionForm
- * I used to initialize the Select Multiple Jquery chosen-select element into the DOM.
+ * @param      {BlazeTemplate} onRendered
+ * Meteor Blaze Template actionForm onRendered
+ * Used to initialize the Select Multiple Jquery chosen-select element into the DOM.
  * onRendered I create a configuration variable then with a for pass the configuration to the select element
  * This can be a good place to apply any DOM manipulations you want, after the template is rendered for the first time.
  *
+ * @param      {BlazeTemplate} Helpers
  * Meteor Blaze Template actionForm Helpers
- * @param {Array} definableActions variable array
- * where we save the definable actions to be shown to the user and the will be selected in a random.
+ * @param {helper} definableActions
+ * variable array where we save the definable actions to be shown to the user and the will be selected in a random.
  *
+ * @param      {BlazeTemplate} Events
  * Meteor Blaze Template actionForm Events
+ * @param {event} click button[type=reset]
  * Here I create an event handler to listen then the user click on cancel button to reset form.
  */
 

@@ -2,16 +2,20 @@
  * @global
  * @memberOf Actions
  * @name  -Methods
+ * @locus server/methods/actions
  * @summary ActionsMethods Server side Meteor Method for Actions
  *
- * addAction: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
+ * @param {MeteorMethod} addAction
+ * Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
  * @param {String} userId from logged user for validations.
  * @param {Object} from the Action Form.
  *
- * removeAction: Method used to remove actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete action.
+ * @param {MeteorMethod} removeAction
+ * Method used to remove actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete action.
  * @param  {String} id of the actual action
  *
- * check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ * @param {MeteorMethod} check()
+ * from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  *
  */
 Meteor.methods({

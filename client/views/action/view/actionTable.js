@@ -2,6 +2,7 @@
  * @global
  * @memberOf Actions
  * @name  -actionTable
+ * @locus client/view/action/view
  * @summary Client side Meteor for Actions Table Views Template.
  *
  * Here you will find the methods for blaze templates:
@@ -13,19 +14,21 @@
  * 1.3 Events: Listen for all the template events example: click, change, dblclick, submit.
  * 2. Meteor subscriptions: To subscribe the emails user data.
  *
+ * @param      {MeteorSubscriptions} actions
  * Meteor Subscribe for Actions is the way we use to take the actions data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
  *
  *
- *
+ * @param  {BlazeTemplate} Helpers
  * Meteor Blaze Template actionTable Helpers
- * @param  {Actions} actionsdata Get all the actions passed from publications.
- * @param  {Boolean} userCanEdit variable to check if there is an user.
+ * @param  {helper} actionsdata Get all the actions passed from publications.
+ * @param  {helper} userCanEdit variable to check if there is an user.
  *
  *
- *
+ * @param  {BlazeTemplate} Events
  * Meteor Blaze Template actionTable Events
- * Here I create an event handler to listen when the user click on button to delete an action.
+ * @param {event} click
+ * "click .js-delete-action" Here I create an event handler to listen when the user click on button to delete an action.
  * First check if there is an user logged in
  * Second looks for the action id to be deleted
  * Third Call Method pass the id data and finally use a callback to check if the operation was performed or not to inform the user.

@@ -1,10 +1,11 @@
 /**
  * @global
  * @memberOf Actions
- * @name  -HooksforActionForm
+ * @name  -Hooks-ActionForm
+ * @locus client/view/action/create
  * @summary Object for AutoForm Hooks of actionForm template.
  *
- * hooksObjects
+ * @param  {var} hooksActions
  * I listen for submit event of a form,
  * then I iterate over the selected items the (tags) get
  * their order, after that create an array with t
@@ -13,6 +14,7 @@
  * Finally I call the meteor method to pass the form object(insertDoc), if there are no errors send a
  * success message to user, if there are errors send an error message
  *
+ * @param {AutoForm.hooks} actionForm
  * Meteor AutoForm Hooks for actionForm form
  * actionForm is the form and the hooksActions is the
  * object create before this.

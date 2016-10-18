@@ -1,8 +1,12 @@
 /**
+ * @global
+ * @memberof   Schedules
+ * @name       -Publications
+ * @locus server/publications/schedules
  * @summary    Schedules Module - Server side Meteor Publications for Schedules
- * @module     Schedules
  *
- * Here you will find the Meteor mongodb query to fetch all the schedules data that belongs to the user session.
+ * @param {MeteorPublication} schedules
+ * Here you will find the Meteor mongodb query to fetch all the schedules data that belongs to the user session, to be passed to client and be used in the blaze templates.
  *
  */
 Meteor.publish('schedules', function(){
