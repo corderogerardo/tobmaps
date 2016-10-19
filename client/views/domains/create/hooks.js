@@ -1,13 +1,18 @@
 /**
- * Domains Module
- * @module     {Domains} (Domains)
+ * @memberOf Domains
+ * @name  domainsForm-Hooks
+ * @locus client/view/domains/create
  * @summary Object for AutoForm Hooks of domainsForm
  *
- * [hooksObjects
- * We listen for submit event of a form,
- *  We call the meteor method to pass the form object(insertDoc), if there are no errors send a
- *  success message to user, if there are errors send an error message]
- * @type {Object}
+ * @param  {var} hooksDomains
+ * Listen for submit event of a form,
+ * We call the meteor method to pass the form object(insertDoc), if there are no errors send a
+ * success message to user, if there are errors send an error message
+ *
+ * @param {AutoForm.hooks} domainsForm
+ * Meteor AutoForm Hooks for domainsForm form
+ * domainsForm is the form and the hooksDomains is the
+ * object create before this.
  */
 var hooksDomains = {
 	onSubmit:function(insertDoc){
@@ -26,10 +31,7 @@ var hooksDomains = {
 	}
 };
 /**
- * @summary Meteor AutoForm Hooks for domainsForm form
- * [domainsForm is the form and the hooksDomains is the
- * object create before this.]
- * @type {Objectd}
+
  */
 AutoForm.hooks({
 	domainsForm:hooksDomains

@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberof Schedules
- * @name  -Hooks-schedulesForm
+ * @name  schedulesForm-Hooks
  * @locus client/view/schedule/create
  * @summary Object for Hooks of form schedulesForm
  *

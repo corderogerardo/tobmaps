@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberOf Schedules
- * @name  -schedulesForm
+ * @name  schedulesForm
  * @locus client/view/action/create
  * @summary Meteor Blaze Template schedulesForm.
  *

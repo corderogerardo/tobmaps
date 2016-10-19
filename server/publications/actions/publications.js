@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberOf Actions
- * @name  -Publications
+ * @name  Publications
  * @locus server/publications/actions
  * @summary ActionsPublication - Server side Meteor Publications for Actions
  *

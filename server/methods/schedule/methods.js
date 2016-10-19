@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberof   Schedules
- * @name       -Methods
+ * @name       Methods
  * @locus	server/methods/schedule
  *
  * @summary    Schedule Module - Server side Meteor Method for Schedule

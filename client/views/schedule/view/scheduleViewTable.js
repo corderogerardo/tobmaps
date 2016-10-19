@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberOf Schedules
- * @name  -scheduleTable
+ * @name  scheduleTable
  * @locus client/view/schedule/view
  * @summary Client side Meteor for Schedules Table Views Template.
  *
@@ -27,8 +26,8 @@
  *
  * @param      {BlazeTemplate} onRendered
  * Meteor Blaze Template scheduleTableItems onRendered
- * Used to initialize the Select Multiple Jquery chosen-select element into the DOM.
- * onRendered I create a configuration variable then with a for pass the configuration to the select element
+ * Used to initialize the table Jquery footable element into the DOM.
+ * onRendered I create a configuration variable then with a for pass the configuration to the footable element
  * This can be a good place to apply any DOM manipulations you want, after the template is rendered for the first time.
  *
  * @param      {BlazeTemplate} Helpers

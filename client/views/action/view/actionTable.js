@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberOf Actions
- * @name  -actionTable
+ * @name  actionTable
  * @locus client/view/action/view
  * @summary Client side Meteor for Actions Table Views Template.
  *
@@ -18,11 +17,18 @@
  * Meteor Subscribe for Actions is the way we use to take the actions data from publications and pass to client user template.
  * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
  *
+ * @param      {BlazeTemplate} onRendered
+ * Meteor Blaze Template actionTable onRendered
+ * Used to initialize the table Jquery footable element into the DOM.
+ * onRendered I create a configuration variable then with a for pass the configuration to the footable element
+ * This can be a good place to apply any DOM manipulations you want, after the template is rendered for the first time.
  *
  * @param  {BlazeTemplate} Helpers
  * Meteor Blaze Template actionTable Helpers
- * @param  {helper} actionsdata Get all the actions passed from publications.
- * @param  {helper} userCanEdit variable to check if there is an user.
+ * @param  {helper} actionsdata
+ * Get all the actions passed from publications.
+ * @param  {helper} userCanEdit
+ * variable to check if there is an user.
  *
  *
  * @param  {BlazeTemplate} Events

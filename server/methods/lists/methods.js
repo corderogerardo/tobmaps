@@ -1,26 +1,38 @@
 /**
+ * @memberOf Lists
+ * @name  Methods
+ * @locus server/methods/lists
  *
- * @summary    Lists Module - Server side Meteor Method for Lists
- * @module     Lists
+ * @summary    ListsMethods - Server side Meteor Method for Lists
  *
  * Here you will find the methods for:
  * 1. Add new Lists-insertList.
  * 2. Update Lists-updateList.
  * 3. Remove Lists-removeList.
  *
+ * @param {MeteorMethod} insertList
+ * Method used to insert new Lists, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert List.
+ * @param      {String} userId from logged user
+ * @param      {Object} from the List Form
+ * @return {Boolean} insertList
+ * Return true if the List was inserted correctly, false if does not.
+ *
+ * @param {MeteorMethod} removeList
+ * Method used to remove Lists, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete List.
+ * @param  {String} id of the actual List
+ * @return {Boolean} Return true if the List was inserted correctly, false if does not.
+ *
+ * Extra validation we search for the id of the lists inside the Schedule collection, if a list is in use you should not be able to delete the list.
+ *
+ * @param {exception} MeteorException
+ * the throw new Meteor.Error return a message to the user if the list is been used in a schedule or several.
+ *
+ * @param {MeteorMethod} check()
  * Meteor general methods.
- * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ * from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  *
  */
 Meteor.methods({
-	/**
-	 * @method 1.insertList: Method used to insert new Lists, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert List.
-	 *
-	 * @param      {User Object} userId from logged user
-	 * @param      {Action Object} from the Action Form
-	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
-	 *
-	 */
 	insertList:function(listf){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
@@ -49,16 +61,6 @@ Meteor.methods({
 			}});
 		}
 	},
-	/**
-	 * @method 3. removeList: Method used to remove Lists, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete List.
-	 * @param  {String} id of the actual List
-	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
-	 *
-	 * Extra validation we search for the id of the lists inside the Schedule collection, if a list is in use you should not be able to delete the list.
-	 *
-	 * @Meteor exception the throw new Meteor.Error return a message to the user if the list is been used in a schedule or several.
-	 *
-	 */
 	removeList:function(listid){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');

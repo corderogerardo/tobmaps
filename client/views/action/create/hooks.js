@@ -1,12 +1,11 @@
 /**
- * @global
  * @memberOf Actions
- * @name  -Hooks-ActionForm
+ * @name  actionForm-Hooks
  * @locus client/view/action/create
  * @summary Object for AutoForm Hooks of actionForm template.
  *
  * @param  {var} hooksActions
- * I listen for submit event of a form,
+ * Listen for submit event of a form,
  * then I iterate over the selected items the (tags) get
  * their order, after that create an array with t
  * he real order position that where selected the actions,
@@ -16,8 +15,7 @@
  *
  * @param {AutoForm.hooks} actionForm
  * Meteor AutoForm Hooks for actionForm form
- * actionForm is the form and the hooksActions is the
- * object create before this.
+ * actionForm is the form and the hooksActions is the object create before this.
  */
 var hooksActions = {
 	onSubmit:function(insertDoc){

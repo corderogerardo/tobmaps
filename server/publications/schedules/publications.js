@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberof   Schedules
- * @name       -Publications
+ * @name       Publications
  * @locus server/publications/schedules
  * @summary    Schedules Module - Server side Meteor Publications for Schedules
  *

@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberOf Actions
- * @name  -Methods
+ * @name  Methods
  * @locus server/methods/actions
  * @summary ActionsMethods Server side Meteor Method for Actions
  *
@@ -15,6 +14,7 @@
  * @param  {String} id of the actual action
  *
  * @param {MeteorMethod} check()
+ * Meteor general methods.
  * from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
  *
  */

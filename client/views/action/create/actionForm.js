@@ -1,7 +1,6 @@
 /**
- * @global
  * @memberOf Actions
- * @name  -actionForm
+ * @name  actionForm
  * @locus client/view/action/create
  * @summary Meteor Blaze Template actionForm.
  *
@@ -38,9 +37,6 @@ var MY_SELECT = $('.chosen-select').get(0);
 var selection = ChosenOrder.getSelectionOrder(MY_SELECT);
 });
 
-/**
-
- */
 Template.actionForm.helpers({
 	definableActions: function(){
 		var arractions=[];
@@ -51,9 +47,7 @@ Template.actionForm.helpers({
 		return arractions;
 	}
 });
-/**
 
- */
 Template.actionForm.events({
 	'click button[type=reset]':function(event){
 		event.preventDefault();
