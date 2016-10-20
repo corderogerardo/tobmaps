@@ -1,23 +1,36 @@
 /**
- * @summary    Emails Module - Server side Meteor Method for Emails
- * @module     Emails
+ * @memberOf Emails
+ * @name  Methods
+ * @locus server/methods/emails
+ * @summary Emails Methods - Server side Meteor Method for Emails
  *
- * Here you will find the methods for:
- * 1. AddEmail new Emails-addAction.
- * 2. Update Emails-updateAction.
- * 3. Remove Emails-removeAction.
+ * @param {MeteorMethod} addEmailYahoo
+ * Method used to insert new yahoo email, first check if there is a an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert email.
+ * @param {String} userId from logged user for validations.
+ * @param {Object} account from the yahoo email form.
  *
- * Meteor general methods.
- * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ * @param {MeteorMethod} addEmailGmail
+ * Method used to insert new gmail email, first check if there is a an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert email.
+ * @param {String} userId from logged user for validations.
+ * @param {Object} account from the gmail email form.
  *
- */
+ * @param {MeteorMethod} addEmailOutlook
+ * Method used to insert new outlook email, first check if there is a an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert email.
+ * @param {String} userId from logged user for validations.
+ * @param {Object} account from the outlook email form.
+ *
+ * @param {MeteorMethod} addEmailAOL
+ * Method used to insert new aol email, first check if there is a an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert email.
+ * @param {String} userId from logged user for validations.
+ * @param {Object} account from the aol email form.
+ *
+ * @param {MeteorMethod} removeEmail
+ * Method used to remove emails, first we check if there is an user logged in, if does then check the data integrity that comes from object if pass validations then delete emails.
+ * @param {String} userId from logged user for validations.
+ * @param {String} email_id from the current email
+ *
+ */	
 Meteor.methods({
-	/**
-	 * @method 1. addAEmail(domain): Methods used to insert new Emails, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
-	 * @param      {User Object} userId from logged user for validations.
-	 * @param      {Account(email) Object} userId from logged user for validations.
-	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
-	 */
 	addAEmailYahoo: function(userId, account){
 		if(! this.userId) {
 				throw new Meteor.Error('not-authorized');
@@ -99,7 +112,7 @@ Meteor.methods({
 	 * @param  {Email Object} account_id: from the email table view.
 	 * @return {Boolean} Return true if the email was remove correctly, false if does not.
 	 */
-	removeAccount: function(userId, account_id){
+	removeEmail: function(userId, account_id){
 		if(! this.userId) {
 				throw new Meteor.Error('not-authorized');
 		}
