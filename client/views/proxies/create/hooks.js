@@ -32,12 +32,6 @@ var hooksProxies = {
 		return false;
 	}
 };
-/**
- * @summary Meteor AutoForm Hooks for actionForm form
- * [actionForm is the form and the hooksActions is the
- * object create before this.]
- * @type {[type]}
- */
 AutoForm.hooks({
 	proxyForm:hooksProxies
 });

@@ -214,11 +214,7 @@ casper.then(function(){
 
 casper.thenOpen(outlookurl,function(){
 			this.echo("You're in CASPER.THENOPEN");
-		/**
-		 * With Casper.fill method we send the username values of the form
-		 * With Casper.fill method we send the password values of the form
-		 * @type {String}
-		 */
+
 		 this.fill('form[name="f1"]',
 		 {
 			//tobmaps@yahoo.com
@@ -258,12 +254,7 @@ casper.then(function(){
 		}
 	});/*end forEach*/
 });
-/**	this.wait(10000);
- * @summary    Logout for outlook
- * If statement to check if is the last action then check account domain and logout
- * @param  {String} accountDomain type of account domain
- * @return {[type]}               [description]
- */
+
  clickJunkOutlook();
  clickDraftsOutlook();
  clickDeletedItemsOutlook();
@@ -272,21 +263,13 @@ casper.then(function(){
  logoutOutlook();
 
 });/*END objAccounts.forEach*/
-/**
- *
- * @summary    START OUTLOOK FUNCTIONS
- * START OUTLOOK FUNCTIONS
- *
- */
+
 function takeIdsInboxOutlook(){
 	results=[];
 	casper.then(function(){
 		results = casper.evaluate(function(){
 			ids = [];
-		/**
-		 * Jquery.Each function.
-		 * @return {Array}
-		 */
+
 		 $.each($("div[aria-label='conversation'] > div > div > div > div > div"),function(x,y){
 			/* $.each($("div[autoid='_lvv_9'] > div"),function(x,y){*/
 				ids.push($(y).attr("id"));
@@ -294,11 +277,10 @@ function takeIdsInboxOutlook(){
 		 return ids;
 		});
 	});
-
 	casper.then(function(){
 		this.echo("Mails ID: "+JSON.stringify(results));
 	});
-}/*End function takeIdsInboxOutlook*/
+}
 
 function takeIdsSpamOutlook(){
 	results=[];

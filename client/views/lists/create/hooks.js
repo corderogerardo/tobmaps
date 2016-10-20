@@ -35,10 +35,6 @@ var hooksLists = {
 		return false;
 	}
 };
-/**
-
- * @type {[type]}
- */
 AutoForm.hooks({
 	listsForm:hooksLists
 });

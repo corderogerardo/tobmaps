@@ -12,8 +12,8 @@
  *
  * @param {MeteorMethod} insertDomain
  * Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert Domain.
- * @param      {User Object} userId from logged user
- * @param      {Domain Object} from the Domain Form
+ * @param      {UserObject} userId from logged user
+ * @param      {DomainObject} from the Domain Form
  * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
  *
  * @param {MeteorMethod} removeDomain
