@@ -1,7 +1,78 @@
 /**
- * Import CasperJS module and create an instance with configurations.
+ * @memberof Bots
+ * @name Outlook
+ * @locus	tests/
+ * @summary Import CasperJS module and create an instance with configurations.
+ * Here you will find the function or Actions that will perform the bot for outlook emails.
+ *
+ * 1. Set up casperjs and create the configuration for the instance.
+ * 2. Imports Libraries for mouse, SelectXPath, utils, cli.
+ * 3. From TobMaps MeteorJS APP we pass arguments(args), to this bot, casper.cli.args;
+ * 4. Create the outlookurl variable.  The outlook URL where login.
+ * 5. Emails and Passwords: Take the casper.cli.args accounts that we passed from MeteorAPP, casper.cli.get("accounts"), and clean the data received.
+ * 6. BlackList: The blackList array is where we save the user domains the user specified in schedule as the selected blacklist, passed in the args when we use the meteor method, casper.cli.get("blacklist").
+ * 7. WhiteList: The whiteList array is where we save the user domains the user specified in schedule as the selected whitelist, passed in the args when we use the meteor method, casper.cli.get("whitelist").
+ * 8. Actions: The actions array variable is where we save the actions that the user has specified in schedule as the selected actions, passed in the args when we use the meteor method, casper.cli.get("actions").
+ * 9. We take the args we passed from meteorjs app.
+ *
+ *
+ * @param {casper} start
+ * Step one: We start the casper instance and pass the data we received from Meteor TobMaps App.
+ * Take the objAccounts array of objects and iterate if there are more than one email account and password.
+ * In this case the instance only should receive one email and password.
+ *
+ * @param {casper} thenOpen
+ * Step two: the thenOpen function receive an url as parameter, the outlook website to be requested and where the bot is going to login with the email and password. Once the website loads successfully, we send the account email data and password and click on login/submit to login.
+ *
+ * @param {casper} then
+ * Step three: then we receive all the actions defined by the user and iterate all those actions in the order they came.
+ * IMPORTANT: Each action is a function defined in this file.
+ * @param {function} moveSpamMessagesOutlook
+ * This function receive as param a the blackList that the user selected for the schedule.
+ * This function needs another function that perform click on Outlook INBOX before of been executed.
+ * The function needs to be located in the INBOX folder of outlook to take the data and work correctly.
+ * CasperJS Step to iterate over the ids messages, search the email's sender in the message and extract the domain, if the domain match with a given blacklisted domain move the message to the Junk or Spam folder.
+ *
+ * @param {function} moveInboxMessagesOutlook
+ * This function receive as param a the whiteList- that the user selected for the schedule.
+ * This function needs another function that perform click on Outlook SPAM Folder before of been executed.
+ * The function needs to be located in the SPAM folder of outlook to take the data and work correctly.
+ * CasperJS Step to iterate over the ids emails search the email and extract the domain, if the domain match with a given blacklisted domain move the email to the Junk or Spam folder.
+ *
+ * @param {function} sendManyMessagesOutlook
+ *This function work as follows:
+ * 1.perform click on New for send a new Message, that opens the form to send a message.
+ * 2.Wait for elements in the form to load correctly to send the email in the TO input. then fill the subject, the main message.
+ * 3. then wait for the label "Send", and click on the button called send to send the message.
+ *
+ *
+ * @param {function} dontClickUnsubscribeOutlook
+ * This function receive as params the white and black Lists that the user selected for the schedule.
+ * This function iterate over all the messages in the INBOX folder. Make click over each message, then perform a click over the title or name of the sender message to look for the email. Once it has gotten the email take the email domain. With the domain search if the domain is in the white or black list with a javascript native function indexOf, this returns -1 if is not, >0 if it is.
+ * Then with those values follow a some steps, for example if the domain is in the white list the bot search for all the links <a> tags in the message, if the <a> tag has the text unsubscribe and the domain is in the white list this is ignored, if not then it is clicked by the bot. The case where the domain is not on the white or black list, the decision of making click is taken randomly.
+ *
+ *
+ * @param {functions} MoreFunctions
+ *
+ * @param {function} takeIdsInboxOutlook
+ * This function search and extract all the messages ID's on the Inbox Folder. The messages ids are different to the spam folder.
+ * I separate this function because is used in other function and it was more maintainable to separate it. So if there are some changes in the Outlook Website in this specific function, the developer/programmer only needs to change this function.
+ *
+ * @param {function} takeIdsSpamOutlook
+ * This function search and extract all the messages ID's on the Spam Folder. The messages ids are different to the Inbox folder.
+ * I separate this function because is used in other function and it was more maintainable to separate it. So if there are some changes in the Outlook Website in this specific function, the developer/programmer only needs to change this function.
+ *
+ * @param {functions} forClickDifferentOptions
+ * 1. clickInboxOutlook for click on the inbox outlook menu option.
+ * 1. clickDraftsOutlook for click on the Draft outlook menu option.
+ * 1. clickSentItemsOutlook for click on the SentItems outlook menu option.
+ * 1. clickDeletedItemsOutlook for click on the DeletedItems outlook menu option.
+ * 1. clickArchiveOutlook for click on the Archived outlook menu option.
+ * 1. clickJunkOutlook for click on the Junk outlook menu option.
+ * 1. logoutOutlook for logout from outlook.
+ *
+ *
  */
-	/*clientScripts: ['jquery.min.js'],*/
  var casper = require("casper").create({
 	clientScripts: ['../../../../../tests/jquery.min.js'],
 	verbose: true,
@@ -27,38 +98,12 @@
 		var step = trace[i];
 		this.echo('   ' + step.file + ' (line ' + step.line + ')', 'ERROR');
 	}
- });
-/**
- * Import the mouse module from the casper instance
- * @type {Module}
- */
- var mouse = require('mouse').create(casper);
-/**
- * Import que selectXPath casperjs module
- * @type {Module}
- */
- var x = require('casper').selectXPath;
-/**
- * Used import the casperjs utils library
- * @Module {Casperjs Utils}
- */
- var utils = require("utils");
- /**
- *	We take the args we passed from meteorjs app.
- * @Args {args}
- */
- var meteorarguments = casper.cli.args;
-/**
- *	Accounts variable
- * 	The accounts array is where we save the user and password data we passed in the args when we use the meteor method.
- * @type {Array}
- */
-/**
- * The outlook URL where login
- * @type {String}
- */
- var outlookurl = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
-
+});
+var mouse = require('mouse').create(casper);
+var x = require('casper').selectXPath;
+var utils = require("utils");
+var meteorarguments = casper.cli.args;
+var outlookurl = "https://login.live.com/login.srf?wa=wsignin1.0&ct=1469453425&rver=6.6.6556.0&wp=MBI_SSL&wreply=https:%2F%2Foutlook.live.com%2Fowa%2F&id=292841&CBCXT=out";
 
 /* ,{"email":"ogeretle@outlook.com","password":"goMAD.123"},{"email":"mastercasper@outlook.com","password":"casper.123"},{"email":"tobmaps@yahoo.com","password":"12345678tm"},{"email":"tobmaps@yahoo.com","password":"12345678tm"},{"email":"tobmaps@yahoo.com","password":"12345678tm"},{"email":"tobmaps@yahoo.com","password":"12345678tm"}*/
  /*var accounts = '[{"email":"tobmapx@outlook.com","password":"tobMAPS-123"}]';*/
@@ -88,11 +133,6 @@
  }
  /*var accounts = [{user: 'tobmapx@outlook.com',pwd: 'tobMAPS-123'}];*/
 
-/**
- *	BlackList Variable
- * The blackList array is where we save the user domains the user specified in schedule as the selected blacklist, passed in the args when we use the meteor method.
- * @type {Array}
- */
  /*var blackList = '[{"domains":["yahoo.com","outlook.com"]}]';*/
  var blackList = casper.cli.get("blacklist");
  blackList = blackList.replace("[","");
@@ -112,11 +152,7 @@
 
 
  blackList = blackList.split(",");
-/**
- *	WhiteList Variable
- * The whiteList array is where we save the user domains the user specified in schedule as the selected whitelist, passed in the args when we use the meteor method.
- * @type {Array}
- */
+
  /*var whiteList ='[{"domains":["gmail.com","hotmail.com","corderogerardo.com.ve"]}]';*/
  var whiteList = casper.cli.get("whitelist");
  whiteList = whiteList.replace("[","");
@@ -133,7 +169,6 @@
 
  whiteList = whiteList.replace(/domains/g,"");*/
 //for running on console
-
 
  whiteList = whiteList.split(",");
 
@@ -161,58 +196,17 @@
  console.log("Data: "+blackList);
  console.log("Data: "+actions);
 
-/**
- *	We take the args we passed from meteorjs app.
- * @Args {args}
- */
  var meteorarguments = casper.cli.args;
 
-/**
- *	Here start the Bots.
- */
  casper.start(function(self, index,objAccounts, whiteList, blackList, actions,outlookurl,yahoourl){
-
  });
-
-/**
- * Here we need to think how to build the functions
- * that will contain each casperjs script or bot and how are we going to call or make use of that function
- *
- * To execute all the actions we MUST have the accounts and passwords, the black and white list of domains and the lists of actions to be performed
- *
- * To have in mind: those actions can not be executed in parallel if those are in the same instance, so they must be called just right after the other has ended and not in asynchronous way
- *
- * What are going to be asynchronous or multi-threaded the schedules executions, each schedule is going to be an instance of casperjs and the user can have multiple schedules, so as much  instances as schedules created.
- *
- * 26/09/2016 We should not filter the accounts by domain in the server method, we should pass all the accounts to the script casperjs without filtering and the casperjs script will ITERATE(actions.each or for while), we pass the definable actions to be performed by all the accounts, each account will ITERATE(actions.each or for while) over all same actions.
- * We are going to iterate over each account, take the domain account and its domain, to know the path or way to follow, then LOGIN, then ITERATE over all the actions then LOGOUT, and start again with another account.
- *
- * We need to test performance, error handling when execute multi-threaded
- */
-
-/**
- * @summary    Login for Outlook accounts
- *
- */
-
  objAccounts.forEach(function(account,index){
-
 	var results;
 	var ids;
-	/**
-	 * Username from email to login
-	 * @type {String}
-	 */
-
 	 /* var username = "tobmapx@outlook.com";*/
 	 var username = account.email;
-	/**
-	 * Password from email to loginactions
-	 * @type {[type]}
-	 */
 	 /* var password = "tobMAPS-123";*/
 	 var password = account.password;
-
 
 casper.then(function(){
 	this.wait(2000);
@@ -402,9 +396,6 @@ function logoutOutlook(){
 }
 
 function moveSpamMessagesOutlook(blackList){
-/**
- * CasperJS Step to iterate over the ids emails search the email and extract the domain, if the domain match with a given blacklisted domain move the email to the Junk or Spam folder..
- */
  casper.then(function(){
 	email="";
 	domain="";
@@ -430,8 +421,8 @@ function moveSpamMessagesOutlook(blackList){
 			domain = email.replace(/.*@/, "");
 			this.echo("Email: "+email+" Domain: "+domain+" Emails: "+emails+ " BlackList: "+blackList);
 
-		/**
-		 * Casper.waitForSelector wait to the email document appear so I can click over the message and extract the email and find the domain.
+		/*
+			Casper.waitForSelector wait to the email document appear so I can click over the message and extract the email and find the domain.
 		 */
 		 this.waitForSelector("div[role='document']",function(){
 			/*this.waitForSelector("div[role='document']",function(){*/
@@ -440,9 +431,9 @@ function moveSpamMessagesOutlook(blackList){
 				this.wait(5000);
 				/*blacklist = blacklist.split(",");*/
 				this.echo("BlackList of casper args: "+ blackList);
-		/**
-		 * If the domain is in the blacklist I click to Junk to move to junk folder.
-		 * @param  {Number} blacklist.indexOf(domain)! indexOf Method to know if in the blacklist or not.
+		/*
+			If the domain is in the blacklist I click to Junk to move to junk folder.
+			blacklist.indexOf(domain)! indexOf Method to know if in the blacklist or not.
 		 */
 		 if(blackList.indexOf(domain)!=-1){
 			this.clickLabel("Junk");
@@ -629,11 +620,6 @@ this.wait(5000);
 });
 }
 
-
-/**
- * Runs the whole suite of steps and optionally executes a callback when they’ve all been done.
- * calling this method is mandatory in order to run the Casper navigation suite.
- */
- casper.run(function(){
+casper.run(function(){
 	this.exit();
- });
+});
