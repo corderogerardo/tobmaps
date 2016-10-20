@@ -1,8 +1,11 @@
 /**
- * @summary    Users Accounts Module - Server side Meteor Publications for Users
- * @module     UsersAccounts
+ * @memberOf Accounts
+ * @name  Publications
+ * @locus server/publications/accounts
+ * @summary Accounts Publications - Server side Meteor Publications for Accounts
  *
- * Here you will find the Meteor mongodb query to fetch all the users data, only for Admin user.
+ * @param {MeteorPublication} userData
+ * Here you will find the Meteor mongodb query to fetch all the accounts data, to be passed to the client and be used in the blaze templates.
  *
  */
 Meteor.publish("userData", function () {

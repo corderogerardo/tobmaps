@@ -1,29 +1,29 @@
 'use strict';
+
 /**
- * Emails Module
- * @module    Emails
- * @description Client side Meteor for AOL Emails Form Template.
+ * @memberOf Emails
+ * @name  GmailForm
+ * @locus client/views/emails/gmail/create
+ * @summary Meteor Blaze Template gmailForm
+ 
+ * @param {BlazeTemplate} onRendered
+ * Meteor Blaze Template gmailForm onRendered:
+ * Handler class to take email and password and stores then in a scheme.
+ * 
+ * @param {Object} account - Object with the email and password values to register in email collection.
+ * @param {String} err/res - return the method value from the server side.
  *
- * Here you will find the methods for blaze templates:
- * 1. aolForm Template Methods:
-<<<<<<< HEAD
- * 1.1 onRendered: Execute a function to add aol accounts.
- * 1.2 Events: Execute a function to add multiples aol accounts.
- * 1.3 setDefaults Validator: Execute a function to set rules to the fields messages.
-=======
- * 1.1 onRendered: Loads the validator jquery function.
- * 1.2 Events: Listen for all the template events example: click, change, dblclick, submit.
->>>>>>> 0c4d5d1f1eca138137829c26f1b87d523e1201a2
- *
+ * @param {BlazeTemplate} Events
+ * Meteor Blaze Template gmailForm Events:
+ * Handler to takes a string and separates the pair takes a email and password and stores them in a scheme, 
+ * repite the process for each pair and call a RPC meteor method.
+ * 
+ * @param {Object} account - Object with the email and password values for each iteration to register in email collection.
+ * @param {String} Meteor.userId() - string with the current user id.
+ * @param {String} err/res - return the method value from the server side.
  */
-/**
- * onRendered functions to execute a function when the “add account” template is first created and then when the “add account” template is rendered.
- * @param  {[class='js-add-account']} )
- * @param  {[name='email']} )
- * @param  {[name='password']} )
- * @return {[Meteor.call(function(error))]}
- */
- Template.aolForm.onRendered(function(){
+
+ Template.gmailForm.onRendered(function(){
 	var validator = $('.js-add-account').validate({
 		submitHandler: function(){
 			var email = $('[name=email]').val();
@@ -32,7 +32,7 @@
 				email:email,
 				password:password,
 			};
-			Meteor.call('addAEmailAol', Meteor.userId(), account, function(error){
+			Meteor.call('addAEmailGmail', Meteor.userId(), account, function(error){
 				if(error){
 					validator.showErrors({
 						email: "The domain is invalid."
@@ -46,12 +46,12 @@
 	});
 	$('.js-multi-form').validate({
 		rules: {
-			aolString: {
+			gmailString: {
 				required: true
 			},
 		},
 		messages: {
-			aolString: {
+			gmailString: {
 				required: "You must enter an email address and password."
 			},
 		}
@@ -91,11 +91,11 @@
  * @param  {string} acounts and passwords
  * @param  {account} orders the string in mail and password pairs
  */
- Template.aolForm.events({
+ Template.gmailForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
 		var lines, lineNumber, data, length;
-		data = $('[name=aolString]').val();
+		data = $('[name=gmailString]').val();
 		lines = data.split('\n');
 		lineNumber = 0;
 		for (var i = lines.length - 1; i >= 0; i--) {
@@ -111,7 +111,7 @@
 			/**
 			 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
 			 */
-			 Meteor.call('addAEmailAol', Meteor.userId(), account, function(err,res){
+			 Meteor.call('addAEmailGmail', Meteor.userId(),account, function(err,res){
 				if(err){
 					console.log("Error "+err);
 					toastr.error('The account is invalid '+err,'Account could not be added!');

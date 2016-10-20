@@ -1,26 +1,28 @@
+'use strict';
 /**
- * @summary Emails Module - Client side Meteor for Outlook Emails Form Template.
- * @module  Emails
+ * @memberOf Emails
+ * @name  YahooForm
+ * @locus client/views/emails/yahoo/create
+ * @summary Meteor Blaze Template yahooForm
  *
- * Here you will find the methods for:
- * 1. outlookForm Template Methods:
- * 1.1 onRendered: Execute a function to add outlook accounts.
- * 1.2 Events
- *   js-multi-form: Execute a function to add multiples outlook accounts.
- * 1.3 setDefaults Validator: Execute a function to set rules to the fields messages.
+ * @param {BlazeTemplate} onRendered
+ * Meteor Blaze Template yahooForm onRendered:
+ * Handler class to take email and password and stores then in a scheme.
+ * 
+ * @param {Object} account - Object with the email and password values to register in email collection.
+ * @param {String} err/res - return the method value from the server side.
  *
- * Meteor general methods.
- * @method check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ * @param {BlazeTemplate} Events
+ * Meteor Blaze Template yahooForm Events:
+ * Handler to takes a string and separates the pair takes a email and password and stores them in a scheme, 
+ * repite the process for each pair and call a RPC meteor method.
+ * 
+ * @param {Object} account - Object with the email and password values for each iteration to register in email collection.
+ * @param {String} Meteor.userId() - string with the current user id.
+ * @param {String} err/res - return the method value from the server side.
  */
 
-/**
- * onRendered functions to execute a function when the “add account” template is first created and then when the “add account” template is rendered.
- * @param  {[class='js-add-account']} )
- * @param  {[name='email']} )
- * @param  {[name='password']} )
- * @return {[Meteor.call(function(error))]}
- */
- Template.outlookForm.onRendered(function(){
+ Template.yahooForm.onRendered(function(){
 	var validator = $('.js-add-account').validate({
 		submitHandler: function(){
 			var email = $('[name=email]').val();
@@ -29,8 +31,8 @@
 				email:email,
 				password:password,
 			};
-			Meteor.call('addAEmailOutlook', Meteor.userId(), account, function(error){
-				if(error){
+			Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err, res){
+				if(err){
 					validator.showErrors({
 						email: "The domain is invalid."
 					});
@@ -43,22 +45,18 @@
 	});
 	$('.js-multi-form').validate({
 		rules: {
-			outlookString: {
+			yahhoString: {
 				required: true
 			},
 		},
 		messages: {
-			outlookString: {
+			yahhoString: {
 				required: "You must enter an email address and password."
 			},
 		}
 	});
  });
 
-/**
- * setDefaults function define a default set of rules and error messages validate functions
- * @type {Object}
- */
  $.validator.setDefaults({
 	rules: {
 		email: {
@@ -82,17 +80,11 @@
 	}
  });
 
-/**
- * Event that takes a string and separates the pair takes a account and password and stores them in a scheme,
- * repite the process for each pair and call a RPC
- * @param  {string} acounts and passwords
- * @param  {account} orders the string in mail and password pairs
- */
- Template.outlookForm.events({
+ Template.yahooForm.events({
 	"submit .js-multi-form":function(event){
 		event.preventDefault();
 		var lines, lineNumber, data, length;
-		data = $('[name=outlookString]').val();
+		data = $('[name=yahhoString]').val();
 		lines = data.split('\n');
 		lineNumber = 0;
 		for (var i = lines.length - 1; i >= 0; i--) {
@@ -105,10 +97,7 @@
 				email:email,
 				password:password,
 			};
-			/**
-			 * @param {Meteor.call} - This meteor method call the server side method insertEmail that receive the email and an user to validate the insert in collection.
-			 */
-			 Meteor.call('addAEmailOutlook', Meteor.userId(), account, function(err,res){
+			 Meteor.call('addAEmailYahoo', Meteor.userId(), account, function(err,res){
 				if(err){
 					console.log("Error "+err);
 					toastr.error('The account is invalid '+err,'Account could not be added!');
