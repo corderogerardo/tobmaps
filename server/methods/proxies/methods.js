@@ -1,13 +1,31 @@
 /**
- * @summary    Meteor Server Side Methods for Proxies Module
- * addProxy: Method used to insert new proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
- * @param      {User Object} userId from logged user
- * @param      {Proxy Object} from the Proxy Form
+ * @memberOf Proxies
+ * @name  Methods
+ * @locus server/methods/proxies
+ * @summary    ProxiesMethods Server side Meteor Method for Proxies
+ *
+ * Here you will find the methods for:
+ * 1. Add new Proxies-addProxy.
+ * 2. Update Proxies-updateProxy.
+ * 3. Remove Proxies-removeProxy.
+ *
+ * @param {MeteorMethod} addProxy
+ * Method used to insert new proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
+ * @param      {String} userId
+ * userId from logged user
+ * @param      {Object} formProxy
+ * from the Proxy Form Template.
  * @return {Boolean} Return true if the proxy was inserted correctly, false if does not.
  *
- * removeProxy: Method used to remove proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete proxy.
+ * @param {MeteorMethod} removeProxy
+ * Method used to remove proxies, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete proxy.
  * @param  {String} id of the actual proxy
  * @return {Boolean}    True or False
+ *
+ * @param {MeteorMethod} check()
+ * from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
+ *
  */
 Meteor.methods({
 	addProxy:function(doc){

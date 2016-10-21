@@ -1,13 +1,30 @@
 /**
- * @summary    Meteor Server Side Methods for Domains Module
- * insertDomain: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert Domain.
- * @param      {User Object} userId from logged user
- * @param      {Domain Object} from the Domain Form
+ * @memberOf Domains
+ * @name  Methods
+ * @locus server/methods/domains
+ *
+ * @summary    DomainsMethods - Server side Meteor Method for Domains
+ *
+ * Here you will find the methods for:
+ * 1. Add new Domains-insertDomain.
+ * 2. Update Domains-updateDomain.
+ * 3. Remove Domains-removeDomain.
+ *
+ * @param {MeteorMethod} insertDomain
+ * Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert Domain.
+ * @param      {UserObject} userId from logged user
+ * @param      {DomainObject} from the Domain Form
  * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
  *
- * removeDomain: Method used to remove Domains, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete Domain.
+ * @param {MeteorMethod} removeDomain
+ * Method used to remove Domains, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete Domain.
  * @param  {String} id of the actual Domain
  * @return {Boolean} Return true if the Domain was inserted correctly, false if does not.
+
+ * @param {MeteorMethod} check()
+ * Meteor general methods.
+ * from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
  */
 Meteor.methods({
 	insertDomain:function(domf){

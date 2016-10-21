@@ -1,8 +1,28 @@
 /**
- * @summary Meteor Blaze Template listsForm onRendered
+ * @memberOf Lists
+ * @name  listsForm
+ * @locus client/view/lists/create
+ * @summary Meteor Blaze Template listsForm
+ *
+ * @param      {BlazeTemplate} onRendered
  * We used to initialize the Select Multiple Jquery chosen-select element into the DOM.
- * [onRendered We create a configuration variable then with a for pass the configuration to the select element]
+ * onRendered We create a configuration variable then with a for pass the configuration to the select element
  * This can be a good place to apply any DOM manipulations you want, after the template is rendered for the first time.
+ *
+ * @param      {MeteorSubscriptions} domains
+ * Meteor Subscribe for Domains is the way we use to take the domains data from publications and pass to client user template.
+ * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
+ *
+ * @param      {BlazeTemplate} Helpers
+ * Meteor Blaze Template listsForm Helpers
+ * @param  {helper} listDomains
+ * Get all the domains passed from publications.
+ *
+ * @param  {BlazeTemplate} Events
+ * Meteor Blaze Template listsForm Events
+ * @param {event} click button[type=reset]
+ * 'click button[type=reset]' We create an event handler to listen then the user click on cancel button to reset form.
+ *
  */
 Template.listsForm.onRendered(function(){
 	var config = {
@@ -16,17 +36,8 @@ Template.listsForm.onRendered(function(){
 				$(selector).chosen(config[selector]);
 		}
 });
-/**
- * @summary Meteor Subscribe for Domains is the way we use to take the domains data from publications and pass to client user template.
- * These functions control how Meteor servers publish sets of records and how clients can subscribe to those sets of data.
- */
-Meteor.subscribe("domains");
 
-/**
- * @summary Meteor Blaze Template listsForm Helpers
- * @param  {Domains} listDomains Get all the domains passed from publications.
- *
- */
+Meteor.subscribe("domains");
 Template.listsForm.helpers({
 	listDomains:function(){
 		return Domains.find().map(function (c) {
@@ -35,10 +46,6 @@ Template.listsForm.helpers({
 	}
 });
 
-/**
- * @summary Meteor Blaze Template listsForm Events
- * We create an event handler to listen then the user click on cancel button to reset form.
- */
 Template.listsForm.events({
 	'click button[type=reset]':function(event){
 		event.preventDefault();

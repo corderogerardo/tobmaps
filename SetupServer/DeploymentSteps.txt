@@ -37,7 +37,7 @@ mv file.tar.gz /home/tobmaps/
 ## Now we need to move to that user folder and to assign to that user the right permissions with the command
 sudo chown -R devtobmaps: .
 ## OR
-sudo chown -R tobmaops: .
+sudo chown -R devtobmaps: .
 
 # STEP6: Now we have the tar.gz file in our user folder (remember an user for development, an user for production)
 ## You need to login as that user you're about to use to uncompress the .tar.gz file and deploy, with the following command:

@@ -1,13 +1,22 @@
 /**
- * @summary    Meteor Server Side Methods for Actions Module
- * addAction: Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
- * @param      {User Object} userId from logged user
- * @param      {Action Object} from the Action Form
- * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
+ * @memberOf Actions
+ * @name  Methods
+ * @locus server/methods/actions
+ * @summary ActionsMethods Server side Meteor Method for Actions
  *
- * removeAction: Method used to remove actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete action.
+ * @param {MeteorMethod} addAction
+ * Method used to insert new actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then insert action.
+ * @param {String} userId from logged user for validations.
+ * @param {Object} from the Action Form.
+ *
+ * @param {MeteorMethod} removeAction
+ * Method used to remove actions, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete action.
  * @param  {String} id of the actual action
- * @return {Boolean}    True or False
+ *
+ * @param {MeteorMethod} check()
+ * Meteor general methods.
+ * from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
  */
 Meteor.methods({
 	addAction:function(doc){
@@ -59,7 +68,6 @@ Meteor.methods({
 				if(scheduleAction){
 					throw new Meteor.Error('The action can not be deleted because is been used in a Schedule.');
 				}
-
 				return Actions.remove({_id:id});
 			}
 		}
