@@ -1,7 +1,7 @@
 /**
  * @memberof Bots
  * @name Outlook
- * @locus	tests/
+ * @locus	tests/outlook
  * @summary Import CasperJS module and create an instance with configurations.
  * Here you will find the function or Actions that will perform the bot for outlook emails.
  *
@@ -15,6 +15,10 @@
  * 8. Actions: The actions array variable is where we save the actions that the user has specified in schedule as the selected actions, passed in the args when we use the meteor method, casper.cli.get("actions").
  * 9. We take the args we passed from meteorjs app.
  *
+ * @param {casper} STEPS
+ * Each casperjs instance follow a series of steps, but they always will LOGIN and LOGOUT, as their first and last step. We will add more functions before login, after logout, to make it look more human possible.
+ * @param {IMPORTANT} FUNCTIONS
+ * We try to work with NodeJS Modules, to keep the Separations of Concerns SOLID Principle. But we faced for some problems trying to make the bots work like that. So we decided to keep this SOLID principle using FUNCTIONS, so if there is a change in a step of casperjs the developer/programmer only needs to find that function and modified it.
  *
  * @param {casper} start
  * Step one: We start the casper instance and pass the data we received from Meteor TobMaps App.

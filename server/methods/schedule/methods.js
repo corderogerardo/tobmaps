@@ -235,8 +235,8 @@ Meteor.methods({
 
 						if(account.email.replace(/.*@/, "")=="outlook.com"){
 
-						line = "xvfb-run casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
-						/*line = "casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
+						line = "xvfb-run casperjs ../../../../../tests/outlook/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+						/*line = "casperjs ../../../../../tests/outlook/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
 							/*console.log("In command method", line);*/
 							Fiber = Npm.require('fibers');
 							exec(line, function(stderr, stdout) {
@@ -257,8 +257,8 @@ Meteor.methods({
 							});/*END EXEC*/
 						}/*END IF OUTLOOK.COM*/
 						if(account.email.replace(/.*@/, "")=="yahoo.com"){
-						line = "xvfb-run casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
-					/*	line = "casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
+						line = "xvfb-run casperjs ../../../../../tests/yahoo/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+					/*	line = "casperjs ../../../../../tests/yahoo/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
 							console.log("In command method", line);
 							Fiber = Npm.require('fibers');
 							exec(line, function(stderr, stdout) {

@@ -1,7 +1,7 @@
 /**
  * @memberof Bots
  * @name Yahoo
- * @locus	tests/
+ * @locus	tests/yahoo
  * @summary Import CasperJS module and create an instance with configurations.
  * Here you will find the function or Actions that will perform the bot for Yahoo emails.
  *
