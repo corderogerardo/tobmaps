@@ -225,12 +225,11 @@ Meteor.methods({
 					console.log(actions, 'that user actions');
 					console.log(proxies, 'that user actions');*/
 
-					/*
-					 toproxies variable to calculate a random proxy to be used when exec the line with the casperjs instance.
-					 */
-					var toproxies = Math.floor(Math.random() * proxies.length) + 1;
-
 					allAccounts.forEach(function (account,index) {
+					/*
+					toproxies variable to calculate a random proxy to be used when exec the line with the casperjs instance.
+					*/
+					var toproxies = Math.floor(Math.random() * proxies.length) + 1;
 						var line = "";
 
 						if(account.email.replace(/.*@/, "")=="outlook.com"){
