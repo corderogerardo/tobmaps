@@ -18,7 +18,7 @@
  *
  * @param  {BlazeTemplate} Events
  * Meteor Blaze Template yahooTable Events
- * @param {event} delete-email
+ * @param {function} delete-email
  * "click .js-delete-email" Here we create an event handler to listen when the user click on button to delete an email.
  * First check if there is an user logged in
  * Second looks for the email id to be deleted
