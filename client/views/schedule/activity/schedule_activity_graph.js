@@ -1,13 +1,4 @@
-/**
- * This render the graph's bots activity to the template
- * @return {Graph rendered} -
- */
  Template.schedule_activity_graph.onRendered( function(){
-		// Data and options for charts
-		/**
-		 * The object barOptions holds the internal configurations for the graph. Here you can change the series, lines, axis , color[add a new color per each data], grid.
-		 * @type {Object}
-		 */
 		 var barOptions = {
 			series: {
 				lines: {
@@ -43,11 +34,6 @@
 				content: "Bot Cuantity: %y, Hours: %x"
 			}
 		 };
-		/**
-		 * This the static data passed to draw the graph.
-		 * This data will be fetched from mongodb database.
-		 * @type {Object}
-		 */
 		 var barData = {
 			label: "Succeeded",
 			data: [
@@ -135,8 +121,5 @@
 			[23, 2],
 			]
 		 };
-		/**
-		 * This the Jquery function that take the id of the graph container and pass the data and configuration to draw the data.
-		 */
 		 $.plot($("#flot-line-chart-schedule"), [barData,barDataTwo,barDataTree], barOptions);
 });

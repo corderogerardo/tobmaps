@@ -1,3 +1,20 @@
+/**
+ * @memberOf Menu
+ * @name  Navigation
+ * @locus client/views/common/navigation
+ * @summary Client side Meteor for Navigation Menu View Template.
+ *
+ * @param {BlazeTemplate} Helpers
+ * Meteor Blaze Template navigation Helpers
+ * @param {Function} isAdminUser check if the current user is an "Admin".
+ * @param {Function} isUser check if the current user is an "User" else upsert a "User" rol
+ *
+ * @param {BlazeTemplate} Events
+ * Meteor Blaze Template navigation Events
+ * @param {method} Router.go We defined a click event handler for each button to navigate in given url
+ * @param {String} Meteor.userId() We used the current user id to personalize the url route and adding security validations   
+ */
+
 Template.navigation.rendered = function(){
 		// Initialize metisMenu
 		$('#side-menu').metisMenu();

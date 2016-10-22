@@ -1,0 +1,21 @@
+{
+	"plugins": ["plugins/markdown"],
+	"markdown": {
+		"parser": "gfm"
+	},
+	"source": {
+		"include": [ "lib","client","server","tests" ],
+		"exclude": [
+			".git",
+			".idea",
+			".meteor",
+			"node_modules",
+			"node_shrinkwrap",
+			"client/plugins",
+			"client/stylesheets",
+			"lib/moment.min.js",
+			"tests/jquery.min.js"
+		 ],
+		"includePattern": ".+\\.js(x|doc)?$"
+	}
+}

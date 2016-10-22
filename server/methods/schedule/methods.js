@@ -1,4 +1,37 @@
-
+/**
+ * @memberof   Schedules
+ * @name       Methods
+ * @locus	server/methods/schedule
+ *
+ * @summary    Schedule Module - Server side Meteor Method for Schedule
+ *
+ * Here you will find the methods for:
+ * 1. Add new Schedule-addAction.
+ * 2. Update Schedule-updateAction.
+ * 3. Remove Schedule-removeAction.
+ * 4. Turn On/Off Schedule-activateSchedule.
+ *
+ * @param {MeteorMethod} insertSchedule
+ * Method that validate if there is an user logged to insert a schedule to it's collection.
+ * @param  {String} userId User id logged
+ * @param  {Object} scheduleForm from the scheduleForm form.
+ * @return {Boolean} insertSchedule Return true if the schedule was inserted correctly, false if does not.
+ *
+ * @param {MeteorMethod} removeSchedule
+ * Method used to remove Schedules, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then validate if the schedule state is true which means is active send an error message to the user and doesn't Delete Schedule, only if the schedule is not active(turn off) delete the schedule.
+ * @param  {String} schedule_id of the actual Schedule to be deleted.
+ * @return {Boolean} removeSchedule Return true if the schedule was deleted correctly, false if does not.
+ *
+ * @param {MeteorMethod} activateSchedule
+ * Method used to change the state of a Schedule, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then turn on or turn off the Schedule.
+ * @param  {String} schedule_id of the actual Schedule to be activated.
+ * @return {Boolean} activateSchedule Return true if the schedule was activated correctly, false if does not.
+ * To activate successfully a Schedule, the user needs to has at least an email and a proxy, otherwise the user could not activate the Schedule.
+ *
+ * @param {MeteorMethod} Meteor general methods.
+ * check() from Meteor is used to validate data integrity and be sure that the data type is the same from the collection.
+ *
+ */
 var exec = Npm.require('child_process').exec;
 
 var process_exec_sync = function (command) {
@@ -25,27 +58,11 @@ var process_exec_sync = function (command) {
 	return future.wait();
 };
 
-
 var cron = Npm.require('node-schedule');
-
 var Fiber = Npm.require('fibers');
-
-
 var rule = new cron.RecurrenceRule();
 
 Meteor.methods({
-	/**
-	 * @summary   Meteor Server Side Methods for Schedules Module
-	 * insertSchedule: Method that validate if there is an user logged to insert a schedule to it's collection.
-	 * @param  {User Object} userId User logged
-	 * @param  {schedule Object} from the scheduleForm form.
-	 * @return {Boolean} Return true if the schedule was inserted correctly, false if does not.
-	 *
-	 *
-	 * removeSchedule: Method used to remove Schedules, first we check if there is an user logged in, if does then check the data integrity that comes from the form object if pass validations then Delete Schedule.
-	 * @param  {String} id of the actual Schedule
-	 * @return {Boolean} Return true if the schedule was deleted correctly, false if does not.
-	 */
 	 insertSchedule: function(schedulef){
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
@@ -91,19 +108,21 @@ Meteor.methods({
 		if(this.userId){
 			check(schedule_id,String);
 			check(check_value,Boolean);
-			console.log("Schedule ID: "+schedule_id+" status: "+check_value);
-			Schedules.update(schedule_id, {
-				$set: { state: check_value },
-			});
-			var	myBot = cron.scheduledJobs[schedule_id];
-			/**
-			 * [schedule description]
-			 * @type {[type]}
-			 */
+
+			var checkUserEmails = Emails.findOne({createdBy:this.userId});
+			var checkUserProxies = Proxies.findOne({createdBy:this.userId});
+			if(!checkUserEmails){
+				throw new Meteor.Error('You need to add an email and a proxy at least to activate the Schedule.');
+			}
+			if(!checkUserProxies){
+				throw new Meteor.Error('You need to add a proxy at least to activate the Schedule.');
+			}
+
 			 var schedule = Schedules.findOne({_id:schedule_id});
 			 console.log(schedule);
 			 var daysArr=schedule.days;
 			 var daysArrNum=[];
+
 			 daysArr.forEach(function(day,index){
 				switch(day){
 					case "sunday":
@@ -131,31 +150,14 @@ Meteor.methods({
 					break;
 				}
 			 });
-			 var schedulehours = schedule.hours.map(Number);
-			 console.log("Days array: "+daysArrNum);
-			 console.log("Hours: "+schedulehours);
-			 console.log("Minutes: "+schedule.awakening);
-			 rule.dayOfWeek = daysArrNum;
 
-			 rule.hour = schedulehours;
+			var schedulehours = schedule.hours.map(Number);
 
-			 rule.minute = [schedule.awakening];
-			/**
-			 * [description]
-			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
-			 * @return {[type]}                [description]
-			 */
 
-			/**
-			 * [description]
-			 * @param  {[type]} c){				return {email:c.email, email:c.email,								password:c.password,password:c.password}			} [description]
-			 * @return {[type]}                [description]
-			 */
+			rule.dayOfWeek = daysArrNum;
+			rule.hour = schedulehours;
+			rule.minute = [schedule.awakening];
 
-			/**
-			* [line description]
-			* @type {String}
-			*/
 			var allAccounts = Emails.find({
 				$or:[
 				{
@@ -167,7 +169,6 @@ Meteor.methods({
 					password:c.password,password:c.password}
 				});
 
-			console.log(allAccounts);
 			var whitelist = Lists.find({
 				$or:[
 				{
@@ -177,12 +178,6 @@ Meteor.methods({
 			}).map(function(c){
 				return {domains:c.domains, domains:c.domains}
 			});
-			console.log(whitelist);
-			/**
-			 * [description]
-			 * @param  {[type]} c){				return {domains:c.domains, domains:c.domains}			} [description]
-			 * @return {[type]}                [description]
-			 */
 			 var blacklist = Lists.find({
 				$or:[
 				{
@@ -192,12 +187,6 @@ Meteor.methods({
 			 }).map(function(c){
 				return {domains:c.domains, domains:c.domains}
 			 });
-			 console.log(blacklist);
-			/**
-			 * [description]
-			 * @param  {[type]} c){				return {actions:c.actions, actions:c.actions}			} [description]
-			 * @return {[type]}                [description]
-			 */
 			 var actions = Actions.find({
 				$or:[
 				{
@@ -208,8 +197,6 @@ Meteor.methods({
 			 }).map(function(c){
 				return {actions:c.actions, actions:c.actions}
 			 });
-			 console.log(actions);
-
 			 var proxies = Proxies.find({
 				$or:[{
 					createdBy:schedule.createdBy
@@ -223,40 +210,44 @@ Meteor.methods({
 				});
 			 console.log(proxies);
 
-			 if(schedule.state === true){
+			 if(check_value === true){
 
-				/**
-				 * START CRON JOB SCHEDULE
-				 *
+				/*
+				 START THE NODE-SCHEDULE INSTANCE - CRON JOB SCHEDULE
 				 */
-				 console.log("Schedule Active", schedule.state);
 				 cron.scheduleJob(schedule_id, rule, function(){
+				/* Uncomment for test.
+					console.log("Schedule Active", schedule.state);
 					console.log(schedule_id, 'Schedule Active');
 					console.log(allAccounts, 'that user accounts');
 					console.log(blacklist, 'that user black list');
 					console.log(whitelist, 'that user white list');
 					console.log(actions, 'that user actions');
-					console.log(proxies, 'that user actions');
-
-					var toproxies = Math.floor(Math.random() * proxies.length) + 1;
+					console.log(proxies, 'that user actions');*/
 
 					allAccounts.forEach(function (account,index) {
+					/*
+					toproxies variable to calculate a random proxy to be used when exec the line with the casperjs instance.
+					*/
+					var toproxies = Math.floor(Math.random() * proxies.length) + 1;
 						var line = "";
 
 						if(account.email.replace(/.*@/, "")=="outlook.com"){
 
-							/*line = "xvfb-run casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
-							line = "casperjs ../../../../../tests/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
-							console.log("In command method", line);
+						line = "xvfb-run casperjs ../../../../../tests/outlook/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+						/*line = "casperjs ../../../../../tests/outlook/outlookactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
+							/*console.log("In command method", line);*/
 							Fiber = Npm.require('fibers');
 							exec(line, function(stderr, stdout) {
-								console.log('Command Method STDOUT: '+ stdout);
-								console.log('Command Method STDERR: '+ stderr);
+							/*	console.log('Command Method STDOUT: '+ stdout);
+								console.log('Command Method STDERR: '+ stderr);*/
 								Fiber(function() {
 									var botcli = ScheduleLoggers.insert({
 										out: JSON.stringify(stdout),
 										stderror: JSON.stringify(stderr),
 										command:line,
+										status:false,
+										schedule_id:schedule_id,
 										createdOn: new Date(),
 										createdBy:this.userId,
 									});
@@ -265,8 +256,8 @@ Meteor.methods({
 							});/*END EXEC*/
 						}/*END IF OUTLOOK.COM*/
 						if(account.email.replace(/.*@/, "")=="yahoo.com"){
-						/*	line = "xvfb-run casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no" --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
-						line = "casperjs ../../../../../tests/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+						line = "xvfb-run casperjs ../../../../../tests/yahoo/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;
+					/*	line = "casperjs ../../../../../tests/yahoo/yahooactions.js --blacklist="+ JSON.stringify(whitelist)+" --whitelist="+ JSON.stringify(blacklist)+" --accounts="+ JSON.stringify(account)+" --actions="+ JSON.stringify(actions)+" --engine=slimerjs --disk-cache=no --proxy="+proxies[toproxies-1].ip+":"+proxies[toproxies-1].port +" --proxy-auth="+proxies[toproxies-1].user+":"+proxies[toproxies-1].pass+" --proxy-type="+proxies[toproxies-1].type;*/
 							console.log("In command method", line);
 							Fiber = Npm.require('fibers');
 							exec(line, function(stderr, stdout) {
@@ -288,14 +279,18 @@ Meteor.methods({
 					});/*END FOREACH*/
 
 				 });/*END CRON JOB SCHEDULE*/
-
-
+					Schedules.update(schedule_id, {
+						$set: { state: check_value },
+					});
 				}/*END IF CHECKED TRUE*/
 				else {
 					console.log("Schedule Inactive", schedule.state);
 					myBot = cron.scheduledJobs[schedule_id];
 					console.log("Schedules in queue ", myBot);
 					myBot.cancel();
+					Schedules.update(schedule_id, {
+						$set: { state: check_value },
+					});
 				}
 			}
 		},

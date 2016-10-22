@@ -1,48 +1,48 @@
-'use strict';
 /**
- * Meteor methods in server side for accounts
- */
+ * @memberOf Accounts
+ * @name  Methods
+ * @locus server/methods/accounts
+ * @summary Accounts Methods - Server side Meteor Method for Accounts
+ *
+ * @param {MeteorMethod} addRoles
+ * Method used to set a rol when the user login first time.
+ * @param {String} userId from logged user for validations.
+ *
+ * @param {MeteorMethod} addAccount
+ * Method that validate if there is an user logged to insert an account to the collection and send a verification email.
+ * @param {Object} account from the register form.
+ *
+ * @param {MeteorMethod} removeAccount
+ * Method that validate if there is an user session(user logged) to remove an email to it's the collection.
+ * @param {String} userId from logged user for validations.
+ * @param {String} account_id from the current user
+ *
+ */	
 
-Meteor.methods({
-	/**
-	 * addRoles: Method that set a User rol when the user login first time 
-	 * @param {User Object} userId
-	 */
-	addRoles:function(userId){
-    Roles.addUsersToRoles(userId, ['User']);
-  },
-  /**
-	 * addAccount: Method that validate if there is an user logged to insert an email to it's the collection
-	 * and send a verification email.
-	 * @param  {User Object} userId
-	 * @param  {Email Object} from the email form.
-	 * @return {Boolean} Return true if the email was insected correctly, false if does not.
-	 */
-  addAccount: function(account){
+ Meteor.methods({
+	 addRoles:function(userId){
+		check(userId, String);
+		Roles.addUsersToRoles(userId, ['User']);
+	 },
+	 addAccount: function(account){
+		check(account.email,String);
+		check(account.password,String);
 		var userId = Accounts.createUser({
-      email: account.email,
-      password: account.password
-    });
-    console.log(userId);
-    if(userId){
-    	return Accounts.sendVerificationEmail(userId);
-    }
-	},
-	 /* removeAccount: Method that validate if there is an user logged to remove an email to it's the collection.
-	 * @param  {User Object} userId
-	 * @param  {Email Object} from the email form.
-	 * @return {Boolean} Return true if the email was remove correctly, false if does not.
-	 */
-	removeUserAccount: function(userId, account_id){
+			email: account.email,
+			password: account.password
+		});
+		console.log(userId);
+		if(userId){
+			return Accounts.sendVerificationEmail(userId);
+		}
+	 },
+	 removeAccount: function(userId, account_id){
 		if(! this.userId) {
-				throw new Meteor.Error('not-authorized');
+			throw new Meteor.Error('not-authorized');
 		}
 		if(this.userId){
-    	Meteor.users.remove({"_id":account_id});
-    }
-	},
-});
-
-Meteor.publish("userData", function () {
-    return Meteor.users.find();
-});
+			check(account_id,String);
+			Meteor.users.remove({"_id":account_id});
+		}
+	 },
+	});
